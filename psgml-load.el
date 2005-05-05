@@ -15,6 +15,7 @@
 		("\\.xml" . xml-mode)
 		("\\.xsl" . xml-mode)
 		("\\.fo" . xml-mode)
+		("\\.plist" . xml-mode)
 		)
 	      auto-mode-alist
 	      )
