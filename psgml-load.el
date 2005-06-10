@@ -7,15 +7,15 @@
 ; XHTML and I want my html to conform to XML.
 (setq auto-mode-alist 
       (append '(
-		("\\.sgml" . sgml-mode)
-		("\\.idd" . sgml-mode)
-		("\\.ide" . sgml-mode)
-		("\\.htm" . xml-mode)
-		("\\.html" . xml-mode)
-		("\\.xml" . xml-mode)
-		("\\.xsl" . xml-mode)
-		("\\.fo" . xml-mode)
-		("\\.plist" . xml-mode)
+		("\\.sgml\\'" . sgml-mode)
+		("\\.idd\\'" . sgml-mode)
+		("\\.ide\\'" . sgml-mode)
+		("\\.htm\\'" . xml-mode)
+		("\\.html\\'" . xml-mode)
+		("\\.xml\\'" . xml-mode)
+		("\\.xsl\\'" . xml-mode)
+		("\\.fo\\'" . xml-mode)
+		("\\.plist\\'" . xml-mode)
 		)
 	      auto-mode-alist
 	      )
