@@ -1,20 +1,29 @@
+(defun foldr (proc seed lst)
+  (if (null lst)
+      seed
+    (funcall proc (car lst)
+             (foldr proc
+                    seed
+                    (cdr lst)))))
+
 (defun modal-insert (next-proc)
+  "Exit modal and perform function"
   `(lambda (&optional arg)
-     "Exit modal and perform function"
-     (interactive "*P")
-     (,next-proc arg)
-     (modal-minor-mode 0)))
+     (interactive)
+     (call-interactively ',next-proc)
+     (modal-emacs 0)))
 
 (defun modal-insert-mode ()
   "Exit modal"
   (interactive)
-  (modal-minor-mode 0))
+  (modal-emacs 0))
 
 (defun quick-search-forward (arg)
   "Search for a char like vi"
   (interactive "p")
   (let ((c (read-char "Look for: " nil)))
-    (search-forward (char-to-string c) nil nil arg)))
+    (search-forward (char-to-string c) nil nil arg)
+    (backward-char 1)))
 
 (defun quick-search-backward (arg)
   "Search for a char like vi"
@@ -22,8 +31,8 @@
   (let ((c (read-char "Look for: " nil)))
     (search-backward (char-to-string c) nil nil arg)))
 
-(defvar modal-minor-mode-map nil)
-(setq modal-minor-mode-map
+(defvar modal-emacs-map nil)
+(setq modal-emacs-map
       (let ((map (make-sparse-keymap)))
         (define-key map "0" 'digit-argument)
         (define-key map "1" 'digit-argument)
@@ -38,7 +47,7 @@
         (define-key map "-" 'negative-argument)
 
         (define-key map "a" 'beginning-of-line)
-        (define-key map "A" (modal-insert '(lambda (p) (back-to-indentation))))
+        (define-key map "A" (modal-insert 'back-to-indentation))
         (define-key map "b" 'backward-char)
         (define-key map "B" 'backward-word)
         (define-key map "c" 'mode-specific-command-prefix)
@@ -64,6 +73,7 @@
         (define-key map "y" 'yank)
         (define-key map "Y" 'yank-pop)
         (define-key map "x" 'Control-X-prefix)
+        (define-key map "X" 'execute-extended-command)
         (define-key map "z" 'zap-to-char)
         (define-key map "^" 'delete-indentation)
 
@@ -97,48 +107,48 @@
         (define-key map ">" 'end-of-buffer)
         map))
 
-(defvar modal-minor-mode t
-  "If non-nil, modal emacs is in effect")
+(defcustom modal-emacs nil
+  "If non-nil, modal emacs is in effect"
+  :group 'modal-emacs
+  :type 'boolean)
 
-(make-variable-buffer-local 'modal-minor-mode)
+(make-variable-buffer-local 'modal-emacs)
 
-(defun modal-minor-mode (&optional arg)
+(defun modal-emacs (&optional arg)
   "Enter modal editing mode (like having C- pressed)"
   (interactive "p")
-  (setq modal-minor-mode (> arg 0))
+  (setq modal-emacs (> arg 0))
   (force-mode-line-update))
 
-(add-to-list 'minor-mode-alist '(modal-minor-mode " Modal"))
-
-(defun foldr (proc seed lst)
-  (if (null lst)
-      seed
-    (funcall proc (car lst)
-             (foldr proc
-                    seed
-                    (cdr lst)))))
+(add-to-list 'minor-mode-alist '(modal-emacs " Modal"))
 
 (setq minor-mode-map-alist
       (foldr '(lambda (x acc)
-                (if (eq 'modal-minor-mode (car x))
+                (if (eq 'modal-emacs (car x))
                     acc
                   (cons x acc)))
              nil
              minor-mode-map-alist))
 
 (add-to-list 'minor-mode-map-alist
-             (cons 'modal-minor-mode
-                   modal-minor-mode-map))
+             (cons 'modal-emacs
+                   modal-emacs-map))
 
-(defvar modal-off-hooks
-  '(electric-buffer-menu-mode-hook
+(defcustom modal-emacs-skip-modes
+  '(custom-mode-hook
+    debugger-mode-hook
+    electric-buffer-menu-mode-hook
+    erc-mode-hook
+    Info-mode-hook
     minibuffer-setup-hook
     view-mode-hook)
-  "List of modes in which modal should be turned off")
+  "List of modes in which modal should be turned off"
+  :group 'modal-emacs
+  :type 'list)
 
 (mapcar '(lambda (x)
            (add-hook x 'modal-insert-mode))
-        modal-off-hooks)
+        modal-emacs-skip-modes)
 
-(global-set-key "\e\C-m" 'modal-minor-mode)
-(global-set-key [f2] 'modal-minor-mode)
+(global-set-key "\e\C-m" 'modal-emacs)
+(global-set-key [f2] 'modal-emacs)
