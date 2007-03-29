@@ -139,7 +139,7 @@ You can replace \"en\" with your ISO language code."
   :group 'php)
 
 ;;;###autoload
-(defcustom php-file-patterns (list "\\.php[s34]?\\'" "\\.phtml\\'" "\\.[ip]nc\\'")
+(defcustom php-file-patterns (list "\\.php[s34]?\\'" "\\.phtml\\'" "\\.inc\\'")
   "*List of file patterns for which to automatically invoke php-mode."
   :type '(repeat (regexp :tag "Pattern"))
   :group 'php)
