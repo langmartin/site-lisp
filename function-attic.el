@@ -37,3 +37,19 @@
 	  t)
       nil))
   (vi-back-to-old-mode))
+
+(defun cx-set-magic-tab-keys ()
+  (interactive)
+  (add-hook 'sh-mode-hook 'cx-smart-tab)
+  (setq tab-always-indent t
+        c-tab-always-indent t
+        perl-tab-always-indent t))
+
+(defun goto-matching-paren-or-insert (arg)
+  "Make % act like it does in vi, if a brace is under the cursor"
+  (interactive "p")
+  (cond ((looking-at "[([{]") (forward-sexp 1) (backward-char))
+        ((looking-at "[])}]") (forward-char) (backward-sexp 1))
+        (t (self-insert-command (or arg 1)))))
+;; C-M-n & C-M-p do this just fine
+;; (global-set-key "%" 'goto-matching-paren-or-insert)
