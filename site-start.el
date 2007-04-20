@@ -128,7 +128,7 @@ Set it intead of tab-width.")
             (append
              '(("\\.html?\\'" . html-helper-mode))
              auto-mode-alist)))
-  (if (reqire 'visual-basic-mode "visual-basic-mode" t)
+  (if (require 'visual-basic-mode "visual-basic-mode" t)
       (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
                                        visual-basic-mode))
                                     auto-mode-alist)))
