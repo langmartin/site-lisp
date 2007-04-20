@@ -43,10 +43,10 @@ Set it intead of tab-width.")
   (global-font-lock-mode 1)
   (setq auto-mode-alist
         (append
-         '(("\\.inc\\'" . java-mode)
-           ("\\.js\\'" . java-mode)
-           ("\\.asp\\'" . java-mode)
-           ("\\.asa\\'" . java-mode)
+         '(("\\.inc\\'" . javascript-mode)
+           ("\\.js\\'" . javascript-mode)
+           ("\\.asp\\'" . javascript-mode)
+           ("\\.asa\\'" . javascript-mode)
            ("^/tmp/mutt.*" . mail-mode))
          auto-mode-alist))
 
@@ -128,10 +128,8 @@ Set it intead of tab-width.")
             (append
              '(("\\.html?\\'" . html-helper-mode))
              auto-mode-alist)))
-  (if (require 'visual-basic-mode "visual-basic-mode" t)
-      (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
-                                       visual-basic-mode))
-                                    auto-mode-alist)))
+  (require 'visual-basic-mode "visual-basic-mode" t)
+  (require 'javascript-mode "javascript-mode" t)
   (rc-maybe-session))
 
 (defun rc-utf8 ()
