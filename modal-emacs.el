@@ -108,7 +108,8 @@
         map))
 
 (defcustom modal-emacs nil
-  "If non-nil, modal emacs is in effect"
+  "If non-nil, modal emacs is in effect. If you customize
+it to be t, then modal emacs will start by default."
   :group 'modal-emacs
   :type 'boolean)
 
@@ -142,13 +143,15 @@
     Info-mode-hook
     minibuffer-setup-hook
     view-mode-hook)
-  "List of modes in which modal should be turned off"
-  :group 'modal-emacs
-  :type 'list)
+  "A list of mode hooks which should be used to turn off
+modal emacs. Probably only useful if you have it turned on
+by default."
+  :type '(repeat variable)
+  :group 'modal-emacs)
 
 (mapcar '(lambda (x)
            (add-hook x 'modal-insert-mode))
         modal-emacs-skip-modes)
 
-(global-set-key "\e\C-m" 'modal-emacs)
 (global-set-key [f2] 'modal-emacs)
+;;(global-set-key "\e\C-m" 'modal-emacs)
