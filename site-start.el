@@ -2,8 +2,8 @@
 ;;;     the rest of this file is support functions.
 
 (defalias 'qrr 'query-replace-regexp)
-(defalias 'exit-emacs 'kill-emacs)
-(defalias 'close-emacs 'kill-emacs)
+(defalias 'exit-emacs 'save-buffers-kill-emacs)
+(defalias 'close-emacs 'save-buffers-kill-emacs)
 
 (defvar rc-coptix-tab-width 4
   "The tab-width is a bit tricky to set, so this
@@ -111,9 +111,6 @@ Set it intead of tab-width.")
   (global-set-key "[5;5~" 'scroll-other-window-down)
   (global-set-key [f5] 'call-last-kbd-macro)
 
-  ;; This function provides the one VI key that I absolutely can't stop hitting
-  (global-set-key "\C-w" 'kill-backward-word-or-region)
-
   ;;; Load if it's there
   (require 'php-mode "php-mode.el" t)
   (add-to-list 'vc-handled-backends 'DARCS)
@@ -132,28 +129,6 @@ Set it intead of tab-width.")
   (require 'javascript-mode "javascript-mode" t)
   (rc-maybe-session))
 
-(defun rc-maybe-mmm-mode ()
-  (interactive)
-  (if (require 'mmm-mode "mmm-mode" t)
-      (setq mmm-global-mode 'maybe)))
-
-(defun rc-asp-javascript-mode ()
-  "Broken still"
-  (interactive)
-  (rc-maybe-mmm-mode)
-  (mmm-add-group
-   'asp-javascript
-   '((asp-code
-      :submode javascript-mode
-      :face mmm-code-submode-face
-      :front "<%"
-      :back "%>")))
-  (add-to-list 'auto-mode-alist '("\\.as[ap]\\'" . asp-javascript-mode))
-  (add-to-list 'auto-mode-alist '("\\.inc\\'" . asp-javascript-mode))
-  (add-to-list 'mmm-mode-ext-classes-alist '(asp-javascript-mode nil html-js))
-  (add-to-list 'mmm-mode-ext-classes-alist '(asp-javascript-mode nil embedded-css))
-  (add-to-list 'mmm-mode-ext-classes-alist '(asp-javascript-mode nil asp-javascript)))
-
 (defun rc-utf8 ()
   "Setup terminal for UTF-8"
   (interactive)
@@ -161,43 +136,15 @@ Set it intead of tab-width.")
   (set-keyboard-coding-system 'utf-8)
   (prefer-coding-system 'utf-8))
 
-;;;; Utility Functions
-(defun cx-header-date () "Insert a date stamp in coptix format"
-  (interactive)
-  (insert (format-time-string "%Y-%m-%d")))
-(defun cx-header-time () "Insert a time stamp in coptix format"
-  (interactive)
-  (insert (format-time-string "%H:%M:%S")))
-(defun cx-header-datetime ()
-  "Insert time and date as %Y-%m-%d %H:%M:%S"
-  (interactive)
-  (cx-header-date)
-  (insert " ")
-  (cx-header-time))
-(defun cx-header-comment () "Insert the coptix shell comment block"
-  (interactive)
-  (insert-file "/coptix/admin/scripts/share/template/comment.sh"))
-(defun cx-dumb-tab () "Set tab to just insert itself"
-  (interactive)
-  (local-set-key "	" 'self-insert-command))
-(defun cx-smart-tab () "Set tab to the global smart thing"
-  (interactive)
-  (local-unset-key "	"))
-
 (defun rc-coptix-keybindings ()
   "Keybindings for Cygwin exit and mark and for goto-line"
   (interactive)
   ;;; Work around term=cygwin
   (global-set-key "\C-x\C-e" 'save-buffers-kill-emacs)
   (global-set-key "\C-o" 'set-mark-command)
-  (global-set-key "\C-xt" 'cx-header-datetime)
-  (global-set-key "\C-xc" 'cx-header-comment)
+  (global-set-key "\C-xt" 'cx-datetime)
+  (global-set-key "\C-xc" 'cx-comment)
   (global-set-key "\C-x+" 'goto-line))
-
-(defun run-scheme-remote (server)
-  "Run scheme on a remote server"
-  (interactive "s Server: ")
-  (run-scheme (concat "ssh " server " gsi -:d-")))
 
 (defun rc-function-keys-mlm (key-fn)
   "Setup Lang's function keys"
@@ -210,32 +157,6 @@ Set it intead of tab-width.")
   (funcall key-fn [home] 'point-to-register)
   (funcall key-fn [end] 'jump-to-register))
 
-(defun unfill-paragraph (from to &optional arg)
-  "Unfill current paragraph.
-If invoked with a non-nil prefix argument or in Transient Mark mode
-when the mark is active unfill the region as paragraphs instead. When
-called from lisp FROM and TO determine the region to unfill. When
-repeated unfill entire region as one paragraph."
-  (interactive (list (and (mark) (region-beginning))
-                     (and (mark) (region-end))
-                     current-prefix-arg))
-  (let ((fill-column (point-max)))
-    (if (or (not (interactive-p))
-            arg
-            (eq last-command 'unfill-paragraph-partial)
-            (and transient-mark-mode mark-active))
-        (if (eq last-command 'unfill-paragraph-partial)
-            (fill-region-as-paragraph from to)
-          (fill-nonuniform-paragraphs from to)
-          (setq this-command 'unfill-paragraph-partial))
-      (fill-paragraph nil))))
-
-(defun kill-backward-word-or-region (&optional arg)
-  (interactive)
-  (if (null mark-active)
-      (backward-kill-word (prefix-numeric-value arg))
-    (kill-region (region-beginning) (region-end))))
-
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"
   (interactive)
@@ -244,39 +165,9 @@ repeated unfill entire region as one paragraph."
         c-tab-always-indent nil
         perl-tab-always-indent nil))
 
-(defun cx-build-tags-primitive (top-dir-pred)
-  "Create a tags table in the top of your project"
-  (let ((dir (cx-find-top-dir top-dir-pred)))
-    (if (string-equal dir "/")
-        (message "Can't find a _darcs directory in this path")
-      (shell-command
-       (concat
-        "find . -path '**/_darcs**' -prune -path '**/CVS/**' -prune -o -type f"
-        "| grep -v -f /coptix/admin/scripts/share/etags-grep-anti-patterns.txt"
-        "| grep -f /coptix/admin/scripts/share/etags-grep-patterns.txt"
-        "| tr '\\n' '\\0'"
-        "| xargs -0 etags"
-        )))))
-
-(defun cx-build-tags ()
-  "Create a tags table in the top of your darcs project."
-  (interactive)
-  (cx-build-tags-primitive (lambda () (file-exists-p "_darcs"))))
-
-(defun cx-build-tags-cvs ()
-  "Create a tags table in the top of your CVS project. (BUSTED)"
-  (interactive)
-  (cx-build-tags-primitive (lambda () (not (file-exists-p "CVS")))))
-
-(defun cx-find-top-dir (pred)
-  "Find the top directory containing the name contains, bail out at the top"
-  (if (or (funcall pred)
-          (= (nth 10 (file-attributes "."))
-             (nth 10 (file-attributes ".."))))
-      (file-truename ".")
-    (progn
-      (cd "..")
-      (cx-find-top-dir pred))))
+(defun cx-dumb-tab ()
+  "Set tab to just insert itself"
+  (local-set-key "	" 'self-insert-command))
 
 (defun rc-electric-keys ()
   "Electrify return and buffer lists"
@@ -318,6 +209,147 @@ repeated unfill entire region as one paragraph."
   (defun viper-adjust-undo ()
     "Redefined to empty function so that movement commands with cursor break the undo list"))
 
+
+
+
+;;;; Unstable
+(defun rc-maybe-mmm-mode ()
+  (interactive)
+  (if (require 'mmm-auto "mmm-mode" t)
+      (progn
+        (setq mmm-global-mode 'maybe)
+        (mmm-add-classes
+         '((asp-javascript
+            :submode javascript-mode
+            :face mmm-code-submode-face
+            :front "<%"
+            :back "%>")
+           (asp-vbscript
+            :submode visual-basic-mode
+            :face mmm-code-submode-face
+            :front "<%"
+            :back "%>")))
+        (define-derived-mode asp-mode html-mode "ASP/HTML"))))
+
+(defun rc-asp-javascript-mode ()
+  "Broken still"
+  (interactive)
+  (rc-maybe-mmm-mode)
+  (add-to-list 'auto-mode-alist '("\\.as[ap]\\'" . asp-mode))
+  (add-to-list 'auto-mode-alist '("\\.inc\\'" . asp-mode))
+  (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil html-js))
+  (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil embedded-css))
+  (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil asp-javascript)))
+
+
+
+
+;;;; Utility Functions
+(defun cx-date () "Insert a date stamp in coptix format"
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
+
+(defun cx-time () "Insert a time stamp in coptix format"
+  (interactive)
+  (insert (format-time-string "%H:%M:%S")))
+
+(defun cx-datetime ()
+  "Insert time and date as %Y-%m-%d %H:%M:%S"
+  (interactive)
+  (cx-date)
+  (insert " ")
+  (cx-time))
+
+(defun cx-comment ()
+  "Insert the coptix shell comment block"
+  (interactive)
+  (insert-file "/coptix/admin/scripts/share/template/comment.sh"))
+
+(defun run-scheme-remote (server)
+  "Run scheme on a remote server"
+  (interactive "s Server: ")
+  (run-scheme (concat "ssh " server " gsi -:d-")))
+
+(defun unfill-paragraph (from to &optional arg)
+  "Unfill current paragraph.
+If invoked with a non-nil prefix argument or in Transient Mark mode
+when the mark is active unfill the region as paragraphs instead. When
+called from lisp FROM and TO determine the region to unfill. When
+repeated unfill entire region as one paragraph."
+  (interactive (list (and (mark) (region-beginning))
+                     (and (mark) (region-end))
+                     current-prefix-arg))
+  (let ((fill-column (point-max)))
+    (if (or (not (interactive-p))
+            arg
+            (eq last-command 'unfill-paragraph-partial)
+            (and transient-mark-mode mark-active))
+        (if (eq last-command 'unfill-paragraph-partial)
+            (fill-region-as-paragraph from to)
+          (fill-nonuniform-paragraphs from to)
+          (setq this-command 'unfill-paragraph-partial))
+      (fill-paragraph nil))))
+
+(defun eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+             (current-buffer))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+(global-set-key "\C-x\M-e" 'eval-and-replace)
+
+(defun kill-backward-word-or-region (&optional arg)
+  "This function provides the one VI key that I absolutely can't stop hitting"
+  (interactive)
+  (if (null mark-active)
+      (backward-kill-word (prefix-numeric-value arg))
+    (kill-region (region-beginning) (region-end))))
+
+(global-set-key "\C-w" 'kill-backward-word-or-region)
+
+(defun cx-build-tags ()
+  "Create a tags table in the top of your darcs project."
+  (interactive)
+  (cx-build-tags-primitive (lambda () (file-exists-p "_darcs"))))
+
+(defun cx-build-tags-primitive (top-dir-pred)
+  "Create a tags table in the top of your project"
+  (let ((dir (cx-find-top-dir top-dir-pred)))
+    (if (string-equal dir "/")
+        (message "Can't find a _darcs directory in this path")
+      (shell-command
+       (concat
+        "find . -path '**/_darcs**' -prune -path '**/CVS/**' -prune -o -type f"
+        "| grep -v -f /coptix/admin/scripts/share/etags-grep-anti-patterns.txt"
+        "| grep -f /coptix/admin/scripts/share/etags-grep-patterns.txt"
+        "| tr '\\n' '\\0'"
+        "| xargs -0 etags"
+        )))))
+
+(defun cx-build-tags-cvs ()
+  "Create a tags table in the top of your CVS project. (BUSTED)"
+  (interactive)
+  (cx-build-tags-primitive (lambda () (not (file-exists-p "CVS")))))
+
+(defun cx-find-top-dir (pred)
+  "Find the top directory containing the name contains, bail out at the top"
+  (if (or (funcall pred)
+          (= (nth 10 (file-attributes "."))
+             (nth 10 (file-attributes ".."))))
+      (file-truename ".")
+    (progn
+      (cd "..")
+      (cx-find-top-dir pred))))
+
+
+
+
+
+;;; User init functions
 (defun rc-ben ()
   "Ben Huffine: coptix + nothing"
   (interactive)
@@ -338,7 +370,7 @@ repeated unfill entire region as one paragraph."
   (rc-electric-keys)
   (autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
   (load "modal-emacs.el" t))
-  
+
 (defun rc-james ()
   "James Long: rc-schemers + VIper + electric everything"
   (interactive)
@@ -350,7 +382,7 @@ repeated unfill entire region as one paragraph."
   (interactive)
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
-  (global-set-key "/" 'hippie-expand)
+  (global-set-key "\M-/" 'hippie-expand)
   (rc-function-keys-mlm 'global-set-key))
 
 (defun rc-d ()
