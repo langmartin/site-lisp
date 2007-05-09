@@ -26,6 +26,7 @@ Set it intead of tab-width.")
    ;; over the filesystem.
    backup-by-copying t
    backup-directory-alist (cons '("." . "~/.emacs.d/backup/") backup-directory-alist)
+   tramp-backup-directory-alist backup-directory-alist
    ;; version control settings
    vc-follow-symlinks t
    vc-suppress-confirm t
@@ -42,15 +43,9 @@ Set it intead of tab-width.")
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
   (setq auto-mode-alist
-        (append
-         '(("\\.inc\\'" . javascript-mode)
-           ("\\.js\\'" . javascript-mode)
-           ("\\.asp\\'" . javascript-mode)
-           ("\\.asa\\'" . javascript-mode)
-           ("^/tmp/mutt.*" . mail-mode))
-         auto-mode-alist))
+        (append '(("/tmp/mutt.*" . mail-mode))
+		auto-mode-alist))
 
-  ;;;; Mode Hooks
   (add-hook '2C-mode-hook
             '(lambda ()
                (setq 2C-window-width 24)
@@ -75,11 +70,11 @@ Set it intead of tab-width.")
   (setq sh-basic-offset rc-coptix-tab-width)
   (setq css-indent-offset rc-coptix-tab-width)
 
-  ;;;; Key Bindings
   (global-set-key "\C-h" 'delete-backward-char)
   (global-set-key [f1] 'help-command)
   (global-set-key "OP" 'help-command)
   (global-unset-key [insert])
+
   ;;;; Home, End, Pgup and Pgdown
   (global-set-key [home] 'beginning-of-line)
   (global-set-key "\e[7~" 'beginning-of-line)
@@ -101,6 +96,7 @@ Set it intead of tab-width.")
   (global-set-key "[1;5C" 'end-of-buffer)
   (global-set-key [C-next] 'scroll-other-window)
   (global-set-key "\e[6^" 'scroll-other-window)
+
   ;;(global-set-key "OB" 'scroll-other-window)      ; Terminal.app arrows
   (global-set-key "[1;5B" 'scroll-other-window)
   (global-set-key "[6;5~" 'scroll-other-window)
@@ -112,21 +108,24 @@ Set it intead of tab-width.")
   (global-set-key [f5] 'call-last-kbd-macro)
 
   ;;; Load if it's there
-  (require 'php-mode "php-mode.el" t)
+  (require 'php-mode "php-mode" t)
   (add-to-list 'vc-handled-backends 'DARCS)
-  (load "darcsum.el" t)
-  (if (require 'css-mode "css-mode-fixed.el" t)
+  (load "darcsum" t)
+  (if (require 'css-mode "css-mode-fixed" t)
       (setq auto-mode-alist
             (append
              '(("\\.css\\'" . css-mode))
              auto-mode-alist)))
-  (if (require 'html-helper-mode "html-helper-mode.el" t)
-      (setq auto-mode-alist
-            (append
-             '(("\\.html?\\'" . html-helper-mode))
-             auto-mode-alist)))
+  (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
-  (require 'javascript-mode "javascript-mode" t)
+  (if (require 'javascript-mode "javascript-mode" t)
+      (setq auto-mode-alist
+	    (append
+	     '(("\\.inc\\'" . javascript-mode)
+	       ("\\.js\\'" . javascript-mode)
+	       ("\\.asp\\'" . javascript-mode)
+	       ("\\.asa\\'" . javascript-mode))
+	     auto-mode-alist)))
   (rc-maybe-session))
 
 (defun rc-utf8 ()
@@ -316,24 +315,26 @@ repeated unfill entire region as one paragraph."
   (interactive)
   (cx-build-tags-primitive (lambda () (file-exists-p "_darcs"))))
 
+(defun cx-build-tags-cvs ()
+  "Create a tags table in the top of your CVS project."
+  (interactive)
+  (cx-build-tags-primitive (lambda () (not (file-exists-p "../CVS")))))
+
 (defun cx-build-tags-primitive (top-dir-pred)
   "Create a tags table in the top of your project"
   (let ((dir (cx-find-top-dir top-dir-pred)))
+    (message "top directory here is %s" dir)
     (if (string-equal dir "/")
         (message "Can't find a _darcs directory in this path")
       (shell-command
        (concat
-        "find . -path '**/_darcs**' -prune -path '**/CVS/**' -prune -o -type f"
+        "find . -type f"
+        "| grep -v -e '_darcs/' -e 'CVS/'"
         "| grep -v -f /coptix/admin/scripts/share/etags-grep-anti-patterns.txt"
         "| grep -f /coptix/admin/scripts/share/etags-grep-patterns.txt"
         "| tr '\\n' '\\0'"
         "| xargs -0 etags"
         )))))
-
-(defun cx-build-tags-cvs ()
-  "Create a tags table in the top of your CVS project. (BUSTED)"
-  (interactive)
-  (cx-build-tags-primitive (lambda () (not (file-exists-p "CVS")))))
 
 (defun cx-find-top-dir (pred)
   "Find the top directory containing the name contains, bail out at the top"
