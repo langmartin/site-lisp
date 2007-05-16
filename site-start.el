@@ -126,7 +126,8 @@ Set it intead of tab-width.")
 	       ("\\.asp\\'" . javascript-mode)
 	       ("\\.asa\\'" . javascript-mode))
 	     auto-mode-alist)))
-  (rc-maybe-session))
+  (rc-maybe-session)
+  (load "csv-nav" t))
 
 (defun rc-utf8 ()
   "Setup terminal for UTF-8"
