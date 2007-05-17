@@ -130,9 +130,9 @@ Set it intead of tab-width.")
   (rc-emacs22-only))
 
 (defun rc-emacs22-only ()
-  (or (string-match "Emacs 22" (emacs-version))
-      (progn
-        (load "csv-nav" t))))
+  (and (string-match "Emacs 22" (emacs-version))
+       (progn
+         (load "csv-nav" t))))
 
 (defun rc-utf8 ()
   "Setup terminal for UTF-8"
