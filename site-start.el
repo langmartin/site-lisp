@@ -127,7 +127,12 @@ Set it intead of tab-width.")
 	       ("\\.asa\\'" . javascript-mode))
 	     auto-mode-alist)))
   (rc-maybe-session)
-  (load "csv-nav" t))
+  (rc-emacs22-only))
+
+(defun rc-emacs22-only ()
+  (or (string-match "Emacs 22" (emacs-version))
+      (progn
+        (load "csv-nav" t))))
 
 (defun rc-utf8 ()
   "Setup terminal for UTF-8"
