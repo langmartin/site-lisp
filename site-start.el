@@ -112,10 +112,14 @@ Set it intead of tab-width.")
   (add-to-list 'vc-handled-backends 'DARCS)
   (load "darcsum" t)
   (if (require 'css-mode "css-mode-fixed" t)
-      (setq auto-mode-alist
-            (append
-             '(("\\.css\\'" . css-mode))
-             auto-mode-alist)))
+      (progn
+        (setq auto-mode-alist
+              (append
+               '(("\\.css\\'" . css-mode))
+               auto-mode-alist))
+        (add-hook 'css-mode-hook
+                  '(lambda ()
+                     (setq css-indent-offset 4)))))
   (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
   (if (require 'javascript-mode "javascript-mode" t)
@@ -355,8 +359,16 @@ repeated unfill entire region as one paragraph."
 (defun doctype-xhtml ()
   (interactive)
   (insert
-   "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-   ))
+   "<!DOCTYPE html
+       PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
+      \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"))
+
+(defun doctype-strict ()
+  (interactive)
+  (insert
+   "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"
+            \"http://www.w3.org/TR/html4/strict.dtd\">"))
+
 
 
 
