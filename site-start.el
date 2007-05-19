@@ -159,8 +159,8 @@ Set it intead of tab-width.")
   (funcall key-fn [f5] 'call-last-kbd-macro)
   (funcall key-fn [f6] 'repeat)
   (funcall key-fn [f7] 'imenu)
-  (funcall key-fn [home] 'point-to-register)
-  (funcall key-fn [end] 'jump-to-register))
+  (funcall key-fn [end] 'point-to-register)
+  (funcall key-fn [home] 'jump-to-register))
 
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"
@@ -352,7 +352,11 @@ repeated unfill entire region as one paragraph."
       (cd "..")
       (cx-find-top-dir pred))))
 
-
+(defun doctype-xhtml ()
+  (interactive)
+  (insert
+   "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+   ))
 
 
 
