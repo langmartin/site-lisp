@@ -60,13 +60,17 @@ Set it intead of tab-width.")
             '(lambda ()
                (setq fill-column 78
                      perl-indent-level rc-coptix-tab-width)))
-  (add-hook 'lisp-mode-hook (lambda () (setq indent-tabs-mode nil)))
-  (add-hook 'emacs-lisp-mode-hook (lambda () (setq indent-tabs-mode nil)))
-  (add-hook 'scheme-mode-hook (lambda () (setq indent-tabs-mode nil)))
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
-  (add-hook 'html-mode-hook 'turn-off-auto-fill)
-  (add-hook 'tex-mode-hook 'turn-off-auto-fill)
-  (add-hook 'plain-TeX-mode-hook 'turn-off-auto-fill)
+  (add-hooks '(lisp-mode-hook
+               emacs-lisp-mode-hook
+               scheme-mode-hook
+               html-mode-hook
+               sql-mode)
+             '(lambda () (setq indent-tabs-mode nil)))
+  (add-hooks '(text-mode-hook
+               html-mode-hook
+               text-mode-hook
+               plain-TeX-mode-hook)
+             'turn-off-auto-fill)
   (setq sh-basic-offset rc-coptix-tab-width)
   (setq css-indent-offset rc-coptix-tab-width)
 
@@ -131,7 +135,8 @@ Set it intead of tab-width.")
 	       ("\\.asa\\'" . javascript-mode))
 	     auto-mode-alist)))
   (rc-maybe-session)
-  (rc-emacs22-only))
+  (rc-emacs22-only)
+  (require 'http-twiddle t))
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
@@ -369,6 +374,21 @@ repeated unfill entire region as one paragraph."
    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"
             \"http://www.w3.org/TR/html4/strict.dtd\">"))
 
+(defun add-hooks (hooks function &optional append local)
+  (mapcar (lambda (x)
+            (add-hook x function append local))
+          hooks))
+
+(add-to-list 'auto-mode-alist '("\\.psql$" . sql-mode))
+(defun customize-sql-mode-postgres ()
+  (turn-on-font-lock)
+  (cond
+   ((string= (file-name-extension (buffer-file-name)) "psql")
+    (progn
+      (sql-highlight-postgres-keywords)
+      (local-set-key "\C-c!" 'sql-postgres)))))
+(add-hook 'sql-mode-hook 'customize-sql-mode-postgres)
+
 
 
 
@@ -406,6 +426,7 @@ repeated unfill entire region as one paragraph."
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
   (global-set-key "\M-/" 'hippie-expand)
+  (global-set-key "\C-x\C-b" 'buffer-menu)
   (rc-function-keys-mlm 'global-set-key))
 
 (defun rc-d ()
