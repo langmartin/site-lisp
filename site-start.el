@@ -136,7 +136,7 @@ Set it intead of tab-width.")
 	     auto-mode-alist)))
   (rc-maybe-session)
   (rc-emacs22-only)
-  (require 'http-twiddle t))
+  (require 'http-twiddle "http-twiddle" t))
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
