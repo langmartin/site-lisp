@@ -1,3 +1,7 @@
+;; (global-set-key [f2] 'modal-emacs)
+;; (global-set-key "\e\C-m" 'modal-emacs)
+;; (modal-emacs-init-skip)x
+
 (defun foldr (proc seed lst)
   (if (null lst)
       seed
@@ -149,9 +153,9 @@ by default."
   :type '(repeat variable)
   :group 'modal-emacs)
 
-(mapcar '(lambda (x)
-           (add-hook x 'modal-insert-mode))
-        modal-emacs-skip-modes)
+(defun modal-emacs-init-skip ()
+  (mapcar '(lambda (x)
+             (add-hook x 'modal-insert-mode))
+          modal-emacs-skip-modes))
 
-(global-set-key [f2] 'modal-emacs)
-;;(global-set-key "\e\C-m" 'modal-emacs)
+(modal-emacs-init-skip)
