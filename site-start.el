@@ -306,6 +306,27 @@ Set it intead of tab-width.")
   (shell "*volt*"))
 
 
+;;;; Growl
+(defun growl (title message)
+  (start-process "growl" " growl"
+                 "growlnotify"
+                 title
+                 "-a" "Emacs")
+  (process-send-string " growl" message)
+  (process-send-string " growl" "\n")
+  (process-send-eof " growl"))
+(defun erc-growl (nick message)
+  (let ((n (substring nick 0 (string-match "\\!" nick))))
+    (growl "ERC" (format "%s said %s" n message))
+    nil))
+(defun erc-growl-match (match-type nick message)
+  (when (and ;; I don't want to see anything from the erc server
+             (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
+             ;; or bots
+             (null (string-match "\\(bot\\|serv\\)!" nick)))
+    (erc-growl nick message)))
+
+
 ;;;; Utility Functions
 (defun cx-date () "Insert a date stamp in coptix format"
   (interactive)
