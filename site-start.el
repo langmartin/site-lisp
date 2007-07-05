@@ -257,6 +257,54 @@ Set it intead of tab-width.")
 
 
 
+;;;; Shell customization
+(defun kill-invisible-shell-buffers (&optional vis)
+  (interactive)
+  (save-excursion
+    (mapcar '(lambda (buffer)
+               (and (or vis (not (get-buffer-window buffer 'visible)))
+                    (and (set-buffer buffer) (equal major-mode 'shell-mode))
+                    (progn
+                      (comint-bol)
+                      (or (eobp) (kill-line))
+                      (while (comint-check-proc buffer)
+                        (comint-send-eof)
+                        (sleep-for 0 2))
+                      (kill-buffer buffer))))
+            (buffer-list))))
+
+(defun comint-send-C-something (char)
+  (interactive)
+  (comint-send-input t t)
+  (comint-send-string
+   (get-buffer-process (current-buffer))
+   char))
+(defun comint-send-C-c ()
+  (interactive)
+  (comint-send-C-something ""))
+(defun comint-send-C-z ()
+  (interactive)
+  (comint-send-C-something ""))
+(add-hook
+ 'shell-mode-hook
+ (lambda ()
+   (local-set-key "\C-c\C-c" 'comint-send-C-c))
+ (lambda ()
+   (local-set-key "\C-c\C-z" 'comint-send-C-z)))
+
+(defun local-shell ()
+  (interactive)
+  (shell "*local*"))
+(defun iago-shell ()
+  (interactive)
+  (shell "*iago*"))
+(defun hook-shell ()
+  (interactive)
+  (shell "*hook*"))
+(defun volt-shell ()
+  (interactive)
+  (shell "*volt*"))
+
 
 ;;;; Utility Functions
 (defun cx-date () "Insert a date stamp in coptix format"
