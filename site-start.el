@@ -168,8 +168,9 @@ Set it intead of tab-width.")
   (funcall key-fn [f5] 'call-last-kbd-macro)
   (funcall key-fn [f6] 'repeat)
   (funcall key-fn [f7] 'imenu)
-  (funcall key-fn [end] 'point-to-register)
-  (funcall key-fn [home] 'jump-to-register))
+  (funcall key-fn [home] 'jump-to-register)
+  (add-hooks '(erc-mode-hook)
+             '(lambda () (local-set-key [home] 'jump-to-register))))
 
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"
@@ -190,15 +191,25 @@ Set it intead of tab-width.")
   (add-hook 'perl-mode-hook
             '(lambda () (local-set-key "\C-m" 'newline))))
 
-(defun rc-maybe-gambit ()
-  "Load and initialize Gambit-C scheme-mode extensions"
+(defun gambit-setup ()
+  "Gambit-C scheme-mode extensions"
+  (interactive)
+  (setq gambit-highlight-color "gray")
   (and (require 'gambit "gambit.el" t)
-       (defun gambit-abort ()
-	 "Return to top level. Equivalent to \",t\"."
-	 (interactive)
-	 (scheme-send-string ",t"))
-       (add-hook 'scheme-mode-hook
-		 (lambda () (local-set-key "\C-cx" 'gambit-abort)))))
+       (progn
+         (defun gambit-abort ()
+           "Return to top level. Equivalent to \",t\"."
+           (interactive)
+           (scheme-send-string ",t"))
+         (add-hook 'scheme-mode-hook
+                   (lambda () (local-set-key "\C-cx" 'gambit-abort)))
+         (setq scheme-program-name "gsi -:d-"))))
+
+(defun scheme48-setup ()
+  "Scheme48 scheme-mode extensions"
+  (interactive)
+  (require 'scheme48)
+  (setq scheme-program-name "scheme48"))
 
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
@@ -222,10 +233,7 @@ Set it intead of tab-width.")
       ad-do-it))
   (defun viper-adjust-undo ()
     "Redefined to empty function so that movement commands with cursor break the undo list"))
-
-
-
-
+
 ;;;; Unstable
 (defun rc-maybe-mmm-mode ()
   (interactive)
@@ -254,9 +262,7 @@ Set it intead of tab-width.")
   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil html-js))
   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil embedded-css))
   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil asp-javascript)))
-
-
-
+
 ;;;; Shell customization
 (defun kill-invisible-shell-buffers (&optional vis)
   (interactive)
@@ -273,18 +279,17 @@ Set it intead of tab-width.")
                       (kill-buffer buffer))))
             (buffer-list))))
 
-(defun comint-send-C-something (char)
-  (interactive)
+(defun comint-send-something (char)
   (comint-send-input t t)
   (comint-send-string
    (get-buffer-process (current-buffer))
    char))
 (defun comint-send-C-c ()
   (interactive)
-  (comint-send-C-something ""))
+  (comint-send-something ""))
 (defun comint-send-C-z ()
   (interactive)
-  (comint-send-C-something ""))
+  (comint-send-something ""))
 (add-hook
  'shell-mode-hook
  (lambda ()
@@ -292,20 +297,24 @@ Set it intead of tab-width.")
  (lambda ()
    (local-set-key "\C-c\C-z" 'comint-send-C-z)))
 
-(defun local-shell ()
-  (interactive)
-  (shell "*local*"))
-(defun iago-shell ()
-  (interactive)
-  (shell "*iago*"))
-(defun hook-shell ()
-  (interactive)
-  (shell "*hook*"))
-(defun volt-shell ()
-  (interactive)
-  (shell "*volt*"))
+(defun local-shell () (interactive) (shell "*local*"))
 
+(defun shell-and-ssh (name)
+  (shell (concat "*" name "*"))
+  (sleep-for 0 2)
+  (insert "ssh " name))
 
+(defun iago-shell () (interactive) (shell-and-ssh "iago"))
+(defun hook-shell () (interactive) (shell-and-ssh "hook"))
+(defun volt-shell () (interactive) (shell-and-ssh "volt"))
+(defun flash-shell () (interactive) (shell-and-ssh "flash"))
+(defun wort-shell () (interactive) (shell-and-ssh "wort"))
+(defun bork-shell () (interactive) (shell-and-ssh "bork"))
+(defun quad-shell () (interactive) (shell-and-ssh "quad"))
+(defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
+(defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
+(defun tank-shell () (interactive) (shell-and-ssh "tank"))
+
 ;;;; Growl
 (defun growl (title message)
   (start-process "growl" " growl"
@@ -325,8 +334,7 @@ Set it intead of tab-width.")
              ;; or bots
              (null (string-match "\\(bot\\|serv\\)!" nick)))
     (erc-growl nick message)))
-
-
+
 ;;;; Utility Functions
 (defun cx-date () "Insert a date stamp in coptix format"
   (interactive)
@@ -458,10 +466,16 @@ repeated unfill entire region as one paragraph."
       (local-set-key "\C-c!" 'sql-postgres)))))
 (add-hook 'sql-mode-hook 'customize-sql-mode-postgres)
 
-
-
-
-;;; User init functions
+(defun ack (command)
+  "Run ack like grep"
+  (interactive
+   (list
+    (read-from-minibuffer
+     "Run ack: "
+     "ack --nocolor --nogroup -nH ")))
+  (grep command))
+
+;;;; User init functions
 (defun rc-ben ()
   "Ben Huffine: coptix + nothing"
   (interactive)
@@ -477,10 +491,9 @@ repeated unfill entire region as one paragraph."
 (defun rc-schemers ()
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
-  (setq gambit-highlight-color "gray")
-  (rc-maybe-gambit)
   (rc-electric-keys)
-  (autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
+  ;;(autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
+  (require 'paredit)
   (load "modal-emacs.el" t))
 
 (defun rc-james ()
