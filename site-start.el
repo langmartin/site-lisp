@@ -211,6 +211,14 @@ Set it intead of tab-width.")
   (require 'scheme48)
   (setq scheme-program-name "scheme48"))
 
+(defun rc-paredit ()
+  (require 'paredit)
+  (add-hooks '(scheme-mode-hook
+               emacs-lisp-mode-hook
+               lisp-mode-hook)
+             '(lambda () (paredit-mode +1))
+             'append))
+
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
       (session-initialize)))
@@ -492,8 +500,6 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  ;;(autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
-  (require 'paredit)
   (load "modal-emacs.el" t))
 
 (defun rc-james ()
@@ -509,7 +515,8 @@ repeated unfill entire region as one paragraph."
   (rc-schemers)
   (global-set-key "\M-/" 'hippie-expand)
   (global-set-key "\C-x\C-b" 'buffer-menu)
-  (rc-function-keys-mlm 'global-set-key))
+  (rc-function-keys-mlm 'global-set-key)
+  (rc-paredit))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
