@@ -516,7 +516,8 @@ repeated unfill entire region as one paragraph."
   (global-set-key "\M-/" 'hippie-expand)
   (global-set-key "\C-x\C-b" 'buffer-menu)
   (rc-function-keys-mlm 'global-set-key)
-  (rc-paredit))
+  (rc-paredit)
+  (setq truncate-lines t))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
