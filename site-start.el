@@ -322,6 +322,7 @@ Set it intead of tab-width.")
 (defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
 (defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
 (defun tank-shell () (interactive) (shell-and-ssh "tank"))
+(defun abla-shell () (interactive) (shell-and-ssh "abla"))
 
 ;;;; Growl
 (defun growl (title message)
