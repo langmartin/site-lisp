@@ -298,12 +298,15 @@ Set it intead of tab-width.")
 (defun comint-send-C-z ()
   (interactive)
   (comint-send-something ""))
+
 (add-hook
  'shell-mode-hook
  (lambda ()
-   (local-set-key "\C-c\C-c" 'comint-send-C-c))
- (lambda ()
+   (local-set-key "\C-c\C-c" 'comint-send-C-c)
    (local-set-key "\C-c\C-z" 'comint-send-C-z)))
+
+(add-hook 'comint-output-filter-functions
+          'comint-strip-ctrl-m)
 
 (defun local-shell () (interactive) (shell "*local*"))
 
@@ -409,7 +412,8 @@ repeated unfill entire region as one paragraph."
       (backward-kill-word (prefix-numeric-value arg))
     (kill-region (region-beginning) (region-end))))
 
-(global-set-key "\C-w" 'kill-backward-word-or-region)
+;; this turns out to be bad, since it needs to be mapped in lots of places
+;; (global-set-key "\C-w" 'kill-backward-word-or-region)
 
 (defun cx-build-tags ()
   "Create a tags table in the top of your darcs project."
