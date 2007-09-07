@@ -39,7 +39,7 @@
 ;; "C-c _" can be used to delete the last popup window that was
 ;; created to highlight a Scheme expression.
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; User overridable parameters.
 
@@ -71,7 +71,7 @@
 (defvar gambit-move-to-highlighted (not gambit-highlight-face)
   "Flag to move to window opened to highlight a Scheme expression.")
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; These must be loaded first because we redefine some of the
 ;; functions they contain.
@@ -79,7 +79,69 @@
 (require 'scheme)
 (require 'cmuscheme)
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
+
+(defun gambit-indent-function (indent-point state)
+  (let ((normal-indent (current-column)))
+    (goto-char (1+ (elt state 1)))
+    (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
+    (if (and (elt state 2)
+             (not (looking-at "\\sw\\|\\s_")))
+        ;; car of form doesn't seem to be a a symbol
+        (progn
+          (if (not (> (save-excursion (forward-line 1) (point))
+                      calculate-lisp-indent-last-sexp))
+              (progn (goto-char calculate-lisp-indent-last-sexp)
+                     (beginning-of-line)
+                     (parse-partial-sexp (point)
+                                         calculate-lisp-indent-last-sexp 0 t)))
+          ;; Indent under the list or under the first sexp on the same
+          ;; line as calculate-lisp-indent-last-sexp.  Note that first
+          ;; thing on that line has to be complete sexp since we are
+          ;; inside the innermost containing sexp.
+          (backward-prefix-chars)
+          (current-column))
+      (let ((function (buffer-substring (point)
+                                        (progn (forward-sexp 1) (point))))
+            method)
+        (setq method (or (gambit-indent-method function)
+                         (get (intern-soft function) 'scheme-indent-function)
+                         (get (intern-soft function) 'scheme-indent-hook)))
+        (cond ((or (eq method 'defun)
+                   (and (null method)
+                        (> (length function) 3)
+                        (string-match "\\`def" function)))
+               (lisp-indent-defform state indent-point))
+              ((integerp method)
+               (lisp-indent-specform method state
+                                     indent-point normal-indent))
+              (method
+                (funcall method state indent-point normal-indent)))))))
+
+(defun gambit-indent-method (function)
+  (let ((method nil)
+        (alist gambit-indent-regexp-alist))
+    (while (and (not method) (not (null alist)))
+      (let* ((regexp (car alist))
+             (x (string-match (car regexp) function)))
+        (if x
+            (setq method (cdr regexp)))
+        (setq alist (cdr alist))))
+    method))
+
+(set lisp-indent-function 'gambit-indent-function)
+
+(defvar gambit-indent-regexp-alist
+  '(
+    ("^declare$"               . defun)
+    ("^##declare$"             . defun)
+    ("^##define"               . defun)
+    ("^macro-check"            . defun)
+    ("^macro-force-vars$"      . defun)
+    ("^macro-number-dispatch$" . defun)
+   ))
+
+;;;----------------------------------------------------------------------------
 
 ;; Portable functions for FSF Emacs and Xemacs.
 
@@ -111,7 +173,7 @@
     (defun move-overlay (overlay start end buffer)
       (set-extent-endpoints overlay start end buffer)))
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; Redefine the function scheme-send-region from `cmuscheme' so
 ;; that we can keep track of all text sent to Gambit's stdin.
@@ -161,7 +223,7 @@
     (put-text-property 1 end 'rear-nonsticky '(read-only) buffer)
     (put-text-property 1 end 'read-only t buffer)))
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 (defun gambit-load-file (file-name)
   "Load a Scheme file FILE-NAME into the inferior Scheme process."
@@ -185,7 +247,7 @@
                                        (file-name-nondirectory file-name)))
   (scheme-send-string (concat "(compile-file \"" file-name "\"\)\n")))
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; Buffer local variables of the Gambit inferior process(es).
 
@@ -198,7 +260,7 @@
 (defvar gambit-last-output-marker nil
   "Points to the last character output by the Gambit process.")
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; Utilities
 
@@ -219,7 +281,7 @@
         (concat str "\n")
         str)))
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; Define keys for single stepping and continuation crawling.
 
@@ -278,7 +340,7 @@
 
 (defvar gambit-popups nil)
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 ;; Procedures to intercept and process the location information output
 ;; by Gambit.
@@ -499,7 +561,7 @@ enlarge the window if it is too small."
 (defun gambit-unhighlight ()
   (gambit-highlight-region (get-buffer scheme-buffer) 1 1))
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
 
 (defun gambit-install-comment-syntax ()
   "Configure #| ... |# comments."
@@ -584,4 +646,4 @@ enlarge the window if it is too small."
 
 (provide 'gambit)
 
-;------------------------------------------------------------------------------
+;;;----------------------------------------------------------------------------
