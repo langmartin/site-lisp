@@ -8,10 +8,20 @@
   :group 'cx-timesheet
   :type 'string)
 
+(defcustom cx-timesheet-output-path "~/.emacs.d/tms-output"
+  "Path to put timesheet project dump"
+  :group 'cx-timesheet
+  :type 'string)
+
 (defun cx-timesheet-rc ()
   (setq auto-mode-alist
         (cons (cons "\\.action\\.el$" 'action-el-handler)
               auto-mode-alist)))
+
+(defun action-el-handler ()
+  (emacs-lisp-mode)
+  (eval-buffer)
+  (kill-buffer (current-buffer)))
 
 (defvar cx-timesheet-debug)
 (setq cx-timesheet-debug nil)
@@ -33,9 +43,67 @@
               (error "Timesheet entry failed"))
           (kill-buffer (current-buffer)))))))
 
-(defun tms-workstation (notes)
-  (interactive "snote: ")
-  (cx-timesheet-entry "592" notes))
+(defun cx-timesheet-update ()
+  (interactive)
+  (make-directory cx-timesheet-output-path t)
+  (let ((req-buffer
+         (url-retrieve-synchronously "http://ccc/timesheet/qs_tms_items.asp")))
+    (save-excursion
+      (set-buffer req-buffer)
+      (goto-char (point-min))
+      (search-forward "
+
+" (point-max) t)
+      (while (not (= (point) (point-max)))
+        (cx-timesheet-convert-line)))))
+
+(defun cx-tms-match ()
+  (if (search-forward-regexp "^cxtms_\\.?\\(.*?\\)|\\([0-9]+\\).*?$" (point-at-eol) t)
+      (let ((file (match-string 1))
+            (id (match-string 2)))
+        (cons (replace-regexp-in-string "/" "-" file)
+              (number-to-string (string-to-number id))))
+    nil))
+
+(defun cx-timesheet-convert-line ()
+  ;;   (beginning-of-line) (previous-line)
+  (let ((strings (cx-tms-match)))
+    (if strings
+        (let ((path (concat cx-timesheet-output-path "/"
+                            (car strings)
+                            ".action.el")))
+          (call-with-output-file
+           path
+           (lambda ()
+             (prin1
+              `(lambda (notes)
+                 (interactive "snotes: ")
+                 (cx-timesheet-entry ,(cdr strings) notes))
+              'insert))
+           ))))
+  (progn
+    (beginning-of-line)
+    (next-line)))
+
+;; cxtms_.CX Business:General > Administration: Accounting/Taxes|576
+;; (cx-timesheet-convert-line)
+
+(defun call-with-output-file (path thunk &optional extension)
+  (save-excursion
+    (set-buffer (create-file-buffer path))
+    (funcall thunk)
+    (setq buffer-file-name path)
+    (save-buffer)
+    (kill-buffer (current-buffer))))
+
+;; (call-with-output-file
+;;  "~/foo"
+;;  (lambda ()
+;;    (prin1
+;;     `(lambda (notes)
+;;        (interactive "snotes: ")
+;;        (cx-timesheet-entry ,(match-string 2) notes))
+;;     'insert)))
 
 ;;;; urlencoding
 (defun alphanumericp (ch)
@@ -61,8 +129,6 @@
     hex-values
     (logand 15 ch))))
 
-(defun else () t)
-
 (defun urlencode (string)
   (let ((out ""))
     (mapc (lambda (ch)
@@ -72,17 +138,13 @@
                    (cond ((alphanumericp ch)
                           (char-to-string ch))
                          ((= ?  ch) "+")
-                         ((else) (concat
+                         (t (concat
                                   "%"
                                   (hex-nibble (ash ch -4))
                                   (hex-nibble ch)))))))
           string)
     out))
 
-(defun action-el-handler ()
-  (save-excursion
-    (emacs-lisp-mode)
-    (eval-buffer)
-    (kill-buffer (current-buffer))))
+;; (urlencode "foo bar (baz)")
 
 (provide 'cx-timesheet)
