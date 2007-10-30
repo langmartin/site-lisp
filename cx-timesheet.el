@@ -76,14 +76,14 @@
            path
            (lambda ()
              (prin1
-              `(lambda (notes)
-                 (interactive "snotes: ")
-                 (cx-timesheet-entry ,(cdr strings) notes))
-              'insert))
-           ))))
-  (progn
-    (beginning-of-line)
-    (next-line)))
+              `(call-interactively
+                '(lambda (notes)
+                   (interactive "snotes: ")
+                   (cx-timesheet-entry ,(cdr strings) notes)))
+              'insert))))
+      (progn
+        (beginning-of-line)
+        (next-line)))))
 
 ;; cxtms_.CX Business:General > Administration: Accounting/Taxes|576
 ;; (progn (beginning-of-line) (previous-line) (cx-timesheet-convert-line))
