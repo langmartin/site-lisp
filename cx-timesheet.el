@@ -44,6 +44,7 @@
           (kill-buffer (current-buffer)))))))
 
 (defun cx-timesheet-update ()
+  "Update list of available projects"
   (interactive)
   (make-directory cx-timesheet-output-path t)
   (let ((req-buffer
@@ -66,7 +67,6 @@
     nil))
 
 (defun cx-timesheet-convert-line ()
-  ;;   (beginning-of-line) (previous-line)
   (let ((strings (cx-tms-match)))
     (if strings
         (let ((path (concat cx-timesheet-output-path "/"
@@ -86,7 +86,7 @@
     (next-line)))
 
 ;; cxtms_.CX Business:General > Administration: Accounting/Taxes|576
-;; (cx-timesheet-convert-line)
+;; (progn (beginning-of-line) (previous-line) (cx-timesheet-convert-line))
 
 (defun call-with-output-file (path thunk &optional extension)
   (save-excursion
@@ -95,15 +95,6 @@
     (setq buffer-file-name path)
     (save-buffer)
     (kill-buffer (current-buffer))))
-
-;; (call-with-output-file
-;;  "~/foo"
-;;  (lambda ()
-;;    (prin1
-;;     `(lambda (notes)
-;;        (interactive "snotes: ")
-;;        (cx-timesheet-entry ,(match-string 2) notes))
-;;     'insert)))
 
 ;;;; urlencoding
 (defun alphanumericp (ch)
