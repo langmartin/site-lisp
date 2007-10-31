@@ -332,7 +332,7 @@ Set it intead of tab-width.")
   (start-process "growl" " growl"
                  "growlnotify"
                  title
-                 "-a" "Emacs")
+                 "-a" "Emacs.app")
   (process-send-string " growl" message)
   (process-send-string " growl" "\n")
   (process-send-eof " growl"))
