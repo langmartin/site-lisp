@@ -13,10 +13,42 @@
   :group 'cx-timesheet
   :type 'string)
 
+(defcustom cx-timesheet-tunnel-port 5551
+  "Localhost port to use for tunneling"
+  :group 'cx-timesheet
+  :type 'number)
+
+(defcustom cx-timesheet-tunnel-host "iago.hosts.coptix.com"
+  "Hostname to use for tunneling"
+  :group 'cx-timesheet
+  :type 'string)
+
+(defcustom cx-timesheet-host "ccc.coptix.lan"
+  "Hostname to use normally"
+  :group 'cx-timesheet
+  :type 'string)
+
+(defvar cx-timesheet-host-buffer cx-timesheet-host)
+
 (defun cx-timesheet-rc ()
+  "Prepend action-el-handler to auto-mode-alist"
   (setq auto-mode-alist
         (cons (cons "\\.action\\.el$" 'action-el-handler)
               auto-mode-alist)))
+
+(defun cx-timesheet-start-tunnel ()
+  "Start the tunnel"
+  (interactive)
+  (let* ((port (number-to-string cx-timesheet-tunnel-port))
+         (cmd (concat "ssh -fN -L " port ":ccc:80 " cx-timesheet-tunnel-host " &")))
+    (message cmd)
+    (shell-command cmd)
+    (setq cx-timesheet-host-buffer (concat "localhost:" port))))
+
+(defun cx-timesheet-stop-tunnel ()
+  "Stop using the tunnel"
+  (interactive)
+  (setq cx-timesheet-host-buffer cx-timesheet-host))
 
 (defun action-el-handler ()
   (emacs-lisp-mode)
@@ -27,7 +59,7 @@
 (setq cx-timesheet-debug nil)
 
 (defun cx-timesheet-entry (tskid notes)
-  (let ((req (concat "http://ccc.coptix.lan/timesheet/qs_tms_post.asp?"
+  (let ((req (concat "http://" cx-timesheet-host-buffer "/timesheet/qs_tms_post.asp?"
                      "username=" cx-timesheet-username "&"
                      "tskid=" tskid "&"
                      "notes=" (urlencode notes))))
@@ -48,7 +80,7 @@
   (interactive)
   (make-directory cx-timesheet-output-path t)
   (let ((req-buffer
-         (url-retrieve-synchronously "http://ccc/timesheet/qs_tms_items.asp")))
+         (url-retrieve-synchronously "http://" cx-timesheet-host-buffer "/timesheet/qs_tms_items.asp")))
     (save-excursion
       (set-buffer req-buffer)
       (goto-char (point-min))
@@ -72,7 +104,7 @@
         (let ((path (concat cx-timesheet-output-path "/"
                             (car strings)
                             ".action.el")))
-          (call-with-output-file
+          (with-output-file
            path
            (lambda ()
              (prin1
@@ -88,7 +120,7 @@
 ;; cxtms_.CX Business:General > Administration: Accounting/Taxes|576
 ;; (progn (beginning-of-line) (previous-line) (cx-timesheet-convert-line))
 
-(defun call-with-output-file (path thunk &optional extension)
+(defun with-output-file (path thunk)
   (save-excursion
     (set-buffer (create-file-buffer path))
     (funcall thunk)
@@ -121,20 +153,16 @@
     (logand 15 ch))))
 
 (defun urlencode (string)
-  (let ((out ""))
-    (mapc (lambda (ch)
-            (setq out
-                  (concat
-                   out
-                   (cond ((alphanumericp ch)
-                          (char-to-string ch))
-                         ((= ?  ch) "+")
-                         (t (concat
-                                  "%"
-                                  (hex-nibble (ash ch -4))
-                                  (hex-nibble ch)))))))
-          string)
-    out))
+  (mapconcat (lambda (ch)
+               (cond ((alphanumericp ch)
+                      (char-to-string ch))
+                     ((= ?  ch) "+")
+                     (t (concat
+                         "%"
+                         (hex-nibble (ash ch -4))
+                         (hex-nibble ch)))))
+             string
+             ""))
 
 ;; (urlencode "foo bar (baz)")
 
