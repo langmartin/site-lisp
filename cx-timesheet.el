@@ -80,7 +80,8 @@
   (interactive)
   (make-directory cx-timesheet-output-path t)
   (let ((req-buffer
-         (url-retrieve-synchronously "http://" cx-timesheet-host-buffer "/timesheet/qs_tms_items.asp")))
+         (url-retrieve-synchronously
+          (concat "http://" cx-timesheet-host-buffer "/timesheet/qs_tms_items.asp"))))
     (save-excursion
       (set-buffer req-buffer)
       (goto-char (point-min))
