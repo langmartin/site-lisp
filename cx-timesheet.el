@@ -39,8 +39,9 @@
 (defun cx-timesheet-start-tunnel ()
   "Start the tunnel"
   (interactive)
+  (shell-command "killall emacs-ssh-tunnel")
   (let* ((port (number-to-string cx-timesheet-tunnel-port))
-         (cmd (concat "ssh -fN -L " port ":ccc:80 " cx-timesheet-tunnel-host " &")))
+         (cmd (concat "argv0 ssh emacs-ssh-tunnel -fN -L " port ":ccc:80 " cx-timesheet-tunnel-host " &")))
     (message cmd)
     (shell-command cmd)
     (setq cx-timesheet-host-buffer (concat "localhost:" port))))
@@ -48,7 +49,8 @@
 (defun cx-timesheet-stop-tunnel ()
   "Stop using the tunnel"
   (interactive)
-  (setq cx-timesheet-host-buffer cx-timesheet-host))
+  (setq cx-timesheet-host-buffer cx-timesheet-host)
+  (shell-command "killall emacs-ssh-tunnel"))
 
 (defun action-el-handler ()
   (emacs-lisp-mode)
