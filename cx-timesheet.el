@@ -8,6 +8,11 @@
   :group 'cx-timesheet
   :type 'string)
 
+(defcustom cx-timesheet-host "ccc.coptix.lan"
+  "Hostname to use normally"
+  :group 'cx-timesheet
+  :type 'string)
+
 (defcustom cx-timesheet-output-path "~/.emacs.d/tms-output"
   "Path to put timesheet project dump"
   :group 'cx-timesheet
@@ -23,8 +28,8 @@
   :group 'cx-timesheet
   :type 'string)
 
-(defcustom cx-timesheet-host "ccc.coptix.lan"
-  "Hostname to use normally"
+(defcustom cx-timesheet-tunnel-extra "-L3128:iago:3128 -D1080"
+  "Extra arguments to the tunnel process"
   :group 'cx-timesheet
   :type 'string)
 
@@ -41,7 +46,9 @@
   (interactive)
   (shell-command "killall emacs-ssh-tunnel")
   (let* ((port (number-to-string cx-timesheet-tunnel-port))
-         (cmd (concat "argv0 ssh emacs-ssh-tunnel -fN -L " port ":ccc:80 " cx-timesheet-tunnel-host " &")))
+         (cmd (concat "argv0 ssh emacs-ssh-tunnel -fN -L " port ":ccc:80 "
+                      cx-timesheet-tunnel-extra " "
+                      cx-timesheet-tunnel-host " &")))
     (message cmd)
     (shell-command cmd)
     (setq cx-timesheet-host-buffer (concat "localhost:" port))))
