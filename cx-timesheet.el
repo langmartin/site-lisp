@@ -60,9 +60,12 @@
   (shell-command "killall emacs-ssh-tunnel"))
 
 (defun action-el-handler ()
-  (emacs-lisp-mode)
-  (eval-buffer)
-  (kill-buffer (current-buffer)))
+  (let ((cxp (point)))
+    (switch-to-buffer (current-buffer))
+    (emacs-lisp-mode)
+    (eval-buffer)
+    (kill-buffer nil)
+    (goto-char cxp)))
 
 (defvar cx-timesheet-debug)
 (setq cx-timesheet-debug nil)
@@ -73,7 +76,8 @@
                      "tskid=" tskid "&"
                      "notes=" (urlencode notes))))
     (message "%s" req)
-    (let ((buffer (url-retrieve-synchronously req)))
+    (let* ((backto (current-buffer))
+           (buffer (url-retrieve-synchronously req)))
       (if cx-timesheet-debug
           (progn
             (view-buffer buffer))
