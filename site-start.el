@@ -219,6 +219,24 @@ Set it intead of tab-width.")
              '(lambda () (paredit-mode +1))
              'append))
 
+(defun scheme-add-keywords (keyword-rules)
+   (let* ((keyword-list (mapcar #'(lambda (x)
+                                    (symbol-name (car x)))
+                                keyword-rules))
+          (keyword-regexp (concat "(\\("
+                                  (regexp-opt keyword-list)
+                                  "\\)[ \n]")))
+     (font-lock-add-keywords 'scheme-mode
+                             `((,keyword-regexp 1 font-lock-keyword-face))))
+   (scheme-add-indentations keyword-rules))
+
+(defun scheme-add-indentations (rules)
+  (mapc #'(lambda (x)
+            (put (car x)
+                 'scheme-indent-function
+                 (cadr x)))
+        rules))
+
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
       (session-initialize)))
