@@ -60,12 +60,11 @@
   (shell-command "killall emacs-ssh-tunnel"))
 
 (defun action-el-handler ()
-  (let ((cxp (point)))
-    (switch-to-buffer (current-buffer))
-    (emacs-lisp-mode)
+  (switch-to-buffer (current-buffer))
+  (emacs-lisp-mode)
+  (save-excursion
     (eval-buffer)
-    (kill-buffer nil)
-    (goto-char cxp)))
+    (kill-buffer nil)))
 
 (defvar cx-timesheet-debug)
 (setq cx-timesheet-debug nil)
