@@ -164,11 +164,8 @@ Set it intead of tab-width.")
 (defun rc-function-keys-mlm (key-fn)
   "Setup Lang's function keys"
   (interactive)
-  (funcall key-fn [f3] 'kmacro-start-macro-or-insert-counter)
-  (funcall key-fn [f4] 'kmacro-end-or-call-macro)
-  (funcall key-fn [f5] 'call-last-kbd-macro)
-  (funcall key-fn [f6] 'repeat)
-  (funcall key-fn [f7] 'imenu)
+  (global-set-key [kp-1] 'imenu)
+  (global-set-key [kp-0] 'repeat)
   (funcall key-fn [home] 'jump-to-register)
   (add-hooks '(erc-mode-hook)
              '(lambda () (local-set-key [home] 'jump-to-register))))
@@ -237,6 +234,35 @@ Set it intead of tab-width.")
                  'scheme-indent-function
                  (cadr x)))
         rules))
+
+(scheme-add-keywords
+ '((when 1)
+   (unless 1)
+   ))
+
+(scheme-add-indentations
+ '((and-let* 1)
+   (let-optionals 2)
+   (let-optionals* 2)
+   (let-port-rest 2)
+   (wind-fluid 3)
+   (case-equal 1)
+   (let-list 1)
+
+   ;; ykk-ports
+   (with-current-output-port 1)
+   (let-current-output-port 1)
+   (maybe-current-output-port 1)
+   (let-maybe-current-output-port 1)
+   (with-current-input-port 1)
+   (let-current-input-port 1)
+   (maybe-current-input-port 1)
+   (let-maybe-current-input-port 1)
+   (with-string-input-port 1)
+   (let-string-input-port 1)
+   (with-string-ports 1)
+   (let-string-ports 1)
+   ))
 
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
@@ -335,7 +361,7 @@ Set it intead of tab-width.")
   (insert "ssh " name))
 
 (defun iago-shell () (interactive) (shell-and-ssh "iago"))
-(defun hook-shell () (interactive) (shell-and-ssh "hook"))
+(defun lint-shell () (interactive) (shell-and-ssh "lint"))
 (defun volt-shell () (interactive) (shell-and-ssh "volt"))
 (defun flash-shell () (interactive) (shell-and-ssh "flash"))
 (defun wort-shell () (interactive) (shell-and-ssh "wort"))
@@ -345,6 +371,8 @@ Set it intead of tab-width.")
 (defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
 (defun tank-shell () (interactive) (shell-and-ssh "tank"))
 (defun abla-shell () (interactive) (shell-and-ssh "abla"))
+(defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
+(defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
 
 ;;;; Growl
 (defun growl (title message)
@@ -503,8 +531,8 @@ repeated unfill entire region as one paragraph."
   (interactive
    (list
     (read-from-minibuffer
-     "Run ack: "
-     "ack --nocolor --nogroup -nH ")))
+     "Run ack (-n: no recurse, -a: all filetypes, -i: case insesitive) "
+     "ack --nocolor --nogroup -H")))
   (grep command))
 
 ;;;; User init functions
@@ -537,8 +565,8 @@ repeated unfill entire region as one paragraph."
   (interactive)
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
-  (global-set-key "\M-/" 'hippie-expand)
-  (global-set-key "\C-x\C-b" 'buffer-menu)
+  ;; (global-set-key "\M-/" 'hippie-expand)
+  ;; (global-set-key "\C-x\C-b" 'buffer-menu)
   (rc-function-keys-mlm 'global-set-key)
   (rc-paredit)
   (setq truncate-lines t))

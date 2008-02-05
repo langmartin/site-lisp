@@ -46,7 +46,7 @@
   (interactive)
   (shell-command "killall emacs-ssh-tunnel")
   (let* ((port (number-to-string cx-timesheet-tunnel-port))
-         (cmd (concat "argv0 ssh emacs-ssh-tunnel -fN -L " port ":ccc:80 "
+         (cmd (concat "argv0 ssh emacs-ssh-tunnel -C -fN -L " port ":ccc:80 "
                       cx-timesheet-tunnel-extra " "
                       cx-timesheet-tunnel-host " &")))
     (message cmd)

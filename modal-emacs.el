@@ -76,7 +76,7 @@
         (define-key map "q" 'quoted-insert)
         (define-key map "y" 'yank)
         (define-key map "Y" 'yank-pop)
-        (define-key map "x" 'Control-X-prefix)
+        (define-key map "x" 'ctl-x-map)
         (define-key map "X" 'execute-extended-command)
         (define-key map "z" 'zap-to-char)
         (define-key map "^" 'delete-indentation)
