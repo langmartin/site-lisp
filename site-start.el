@@ -115,15 +115,16 @@ Set it intead of tab-width.")
   (require 'php-mode "php-mode" t)
   ;; (add-to-list 'vc-handled-backends 'DARCS)
   ;; (load "darcsum" t)
-  (if (require 'css-mode "css-mode-fixed" t)
-      (progn
-        (setq auto-mode-alist
-              (append
-               '(("\\.css\\'" . css-mode))
-               auto-mode-alist))
-        (add-hook 'css-mode-hook
-                  '(lambda ()
-                     (setq css-indent-offset 4)))))
+  (defun rc-broken-version-of-css-mode-so-please-dont ()
+    (if (require 'css-mode "css-mode-fixed" t)
+        (progn
+          (setq auto-mode-alist
+                (append
+                 '(("\\.css\\'" . css-mode))
+                 auto-mode-alist))
+          (add-hook 'css-mode-hook
+                    '(lambda ()
+                       (setq css-indent-offset 4))))))
   (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
   (if (require 'javascript-mode "javascript-mode" t)
