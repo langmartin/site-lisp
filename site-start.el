@@ -248,6 +248,7 @@ Set it intead of tab-width.")
    (wind-fluid 3)
    (case-equal 1)
    (let-list 1)
+   (case-regex 1)
 
    ;; ykk-ports
    (with-current-output-port 1)
@@ -557,8 +558,7 @@ repeated unfill entire region as one paragraph."
 (defun rc-james ()
   "James Long: rc-schemers + VIper + electric everything"
   (interactive)
-  (rc-schemers)
-  (rc-viper))
+  (rc-schemers))
 
 (defun rc-lang ()
   "Lang Martin: rc-schemers + electric everything"
