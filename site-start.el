@@ -265,6 +265,16 @@ Set it intead of tab-width.")
    (let-string-ports 1)
    ))
 
+(require 'info-look)
+
+(info-lookup-add-help
+ :mode 'scheme-mode
+ :regexp "[^()`',\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(r5rs)Index" nil "^[ \t]+-+ [^:]+:[ \t]*" "\\b")
+             ("(scheme48)Binding Index")
+             ("(gambit-c)General Index")))
+
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
       (session-initialize)))
