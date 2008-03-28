@@ -374,6 +374,7 @@ Set it intead of tab-width.")
 (defun abla-shell () (interactive) (shell-and-ssh "abla"))
 (defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
 (defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
+(defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
 
 ;;;; Growl
 (defun growl (title message)
