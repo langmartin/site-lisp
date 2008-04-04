@@ -228,6 +228,8 @@ Set it intead of tab-width.")
                              `((,keyword-regexp 1 font-lock-keyword-face))))
    (scheme-add-indentations keyword-rules))
 
+(load "scheme-indent.el")
+
 (defun scheme-add-indentations (rules)
   (mapc #'(lambda (x)
             (put (car x)
@@ -248,7 +250,11 @@ Set it intead of tab-width.")
    (wind-fluid 3)
    (case-equal 1)
    (let-list 1)
+   (let-fluid 2)
    (case-regex 1)
+   (case-posix-regex 1)
+
+   (let-fluids with-...)
 
    ;; ykk-ports
    (with-current-output-port 1)
