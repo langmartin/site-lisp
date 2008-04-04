@@ -201,13 +201,15 @@ Set it intead of tab-width.")
            (scheme-send-string ",t"))
          (add-hook 'scheme-mode-hook
                    (lambda () (local-set-key "\C-cx" 'gambit-abort)))
-         (setq scheme-program-name "gsi -:d-"))))
+         (setq scheme-program-name "gsi -:d-")))
+  (scheme-extend-info "(gambit-c)General Index"))
 
 (defun scheme48-setup ()
   "Scheme48 scheme-mode extensions"
   (interactive)
   (require 'scheme48)
-  (setq scheme-program-name "scheme48"))
+  (setq scheme-program-name "scheme48")
+  (scheme-extend-info "(scheme48)Binding Index"))
 
 (defun rc-paredit ()
   (require 'paredit)
@@ -263,17 +265,21 @@ Set it intead of tab-width.")
    (let-string-input-port 1)
    (with-string-ports 1)
    (let-string-ports 1)
+
+   ;; ykk http
+   (let-http-response 1)
+   (let-headers 1)
+   (output-response 2)
    ))
 
-(require 'info-look)
-
-(info-lookup-add-help
- :mode 'scheme-mode
- :regexp "[^()`',\" \t\n]+"
- :ignore-case t
- :doc-spec '(("(r5rs)Index" nil "^[ \t]+-+ [^:]+:[ \t]*" "\\b")
-             ("(scheme48)Binding Index")
-             ("(gambit-c)General Index")))
+(defun scheme-extend-info (page)
+ (require 'info-look)
+ (info-lookup-add-help
+  :mode 'scheme-mode
+  :regexp "[^()`',\" \t\n]+"
+  :ignore-case t
+  :doc-spec `(("(r5rs)Index" nil "^[ \t]+-+ [^:]+:[ \t]*" "\\b")
+              (,page))))
 
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
@@ -369,10 +375,9 @@ Set it intead of tab-width.")
 (defun shell-and-ssh (name)
   (shell (concat "*" name "*"))
   (sleep-for 0 2)
-  (insert "ssh " name))
+  (insert "ss " name))
 
-(defun iago-shell () (interactive) (shell-and-ssh "iago"))
-(defun lint-shell () (interactive) (shell-and-ssh "lint"))
+(defun liar-shell () (interactive) (shell-and-ssh "liar"))
 (defun volt-shell () (interactive) (shell-and-ssh "volt"))
 (defun flash-shell () (interactive) (shell-and-ssh "flash"))
 (defun wort-shell () (interactive) (shell-and-ssh "wort"))
@@ -564,7 +569,8 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  (load "modal-emacs.el" t))
+  ;; (load "modal-emacs.el" t)
+  (scheme48-setup))
 
 (defun rc-james ()
   "James Long: rc-schemers + VIper + electric everything"
