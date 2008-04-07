@@ -188,7 +188,8 @@ Set it intead of tab-width.")
   (global-set-key "\C-m" 'newline-and-indent)
   (add-hook 'perl-mode-hook
             '(lambda () (local-set-key "\C-m" 'newline))))
-
+
+;;;; scheme setup
 (defun gambit-setup ()
   "Gambit-C scheme-mode extensions"
   (interactive)
@@ -286,7 +287,8 @@ Set it intead of tab-width.")
   :ignore-case t
   :doc-spec `(("(r5rs)Index" nil "^[ \t]+-+ [^:]+:[ \t]*" "\\b")
               (,page))))
-
+
+;;;; rc-* setup functions to manage some bits
 (defun rc-maybe-session ()
   (if (require 'session "session.el" t)
       (session-initialize)))
@@ -309,6 +311,27 @@ Set it intead of tab-width.")
       ad-do-it))
   (defun viper-adjust-undo ()
     "Redefined to empty function so that movement commands with cursor break the undo list"))
+
+(load "modal-emacs.el" t)
+
+(defun mark-and-search-forward ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'quick-search-forward))
+
+(defun mark-and-search-backward ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'quick-search-backward))
+
+(defun rc-screen-ify-control-t ()
+  (global-set-key "\C-t" nil)
+  (global-set-key "\C-tt" 'transpose-chars)
+  (global-set-key "\C-t\C-t" 'iswitchb-buffer)
+  (global-set-key "\C-to" 'other-window)
+  (global-set-key "\C-tr" 'iswitchb-display-buffer)
+  (global-set-key "\C-tf" 'mark-and-search-forward)
+  (global-set-key "\C-tb" 'mark-and-search-backward))
 
 ;;;; Unstable
 ;; (defun rc-maybe-mmm-mode ()
@@ -588,6 +611,7 @@ repeated unfill entire region as one paragraph."
   (interactive)
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
+  (global-set-key "\C-x\C-b" 'buffer-menu)
   (global-set-key "\M-/" 'hippie-expand)
   (rc-function-keys-mlm 'global-set-key)
   (rc-paredit)
