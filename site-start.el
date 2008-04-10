@@ -312,26 +312,70 @@ Set it intead of tab-width.")
   (defun viper-adjust-undo ()
     "Redefined to empty function so that movement commands with cursor break the undo list"))
 
-(load "modal-emacs.el" t)
+(defun transpose-windows (arg)
+  "Transpose the buffers shown in two windows. See:
+http://www.emacswiki.org/cgi-bin/wiki/TransposeWindows"
+  (interactive "p")
+  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
-(defun mark-and-search-forward ()
+(define-key ctl-x-4-map "\C-t" 'transpose-windows)
+
+(defun toggle-window-split ()
+  "In a frame with two windows, toggle between vertical and
+horizontal split. See:
+http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
   (interactive)
-  (push-mark)
-  (call-interactively 'quick-search-forward))
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
 
-(defun mark-and-search-backward ()
-  (interactive)
-  (push-mark)
-  (call-interactively 'quick-search-backward))
+(define-key ctl-x-4-map "s" 'toggle-window-split)
 
-(defun rc-screen-ify-control-t ()
-  (global-set-key "\C-t" nil)
-  (global-set-key "\C-tt" 'transpose-chars)
-  (global-set-key "\C-t\C-t" 'iswitchb-buffer)
-  (global-set-key "\C-to" 'other-window)
-  (global-set-key "\C-tr" 'iswitchb-display-buffer)
-  (global-set-key "\C-tf" 'mark-and-search-forward)
-  (global-set-key "\C-tb" 'mark-and-search-backward))
+(defun rc-screen-ify-control-t (set-key)
+  "Set a C-t map of buffer commands to make things work a bit
+like GNU screen with a C-t command key."
+  (funcall set-key "\C-t" nil)
+  (funcall set-key "\C-tt" 'transpose-chars)
+  (funcall set-key "\C-t\C-t" 'iswitchb-buffer)
+  (funcall set-key "\C-t\C-i" 'other-window)
+  (funcall set-key "\C-tn" 'next-buffer)
+  (funcall set-key "\C-t\C-n" 'next-buffer)
+  (funcall set-key "\C-tp" 'previous-buffer)
+  (funcall set-key "\C-t\C-p" 'previous-buffer)
+  (funcall set-key "\C-tS" 'split-window-vertically)
+  (funcall set-key "\C-tX" 'delete-window)
+  ;; these are kind of my own riff on screen commands
+  (funcall set-key "\C-tr" 'iswitchb-display-buffer)
+  ;; these are like vi's f
+  ;; (funcall set-key "\C-tf" 'mark-and-search-forward)
+  ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
+  )
 
 ;;;; Unstable
 ;; (defun rc-maybe-mmm-mode ()
@@ -598,7 +642,6 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  ;; (load "modal-emacs.el" t)
   (scheme48-setup))
 
 (defun rc-james ()
@@ -615,7 +658,10 @@ repeated unfill entire region as one paragraph."
   (global-set-key "\M-/" 'hippie-expand)
   (rc-function-keys-mlm 'global-set-key)
   (rc-paredit)
-  (setq truncate-lines t))
+  (setq truncate-lines t)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (require 'uniquify nil t)
+  (setq uniquify-buffer-name-style 'reverse))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
