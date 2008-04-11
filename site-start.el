@@ -398,9 +398,11 @@ like GNU screen with a C-t command key."
   (comint-send-string
    (get-buffer-process (current-buffer))
    char))
+
 (defun comint-send-C-c ()
   (interactive)
   (comint-send-something ""))
+
 (defun comint-send-C-z ()
   (interactive)
   (comint-send-something ""))
@@ -444,10 +446,12 @@ like GNU screen with a C-t command key."
   (process-send-string " growl" message)
   (process-send-string " growl" "\n")
   (process-send-eof " growl"))
+
 (defun erc-growl (nick message)
   (let ((n (substring nick 0 (string-match "\\!" nick))))
     (growl "ERC" (format "%s said %s" n message))
     nil))
+
 (defun erc-growl-match (match-type nick message)
   (when (and ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
@@ -578,6 +582,7 @@ repeated unfill entire region as one paragraph."
           hooks))
 
 (add-to-list 'auto-mode-alist '("\\.psql$" . sql-mode))
+
 (defun customize-sql-mode-postgres ()
   (turn-on-font-lock)
   (cond
