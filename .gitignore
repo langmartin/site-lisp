@@ -11,3 +11,4 @@ punycode.el
 start-po.el
 start-po.elc
 t-mouse.el
+*.elc
