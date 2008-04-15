@@ -1,5 +1,4 @@
 buffer-time-stamp.el
-cwd.el
 cx-timesheet.el
 gambit.el
 javascript-mode.el
@@ -14,4 +13,3 @@ shell-enhancements-for-lang.el
 shortcuts-for-lang.el
 site-start.el
 subdirs.el
-visual-basic-mode.el
