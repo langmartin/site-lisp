@@ -117,8 +117,6 @@
 ;;  foo
 ;;  fsck)
 
-;; (make-shell-and-ssh-aliases abla rove)
-
 (defun liar-shell () (interactive) (shell-and-ssh "liar"))
 (defun volt-shell () (interactive) (shell-and-ssh "volt"))
 (defun flash-shell () (interactive) (shell-and-ssh "flash"))
@@ -131,7 +129,7 @@
 (defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
 (defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
 
-(defun abla-shell () (interactive) (shell-and-ssh "abla"))
-(defun rove-shell () (interactive) (shell-and-ssh "rove"))
+;; (defun abla-shell () (interactive) (shell-and-ssh "abla"))
+;; (defun rove-shell () (interactive) (shell-and-ssh "rove"))
 
 (provide 'shell-enhancements-for-lang)
