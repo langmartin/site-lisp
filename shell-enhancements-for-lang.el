@@ -43,4 +43,95 @@
 ;;   (message "I can't let you do that, Dave"))
 ;; (global-set-key "\C-x\C-c" 'dave)
 
+
+;;;; Shell customization
+(defun kill-invisible-shell-buffers (&optional vis)
+  (interactive)
+  (save-excursion
+    (mapcar '(lambda (buffer)
+               (and (or vis (not (get-buffer-window buffer 'visible)))
+                    (and (set-buffer buffer) (equal major-mode 'shell-mode))
+                    (progn
+                      (comint-bol)
+                      (or (eobp) (kill-line))
+                      (while (comint-check-proc buffer)
+                        (comint-send-eof)
+                        (sleep-for 0 2))
+                      (kill-buffer buffer))))
+            (buffer-list))))
+
+(defun comint-send-something (char)
+  (comint-send-input t t)
+  (comint-send-string
+   (get-buffer-process (current-buffer))
+   char))
+
+(defun comint-send-C-c ()
+  (interactive)
+  (comint-send-something ""))
+
+(defun comint-send-C-z ()
+  (interactive)
+  (comint-send-something ""))
+
+(add-hook
+ 'shell-mode-hook
+ (lambda ()
+   (local-set-key "\C-c\C-c" 'comint-send-C-c)
+   (local-set-key "\C-c\C-z" 'comint-send-C-z)))
+
+(add-hook 'comint-output-filter-functions
+          'comint-strip-ctrl-m)
+
+(defun local-shell ()
+  (interactive)
+  (shell)
+  (rename-buffer "*shell local*"))
+
+(defun shell-and-ssh (name)
+  (shell)
+  (rename-buffer (concat "*shell " name "*"))
+  (sleep-for 0 2)
+  (insert "cd; ssh " name))
+
+(defmacro make-shell-and-ssh-aliases (&rest names)
+  `(progn
+    ,@(mapcar (lambda (name)
+                (let ((name (symbol-name name)))
+                  `(defun ,(make-symbol (concat name "-shell")) ()
+                     (interactive)
+                     (shell-and-ssh ,name))))
+              names)))
+
+;; (make-shell-and-ssh-aliases
+;;  liar
+;;  volt
+;;  flash
+;;  wort
+;;  quad
+;;  cerf
+;;  jerk
+;;  tank
+;;  nemo
+;;  ogre
+;;  foo
+;;  fsck)
+
+;; (make-shell-and-ssh-aliases abla rove)
+
+(defun liar-shell () (interactive) (shell-and-ssh "liar"))
+(defun volt-shell () (interactive) (shell-and-ssh "volt"))
+(defun flash-shell () (interactive) (shell-and-ssh "flash"))
+(defun wort-shell () (interactive) (shell-and-ssh "wort"))
+(defun quad-shell () (interactive) (shell-and-ssh "quad"))
+(defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
+(defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
+(defun tank-shell () (interactive) (shell-and-ssh "tank"))
+(defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
+(defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
+(defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
+
+(defun abla-shell () (interactive) (shell-and-ssh "abla"))
+(defun rove-shell () (interactive) (shell-and-ssh "rove"))
+
 (provide 'shell-enhancements-for-lang)

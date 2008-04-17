@@ -377,66 +377,6 @@ like GNU screen with a C-t command key."
   ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
   )
 
-;;;; Shell customization
-(defun kill-invisible-shell-buffers (&optional vis)
-  (interactive)
-  (save-excursion
-    (mapcar '(lambda (buffer)
-               (and (or vis (not (get-buffer-window buffer 'visible)))
-                    (and (set-buffer buffer) (equal major-mode 'shell-mode))
-                    (progn
-                      (comint-bol)
-                      (or (eobp) (kill-line))
-                      (while (comint-check-proc buffer)
-                        (comint-send-eof)
-                        (sleep-for 0 2))
-                      (kill-buffer buffer))))
-            (buffer-list))))
-
-(defun comint-send-something (char)
-  (comint-send-input t t)
-  (comint-send-string
-   (get-buffer-process (current-buffer))
-   char))
-
-(defun comint-send-C-c ()
-  (interactive)
-  (comint-send-something ""))
-
-(defun comint-send-C-z ()
-  (interactive)
-  (comint-send-something ""))
-
-(add-hook
- 'shell-mode-hook
- (lambda ()
-   (local-set-key "\C-c\C-c" 'comint-send-C-c)
-   (local-set-key "\C-c\C-z" 'comint-send-C-z)))
-
-(add-hook 'comint-output-filter-functions
-          'comint-strip-ctrl-m)
-
-(defun local-shell () (interactive) (shell "*local*"))
-
-(defun shell-and-ssh (name)
-  (shell (concat "*" name "*"))
-  (sleep-for 0 2)
-  (insert "ss " name))
-
-(defun liar-shell () (interactive) (shell-and-ssh "liar"))
-(defun volt-shell () (interactive) (shell-and-ssh "volt"))
-(defun flash-shell () (interactive) (shell-and-ssh "flash"))
-(defun wort-shell () (interactive) (shell-and-ssh "wort"))
-(defun bork-shell () (interactive) (shell-and-ssh "bork"))
-(defun quad-shell () (interactive) (shell-and-ssh "quad"))
-(defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
-(defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
-(defun tank-shell () (interactive) (shell-and-ssh "tank"))
-(defun abla-shell () (interactive) (shell-and-ssh "abla"))
-(defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
-(defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
-(defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
-
 ;;;; Growl
 (defun growl (title message)
   (start-process "growl" " growl"
@@ -618,10 +558,12 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  (scheme48-setup))
+  (scheme48-setup)
+  (rc-paredit)
+  (iswitchb-mode))
 
 (defun rc-james ()
-  "James Long: rc-schemers + VIper + electric everything"
+  "James Long: rc-schemers + electric everything"
   (interactive)
   (rc-schemers))
 
@@ -633,7 +575,6 @@ repeated unfill entire region as one paragraph."
   (global-set-key "\C-x\C-b" 'buffer-menu)
   (global-set-key "\M-/" 'hippie-expand)
   (rc-function-keys-mlm 'global-set-key)
-  (rc-paredit)
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
