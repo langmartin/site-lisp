@@ -1,45 +1,28 @@
-(defun fedcontent ()
-  (interactive)
-  (find-file "/jerk:/fedpub/data/current/content.tex"))
-
-(defun fedcutline ()
-  (interactive)
-  (find-file "/jerk:/fedpub/data/current/cutline.txt"))
-
-(defun s48manual ()
-  (interactive)
-  (w3m "file:///Users/lang/Sites/s48.org/1.7/manual/manual-Z-H-11.html#node_index_start"
-       t)
-  (rename-buffer "manual*"))
-
-(defun s48riastradh ()
-  (interactive)
-  (w3m "file:///Users/lang/Sites/mumble.net/~campbell/s48-refman/html/index.html"
-       t)
-  (rename-buffer "riastradh*"))
-
 (defun mysqlgrant (db user pass)
   (interactive "sDB: \nsUser: \nsPass: ")
   (insert
    (concat
-    "GRANT select,insert,update,delete ON " db " TO " user "@'%.mysqlsrc' "
+    "GRANT select,insert,update,delete ON " db ".* TO " user "@'%.mysqlsrc' "
     "IDENTIFIED BY '" pass "'; FLUSH PRIVILEGES;")))
 
-(defun smbconf ()
+(defun jerk-smb-conf ()
   (interactive)
-  (find-file "/multi:ssh:lang@iago:sudo:root@iago:/etc/samba/smb.conf"))
+  (find-file "/multi:ssh:lang@iago:sudo:root@jerk:/etc/samba/smb.conf"))
 
-(defun apachehook ()
+(defun cerf-apache-php5 ()
   (interactive)
-  (find-file "/hook:/service/apache-php5/php5.conf"))
+  (find-file "/cerf:/service/apache-php5/php5.conf"))
 
-(defun etchosts ()
+(defun etc-hosts ()
   (interactive)
   (find-file "/sudo:root@localhost:/etc/hosts"))
 
 (defun reddit ()
   (interactive)
-  (insert "0.0.0.0 reddit.com\n0.0.0.0 programming.reddit.com\n"))
+  (insert
+   "0.0.0.0 slashdot.org\n"
+   "0.0.0.0 reddit.com\n"
+   "0.0.0.0 programming.reddit.com\n"))
 
 (defun ykk-setup ()
   (interactive)
@@ -48,5 +31,16 @@
 (defun bugnotes ()
   (interactive)
   (find-file "~/Documents/technology-ownership/ykk-implementation-notes.tex"))
+
+(defun apache-htaccess-login ()
+  (interactive)
+  (insert "Order allow,deny
+Allow from 74.93.41.41
+Deny from all
+AuthType Basic
+AuthName Login Required
+AuthUserFile /usr/local/apache/etc/.htpasswd-allusers
+Require valid-user
+Satisfy any"))
 
 (provide 'shortcuts-for-lang)
