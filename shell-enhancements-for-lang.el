@@ -128,6 +128,7 @@
 (defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
 (defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
 (defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
+(defun nike-shell () (interactive) (shell-and-ssh "nike"))
 
 ;; (defun abla-shell () (interactive) (shell-and-ssh "abla"))
 ;; (defun rove-shell () (interactive) (shell-and-ssh "rove"))
