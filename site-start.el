@@ -42,9 +42,7 @@ Set it intead of tab-width.")
   (show-paren-mode 1)
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
-  (setq auto-mode-alist
-        (append '(("/tmp/mutt.*" . mail-mode))
-		auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("/tmp/mutt.*" . mail-mode))
 
   (add-hook '2C-mode-hook
             '(lambda ()
@@ -201,7 +199,8 @@ Set it intead of tab-width.")
   "Gambit-C scheme-mode extensions"
   (interactive)
   (setq gambit-highlight-color "gray")
-  (and (require 'gambit "gambit.el" t)
+  (and t
+       ;; (require 'gambit "gambit.el" t)
        (progn
          (defun gambit-abort ()
            "Return to top level. Equivalent to \",t\"."
@@ -265,6 +264,7 @@ Set it intead of tab-width.")
    (case-posix-regex 1)
 
    (let-fluids with-...)
+   (let-unspec* 2)
 
    ;; ykk-ports
    (with-current-output-port 1)
