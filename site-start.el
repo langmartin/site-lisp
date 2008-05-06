@@ -118,26 +118,33 @@ Set it intead of tab-width.")
   (defun rc-broken-version-of-css-mode-so-please-dont ()
     (if (require 'css-mode "css-mode-fixed" t)
         (progn
-          (setq auto-mode-alist
-                (append
-                 '(("\\.css\\'" . css-mode))
-                 auto-mode-alist))
+          (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
           (add-hook 'css-mode-hook
                     '(lambda ()
                        (setq css-indent-offset 4))))))
-  (require 'html-helper-mode "html-helper-mode" t)
+  ;; (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
-  (if (require 'javascript-mode "javascript-mode" t)
-      (setq auto-mode-alist
-	    (append
-	     '(("\\.inc\\'" . javascript-mode)
-	       ("\\.js\\'" . javascript-mode)
-	       ("\\.asp\\'" . javascript-mode)
-	       ("\\.asa\\'" . javascript-mode))
-	     auto-mode-alist)))
   (rc-maybe-session)
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
+
+(defun rc-javascript-auto-mode-alist (mode)
+  (mapc (lambda (x)
+          (add-to-list 'auto-mode-alist x))
+        `(("\\.js\\'" .  ,mode)
+          ("\\.inc\\'" . ,mode)
+          ("\\.asp\\'" . ,mode)
+          ("\\.asa\\'" . ,mode))))
+
+(defun rc-javascript-mode ()
+  (require 'javascript-mode)
+  (rc-javascript-auto-mode-alist 'javascript-mode))
+
+(defun rc-js2-javascript-mode ()
+  (require 'js2-mode)
+  (rc-javascript-auto-mode-alist 'js2-mode))
+
+(rc-javascript-mode)
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
