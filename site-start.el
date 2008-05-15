@@ -383,6 +383,8 @@ like GNU screen with a C-t command key."
   ;; (funcall set-key "\C-tf" 'mark-and-search-forward)
   ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
   )
+
+(require 'rst)
 
 ;;;; Growl
 (defun growl (title message)
