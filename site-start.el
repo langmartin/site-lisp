@@ -254,11 +254,24 @@ Set it intead of tab-width.")
    (case-equal 1)
    (let-list 1)
    (let-fluid 2)
+   (let-sxml-pluck-attrs 2)
+   (let-sxml-attrs 2)
    (case-regex 1)
    (case-posix-regex 1)
-
+   (with-form-data 1)
+   (let-conversion 1)
+   (sxml-convert 1)
+   
    (let-fluids with-...)
+   (call-with-values 0)
 
+   (run 1)
+   (run* 1)
+   (fresh 1)
+   (conde 0)
+   (match 1)
+   (receive 2)
+   
    ;; ykk-ports
    (with-current-output-port 1)
    (let-current-output-port 1)
