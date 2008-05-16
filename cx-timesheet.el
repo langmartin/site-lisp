@@ -79,13 +79,12 @@
            (buffer (url-retrieve-synchronously req)))
       (if cx-timesheet-debug
           (progn
-            (view-buffer buffer))
+            (switch-to-buffer buffer))
         (save-excursion
           (set-buffer buffer)
           (goto-char (point-min))
           (if (not (search-forward-regexp "^Successfully" (point-max) t))
-              (error "Timesheet entry failed"))
-          (kill-buffer (current-buffer)))))))
+              (error "Timesheet entry failed")))))))
 
 (defun cx-timesheet-update ()
   "Update list of available projects"

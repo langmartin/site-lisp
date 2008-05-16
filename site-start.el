@@ -42,9 +42,7 @@ Set it intead of tab-width.")
   (show-paren-mode 1)
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
-  (setq auto-mode-alist
-        (append '(("/tmp/mutt.*" . mail-mode))
-		auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("/tmp/mutt.*" . mail-mode))
 
   (add-hook '2C-mode-hook
             '(lambda ()
@@ -118,26 +116,33 @@ Set it intead of tab-width.")
   (defun rc-broken-version-of-css-mode-so-please-dont ()
     (if (require 'css-mode "css-mode-fixed" t)
         (progn
-          (setq auto-mode-alist
-                (append
-                 '(("\\.css\\'" . css-mode))
-                 auto-mode-alist))
+          (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
           (add-hook 'css-mode-hook
                     '(lambda ()
                        (setq css-indent-offset 4))))))
-  (require 'html-helper-mode "html-helper-mode" t)
+  ;; (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
-  (if (require 'javascript-mode "javascript-mode" t)
-      (setq auto-mode-alist
-	    (append
-	     '(("\\.inc\\'" . javascript-mode)
-	       ("\\.js\\'" . javascript-mode)
-	       ("\\.asp\\'" . javascript-mode)
-	       ("\\.asa\\'" . javascript-mode))
-	     auto-mode-alist)))
   (rc-maybe-session)
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
+
+(defun rc-javascript-auto-mode-alist (mode)
+  (mapc (lambda (x)
+          (add-to-list 'auto-mode-alist x))
+        `(("\\.js\\'" .  ,mode)
+          ("\\.inc\\'" . ,mode)
+          ("\\.asp\\'" . ,mode)
+          ("\\.asa\\'" . ,mode))))
+
+(defun rc-javascript-mode ()
+  (require 'javascript-mode)
+  (rc-javascript-auto-mode-alist 'javascript-mode))
+
+(defun rc-js2-javascript-mode ()
+  (require 'js2-mode)
+  (rc-javascript-auto-mode-alist 'js2-mode))
+
+(rc-javascript-mode)
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
@@ -194,7 +199,8 @@ Set it intead of tab-width.")
   "Gambit-C scheme-mode extensions"
   (interactive)
   (setq gambit-highlight-color "gray")
-  (and (require 'gambit "gambit.el" t)
+  (and t
+       ;; (require 'gambit "gambit.el" t)
        (progn
          (defun gambit-abort ()
            "Return to top level. Equivalent to \",t\"."
@@ -264,6 +270,7 @@ Set it intead of tab-width.")
    
    (let-fluids with-...)
    (call-with-values 0)
+   (let-unspec* 2)
 
    (run 1)
    (run* 1)
@@ -325,113 +332,72 @@ Set it intead of tab-width.")
   (defun viper-adjust-undo ()
     "Redefined to empty function so that movement commands with cursor break the undo list"))
 
-(load "modal-emacs.el" t)
+(defun transpose-windows (arg)
+  "Transpose the buffers shown in two windows. See:
+http://www.emacswiki.org/cgi-bin/wiki/TransposeWindows"
+  (interactive "p")
+  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
+    (while (/= arg 0)
+      (let ((this-win (window-buffer))
+            (next-win (window-buffer (funcall selector))))
+        (set-window-buffer (selected-window) next-win)
+        (set-window-buffer (funcall selector) this-win)
+        (select-window (funcall selector)))
+      (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
 
-(defun mark-and-search-forward ()
+(define-key ctl-x-4-map "\C-t" 'transpose-windows)
+
+(defun toggle-window-split ()
+  "In a frame with two windows, toggle between vertical and
+horizontal split. See:
+http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
   (interactive)
-  (push-mark)
-  (call-interactively 'quick-search-forward))
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
 
-(defun mark-and-search-backward ()
-  (interactive)
-  (push-mark)
-  (call-interactively 'quick-search-backward))
+(define-key ctl-x-4-map "s" 'toggle-window-split)
 
-(defun rc-screen-ify-control-t ()
-  (global-set-key "\C-t" nil)
-  (global-set-key "\C-tt" 'transpose-chars)
-  (global-set-key "\C-t\C-t" 'iswitchb-buffer)
-  (global-set-key "\C-to" 'other-window)
-  (global-set-key "\C-tr" 'iswitchb-display-buffer)
-  (global-set-key "\C-tf" 'mark-and-search-forward)
-  (global-set-key "\C-tb" 'mark-and-search-backward))
-
-;;;; Unstable
-;; (defun rc-maybe-mmm-mode ()
-;;   (interactive)
-;;   (if (require 'mmm-auto "mmm-mode" t)
-;;       (progn
-;;         (setq mmm-global-mode 'maybe)
-;;         (mmm-add-classes
-;;          '((asp-javascript
-;;             :submode javascript-mode
-;;             :face mmm-code-submode-face
-;;             :front "<%"
-;;             :back "%>")
-;;            (asp-vbscript
-;;             :submode visual-basic-mode
-;;             :face mmm-code-submode-face
-;;             :front "<%"
-;;             :back "%>")))
-;;         (define-derived-mode asp-mode html-mode "ASP/HTML"))))
+(defun rc-screen-ify-control-t (set-key)
+  "Set a C-t map of buffer commands to make things work a bit
+like GNU screen with a C-t command key."
+  (funcall set-key "\C-t" nil)
+  (funcall set-key "\C-tt" 'transpose-chars)
+  (funcall set-key "\C-t\C-t" 'iswitchb-buffer)
+  (funcall set-key "\C-t\C-i" 'other-window)
+  (funcall set-key "\C-tn" 'next-buffer)
+  (funcall set-key "\C-t\C-n" 'next-buffer)
+  (funcall set-key "\C-tp" 'previous-buffer)
+  (funcall set-key "\C-t\C-p" 'previous-buffer)
+  (funcall set-key "\C-tS" 'split-window-vertically)
+  (funcall set-key "\C-tX" 'delete-window)
+  ;; these are kind of my own riff on screen commands
+  (funcall set-key "\C-tr" 'iswitchb-display-buffer)
+  ;; these are like vi's f
+  ;; (funcall set-key "\C-tf" 'mark-and-search-forward)
+  ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
+  )
 
-;; (defun rc-asp-javascript-mode ()
-;;   "Broken still"
-;;   (interactive)
-;;   (rc-maybe-mmm-mode)
-;;   (add-to-list 'auto-mode-alist '("\\.as[ap]\\'" . asp-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.inc\\'" . asp-mode))
-;;   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil html-js))
-;;   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil embedded-css))
-;;   (add-to-list 'mmm-mode-ext-classes-alist '(asp-mode nil asp-javascript)))
-
-;;;; Shell customization
-(defun kill-invisible-shell-buffers (&optional vis)
-  (interactive)
-  (save-excursion
-    (mapcar '(lambda (buffer)
-               (and (or vis (not (get-buffer-window buffer 'visible)))
-                    (and (set-buffer buffer) (equal major-mode 'shell-mode))
-                    (progn
-                      (comint-bol)
-                      (or (eobp) (kill-line))
-                      (while (comint-check-proc buffer)
-                        (comint-send-eof)
-                        (sleep-for 0 2))
-                      (kill-buffer buffer))))
-            (buffer-list))))
-
-(defun comint-send-something (char)
-  (comint-send-input t t)
-  (comint-send-string
-   (get-buffer-process (current-buffer))
-   char))
-(defun comint-send-C-c ()
-  (interactive)
-  (comint-send-something ""))
-(defun comint-send-C-z ()
-  (interactive)
-  (comint-send-something ""))
-
-(add-hook
- 'shell-mode-hook
- (lambda ()
-   (local-set-key "\C-c\C-c" 'comint-send-C-c)
-   (local-set-key "\C-c\C-z" 'comint-send-C-z)))
-
-(add-hook 'comint-output-filter-functions
-          'comint-strip-ctrl-m)
-
-(defun local-shell () (interactive) (shell "*local*"))
-
-(defun shell-and-ssh (name)
-  (shell (concat "*" name "*"))
-  (sleep-for 0 2)
-  (insert "ss " name))
-
-(defun liar-shell () (interactive) (shell-and-ssh "liar"))
-(defun volt-shell () (interactive) (shell-and-ssh "volt"))
-(defun flash-shell () (interactive) (shell-and-ssh "flash"))
-(defun wort-shell () (interactive) (shell-and-ssh "wort"))
-(defun bork-shell () (interactive) (shell-and-ssh "bork"))
-(defun quad-shell () (interactive) (shell-and-ssh "quad"))
-(defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
-(defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
-(defun tank-shell () (interactive) (shell-and-ssh "tank"))
-(defun abla-shell () (interactive) (shell-and-ssh "abla"))
-(defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
-(defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
-(defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
+(require 'rst)
 
 ;;;; Growl
 (defun growl (title message)
@@ -442,10 +408,12 @@ Set it intead of tab-width.")
   (process-send-string " growl" message)
   (process-send-string " growl" "\n")
   (process-send-eof " growl"))
+
 (defun erc-growl (nick message)
   (let ((n (substring nick 0 (string-match "\\!" nick))))
     (growl "ERC" (format "%s said %s" n message))
     nil))
+
 (defun erc-growl-match (match-type nick message)
   (when (and ;; I don't want to see anything from the erc server
              (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
@@ -576,6 +544,7 @@ repeated unfill entire region as one paragraph."
           hooks))
 
 (add-to-list 'auto-mode-alist '("\\.psql$" . sql-mode))
+
 (defun customize-sql-mode-postgres ()
   (turn-on-font-lock)
   (cond
@@ -611,11 +580,12 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  ;; (load "modal-emacs.el" t)
-  (scheme48-setup))
+  (scheme48-setup)
+  (rc-paredit)
+  (iswitchb-mode))
 
 (defun rc-james ()
-  "James Long: rc-schemers + VIper + electric everything"
+  "James Long: rc-schemers + electric everything"
   (interactive)
   (rc-schemers))
 
@@ -627,8 +597,10 @@ repeated unfill entire region as one paragraph."
   (global-set-key "\C-x\C-b" 'buffer-menu)
   (global-set-key "\M-/" 'hippie-expand)
   (rc-function-keys-mlm 'global-set-key)
-  (rc-paredit)
-  (setq truncate-lines t))
+  (setq truncate-lines t)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (require 'uniquify nil t)
+  (setq uniquify-buffer-name-style 'reverse))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"

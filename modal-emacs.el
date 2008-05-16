@@ -35,6 +35,16 @@
   (let ((c (read-char "Look for: " nil)))
     (search-backward (char-to-string c) nil nil arg)))
 
+(defun mark-and-search-forward ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'isearch-forward-regexp))
+
+(defun mark-and-search-backward ()
+  (interactive)
+  (push-mark)
+  (call-interactively 'isearch-backward-regexp))
+
 (defvar modal-emacs-map nil)
 (setq modal-emacs-map
       (let ((map (make-sparse-keymap)))
@@ -158,4 +168,6 @@ by default."
              (add-hook x 'modal-insert-mode))
           modal-emacs-skip-modes))
 
-(modal-emacs-init-skip)
+;; (modal-emacs-init-skip)
+
+(provide 'modal-emacs)
