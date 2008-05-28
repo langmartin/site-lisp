@@ -21,8 +21,7 @@
   (interactive)
   (insert
    "0.0.0.0 slashdot.org\n"
-   "0.0.0.0 reddit.com\n"
-   "0.0.0.0 programming.reddit.com\n"))
+   "0.0.0.0 reddit.com\n"))
 
 (defun ykk-setup ()
   (interactive)
