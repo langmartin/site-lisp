@@ -33,11 +33,11 @@
 
 (defun apache-htaccess-login ()
   (interactive)
-  (insert "Order allow,deny
-Allow from 74.93.41.41
+  (insert "Order Allow,Deny
+Allow from 75.148.111.133
 Deny from all
 AuthType Basic
-AuthName Login Required
+AuthName \"Login Required\"
 AuthUserFile /usr/local/apache/etc/.htpasswd-allusers
 Require valid-user
 Satisfy any"))
