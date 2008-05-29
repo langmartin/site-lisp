@@ -600,7 +600,10 @@ repeated unfill entire region as one paragraph."
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
-  (setq uniquify-buffer-name-style 'reverse))
+  (setq uniquify-buffer-name-style 'reverse)
+  (require 'shell-enhancements-for-lang)
+  (require 'shortcuts-for-lang)
+  )
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
