@@ -132,7 +132,7 @@
 (defun wort-shell () (interactive) (shell-and-ssh "wort"))
 (defun quad-shell () (interactive) (shell-and-ssh "quad"))
 (defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
-(defun iago-shell () (interactive) (shell-and-ssh "iago"))
+(defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
 (defun tank-shell () (interactive) (shell-and-ssh "tank"))
 (defun nemo-shell () (interactive) (shell-and-ssh "nemo"))
 (defun ogre-shell () (interactive) (shell-and-ssh "ogre"))

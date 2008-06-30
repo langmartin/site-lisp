@@ -25,8 +25,7 @@ Set it intead of tab-width.")
    ;; make backup files in ~/emacs~/ rather than scattered around all
    ;; over the filesystem.
    backup-by-copying t
-   backup-path (expand-file-name "~/.emacs.d/backup/")
-   backup-directory-alist (cons (cons "." backup-path) backup-directory-alist)
+   backup-directory-alist (cons '("." . "~/.emacs.d/backup/") backup-directory-alist)
    tramp-backup-directory-alist backup-directory-alist
    ;; version control settings
    vc-follow-symlinks t
@@ -125,17 +124,7 @@ Set it intead of tab-width.")
   (require 'visual-basic-mode "visual-basic-mode" t)
   (rc-maybe-session)
   (rc-emacs22-only)
-  (require 'http-twiddle "http-twiddle" t)
-  ;;; collect autosave (.#*) files locally (better network
-  ;;; performance, cleaner repositories)
-  (defun auto-save-file-name-p (filename)
-    (string-match "^#.*#$" (file-name-nondirectory filename)))
-  (defun make-auto-save-file-name ()
-    (concat backup-path
-            (if buffer-file-name
-                (concat "#" (replace-regexp-in-string "/" "!" buffer-file-name) "#")
-              (expand-file-name
-               (concat "#%" (buffer-name) "#"))))))
+  (require 'http-twiddle "http-twiddle" t))
 
 (defun rc-javascript-auto-mode-alist (mode)
   (mapc (lambda (x)
