@@ -130,7 +130,7 @@
 (defun volt-shell () (interactive) (shell-and-ssh "volt"))
 (defun flash-shell () (interactive) (shell-and-ssh "flash"))
 (defun wort-shell () (interactive) (shell-and-ssh "wort"))
-(defun quad-shell () (interactive) (shell-and-ssh "quad"))
+(defun hera-shell () (interactive) (shell-and-ssh "hera"))
 (defun cerf-shell () (interactive) (shell-and-ssh "cerf"))
 (defun jerk-shell () (interactive) (shell-and-ssh "jerk"))
 (defun tank-shell () (interactive) (shell-and-ssh "tank"))
