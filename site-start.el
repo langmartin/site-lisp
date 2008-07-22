@@ -195,8 +195,8 @@ Set it intead of tab-width.")
   "Electrify return and buffer lists"
   (global-set-key "\C-x\C-b" 'electric-buffer-list)
   (global-set-key "\C-m" 'newline-and-indent)
-  (add-hook 'perl-mode-hook
-            '(lambda () (local-set-key "\C-m" 'newline))))
+  (add-hooks '(perl-mode-hook python-mode-hook)
+	     '(lambda () (local-set-key "\C-m" 'newline))))
 
 ;;;; scheme setup
 (defun gambit-setup ()
@@ -586,7 +586,7 @@ repeated unfill entire region as one paragraph."
   (rc-electric-keys)
   (scheme48-setup)
   (rc-paredit)
-  (iswitchb-mode))
+  (iswitchb-mode t))
 
 (defun rc-james ()
   "James Long: rc-schemers + electric everything"
@@ -605,7 +605,10 @@ repeated unfill entire region as one paragraph."
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
-  (setq uniquify-buffer-name-style 'reverse))
+  (setq uniquify-buffer-name-style 'reverse)
+  (require 'shell-enhancements-for-lang)
+  (require 'shortcuts-for-lang)
+  )
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"

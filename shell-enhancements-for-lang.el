@@ -85,14 +85,23 @@
 
 (defun local-shell ()
   (interactive)
-  (shell)
-  (rename-buffer "*shell local*"))
+  (shell-and-thunk "local" (lambda () nil)))
+
+(defun shell-and-thunk (name thunk)
+  (let* ((final-name (concat "*shell " name "*"))
+         (final-buffer (get-buffer final-name)))
+    (if final-buffer
+        (switch-to-buffer final-buffer)
+      (progn
+        (shell)
+        (rename-buffer final-name)
+        (funcall thunk)))))
 
 (defun shell-and-ssh (name)
-  (shell)
-  (rename-buffer (concat "*shell " name "*"))
-  (sleep-for 0 2)
-  (insert "cd; ssh " name))
+  (shell-and-thunk name
+                   (lambda ()
+                     (sleep-for 0 2)
+                     (insert "cd; ssh " name))))
 
 (defmacro make-shell-and-ssh-aliases (&rest names)
   `(progn
@@ -129,6 +138,7 @@
 (defun ogre-shell () (interactive) (shell-and-ssh "ogre"))
 (defun fsck-shell () (interactive) (shell-and-ssh "fsck"))
 (defun nike-shell () (interactive) (shell-and-ssh "nike"))
+(defun omplus-shell () (interactive) (shell-and-ssh "omplus"))
 
 ;; (defun abla-shell () (interactive) (shell-and-ssh "abla"))
 ;; (defun rove-shell () (interactive) (shell-and-ssh "rove"))
