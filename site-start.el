@@ -134,6 +134,10 @@ Set it intead of tab-width.")
           ("\\.asp\\'" . ,mode)
           ("\\.asa\\'" . ,mode))))
 
+(defun rc-c-like-javascript-mode ()
+  (load "javascript.el")
+  (rc-javascript-auto-mode-alist 'javascript-mode))
+
 (defun rc-javascript-mode ()
   (require 'javascript-mode)
   (rc-javascript-auto-mode-alist 'javascript-mode))
@@ -587,6 +591,7 @@ repeated unfill entire region as one paragraph."
 (defun rc-james ()
   "James Long: rc-schemers + electric everything"
   (interactive)
+  (rc-c-like-javascript-mode)
   (rc-schemers))
 
 (defun rc-lang ()
