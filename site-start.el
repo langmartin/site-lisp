@@ -135,10 +135,6 @@ Set it intead of tab-width.")
           ("\\.asa\\'" . ,mode))))
 
 (defun rc-c-like-javascript-mode ()
-  (load "javascript.el")
-  (rc-javascript-auto-mode-alist 'javascript-mode))
-
-(defun rc-javascript-mode ()
   (require 'javascript-mode)
   (rc-javascript-auto-mode-alist 'javascript-mode))
 
@@ -146,7 +142,7 @@ Set it intead of tab-width.")
   (require 'js2-mode)
   (rc-javascript-auto-mode-alist 'js2-mode))
 
-(rc-javascript-mode)
+(rc-c-like-javascript-mode)
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
@@ -591,7 +587,6 @@ repeated unfill entire region as one paragraph."
 (defun rc-james ()
   "James Long: rc-schemers + electric everything"
   (interactive)
-  (rc-c-like-javascript-mode)
   (rc-schemers))
 
 (defun rc-lang ()
