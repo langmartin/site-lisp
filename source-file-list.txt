@@ -19,4 +19,5 @@ session.el
 shell-enhancements-for-lang.el
 shortcuts-for-lang.el
 site-start.el
+smooth-scrolling.el
 subdirs.el

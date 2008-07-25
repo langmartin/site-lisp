@@ -53,4 +53,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} ^[^.]*$
 RewriteRule ^(.*)$ $1.php [QSA,L]"))
 
+(defun rebuild-site-lisp-for-desktop ()
+  (interactive)
+  (shell-command "cd /usr/share/emacs/site-lisp; ./makefile.sh /Applications/Emacs.app/Contents/MacOS/Emacs"))
+
 (provide 'shortcuts-for-lang)
