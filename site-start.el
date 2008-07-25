@@ -135,7 +135,7 @@ Set it intead of tab-width.")
           ("\\.asa\\'" . ,mode))))
 
 (defun rc-c-like-javascript-mode ()
-  (require 'javascript-mode)
+  (require 'javascript-mode "javascript")
   (rc-javascript-auto-mode-alist 'javascript-mode))
 
 (defun rc-js2-javascript-mode ()

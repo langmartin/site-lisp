@@ -1,7 +1,6 @@
 buffer-time-stamp.el
 cx-timesheet.el
 gambit.el
-javascript-mode.el
 modal-emacs.el
 one-window.el
 paredit.el
