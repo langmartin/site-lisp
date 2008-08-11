@@ -134,15 +134,13 @@ Set it intead of tab-width.")
           ("\\.asp\\'" . ,mode)
           ("\\.asa\\'" . ,mode))))
 
-(defun rc-c-like-javascript-mode ()
+(defun rc-c-like-javascript-mode-which-crashes-emacs ()
   (require 'javascript-mode "javascript")
   (rc-javascript-auto-mode-alist 'javascript-mode))
 
 (defun rc-js2-javascript-mode ()
   (require 'js2-mode)
   (rc-javascript-auto-mode-alist 'js2-mode))
-
-(rc-c-like-javascript-mode)
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
@@ -167,7 +165,7 @@ Set it intead of tab-width.")
   (global-set-key "\C-x+" 'goto-line))
 
 (defun rc-function-keys-mlm (key-fn)
-  "Setup Lang's function keys"
+  "bind some function keys [kp-[01enter]], C-xC-h, [home]"
   (interactive)
   (global-set-key [kp-1] 'imenu)
   (global-set-key [kp-0] 'repeat)
