@@ -26,7 +26,6 @@ Set it intead of tab-width.")
    ;; over the filesystem.
    backup-by-copying t
    backup-directory-alist (cons '("." . "~/.emacs.d/backup/") backup-directory-alist)
-   tramp-backup-directory-alist backup-directory-alist
    ;; version control settings
    vc-follow-symlinks t
    vc-suppress-confirm t
@@ -297,6 +296,11 @@ Set it intead of tab-width.")
    (let-http-response 1)
    (let-headers 1)
    (output-response 2)
+
+   ;; schim
+   (with-package 1)
+   (with-tag-set 1)
+   (with-item 1)
    ))
 
 (defun scheme-extend-info (page)
@@ -492,7 +496,9 @@ repeated unfill entire region as one paragraph."
 (defun cx-build-tags ()
   "Create a tags table in the top of your darcs project."
   (interactive)
-  (cx-build-tags-primitive (lambda () (file-exists-p "_darcs"))))
+  (cx-build-tags-primitive
+   (lambda () (or (file-exists-p "_darcs")
+                  (file-exists-p ".git")))))
 
 (defun cx-build-tags-cvs ()
   "Create a tags table in the top of your CVS project."
