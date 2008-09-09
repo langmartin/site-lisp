@@ -1,5 +1,5 @@
 #!/bin/sh
-< source-file-list.txt | \
+cat source-file-list.txt | \
 while read file; do
-	rm "${file%el}".elc
+	rm "${file}c"
 done
