@@ -1,3 +1,7 @@
 files = $(shell cat source-file-list.txt)
-all: makefile.sh $(files)
-	./makefile.sh
+
+all: .all.sh $(files)
+	./.all.sh
+
+clean:
+	./.clean.sh

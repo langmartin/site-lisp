@@ -55,6 +55,14 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 
 (defun rebuild-site-lisp-for-desktop ()
   (interactive)
-  (shell-command "cd /usr/share/emacs/site-lisp; ./makefile.sh /Applications/Emacs.app/Contents/MacOS/Emacs"))
+  (shell-command "cd /usr/share/emacs/site-lisp; ./.all.sh /Applications/Emacs.app/Contents/MacOS/Emacs"))
+
+(defun coptix-local-python ()
+  (interactive)
+  (find-file "/coptix/local/lib/python2.5/distutils/distutils.cfg"))
+
+(defun coptix-local-python-path ()
+  (interactive)
+  (find-file "/coptix/local/lib/python2.5/site-packages/sitecustomize.py"))
 
 (provide 'shortcuts-for-lang)

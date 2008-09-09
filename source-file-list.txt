@@ -6,7 +6,6 @@ cx-timesheet.el
 dot-mode.el
 gambit.el
 http-twiddle.el
-js2-mode.el
 modal-emacs.el
 one-window.el
 paredit.el
