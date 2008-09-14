@@ -1,5 +1,4 @@
 #!/bin/sh
-cat source-file-list.txt | \
-while read file; do
-	rm "${file}c"
+for file in "$@"; do
+	rm -f "${file}c"
 done

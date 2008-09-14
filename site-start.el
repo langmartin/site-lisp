@@ -125,19 +125,34 @@ Set it intead of tab-width.")
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
 
+(require 'rst)                          ; defines a slow, recursive filter
+
+(defun filter (proc lst)
+  (let ((value nil))
+    (while lst
+      (if (funcall proc (car lst))
+          (setq value (cons (car lst) value)))
+      (setq lst (cdr lst)))
+    value))
+
 (defun rc-javascript-auto-mode-alist (mode)
-  (mapc (lambda (x)
-          (add-to-list 'auto-mode-alist x))
-        `(("\\.js\\'" .  ,mode)
-          ("\\.inc\\'" . ,mode)
-          ("\\.asp\\'" . ,mode)
-          ("\\.asa\\'" . ,mode))))
+  (let ((files `("\\.js\\'" "\\.inc\\'" "\\.asp\\'" "\\.asa\\'")))
+    (setq auto-mode-alist
+          (filter (lambda (x)
+                    (not (member (car x) files)))
+                  auto-mode-alist))
+    (mapc (lambda (x)
+            (setq auto-mode-alist
+                  (cons (cons x mode)
+                        auto-mode-alist)))
+          files)))
 
 (defun rc-c-like-javascript-mode-which-crashes-emacs ()
   (require 'javascript-mode "javascript")
   (rc-javascript-auto-mode-alist 'javascript-mode))
 
 (defun rc-js2-javascript-mode ()
+  (interactive)
   (require 'js2-mode)
   (rc-javascript-auto-mode-alist 'js2-mode))
 
@@ -400,8 +415,6 @@ like GNU screen with a C-t command key."
   ;; (funcall set-key "\C-tf" 'mark-and-search-forward)
   ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
   )
-
-(require 'rst)
 
 ;;;; Growl
 (defun growl (title message)
@@ -609,6 +622,7 @@ repeated unfill entire region as one paragraph."
   (setq uniquify-buffer-name-style 'reverse)
   (require 'shell-enhancements-for-lang)
   (require 'shortcuts-for-lang)
+  (rc-js2-javascript-mode)
   )
 
 (defun rc-d ()
