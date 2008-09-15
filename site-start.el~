@@ -12,7 +12,7 @@ Set it intead of tab-width.")
 
 (defun rc-coptix ()
   "Common initialization options for Coptix"
-  (custom-set-variables
+  (customize-set-variables
    `(tab-width ,rc-coptix-tab-width)
    `(c-basic-offset ,rc-coptix-tab-width)
    `(standard-indent ,rc-coptix-tab-width)
@@ -54,19 +54,29 @@ Set it intead of tab-width.")
                (setq 2C-beyond-fill-column 0)
                (other-window 2)
                (setq fill-column 55)))
+  ;; (add-hook 'c-mode-common-hook
+;;             '(lambda ()
+;;                (setq tab-width rc-coptix-tab-width)
+;;                (setq c-basic-offset rc-coptix-tab-width)))
+  (add-hook 'perl-mode-hook
+            '(lambda ()
+               (setq fill-column 78
+                     perl-indent-level rc-coptix-tab-width)))
   (add-hooks '(lisp-mode-hook
                emacs-lisp-mode-hook
                scheme-mode-hook
                html-mode-hook
                sql-mode)
              '(lambda () (setq indent-tabs-mode nil)))
-  (add-hooks '(html-mode-hook)
+  (add-hooks '(text-mode-hook
+               html-mode-hook
+               text-mode-hook
+               plain-TeX-mode-hook)
              'turn-off-auto-fill)
 
-  (global-set-key "\C-h" 'delete-backward-char) 
-  (global-set-key "\M-h" 'help)         ; was mark-paragraph
-  (global-set-key [f1] 'help)
-  (global-set-key "OP" 'help)
+  (global-set-key "\C-h" 'delete-backward-char)
+  (global-set-key [f1] 'help-command)
+  (global-set-key "OP" 'help-command)
   (global-unset-key [insert])
 
   ;;;; Home, End, Pgup and Pgdown
@@ -179,6 +189,7 @@ Set it intead of tab-width.")
   (global-set-key [kp-1] 'imenu)
   (global-set-key [kp-0] 'repeat)
   (global-set-key [kp-enter] 'help)
+  (global-set-key "\C-x\C-h" 'help)
   (funcall key-fn [home] 'jump-to-register)
   (add-hooks '(erc-mode-hook)
              '(lambda () (local-set-key [home] 'jump-to-register))))
