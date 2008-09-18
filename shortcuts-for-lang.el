@@ -65,4 +65,32 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
   (interactive)
   (find-file "/coptix/local/lib/python2.5/site-packages/sitecustomize.py"))
 
+(defgroup cx-scripts nil
+  "Script configuration"
+  :group 'tools)
+
+(defcustom sshfs-local-path "~/code/mount"
+  "Local path for sshfs mounts"
+  :group 'cx-scripts
+  :type 'file)
+
+(defcustom sshfs-executable "/Applications/sshfs/bin/mount_sshfs"
+  ""
+  :group 'cx-scripts
+  :type 'file)
+
+(defun sshfs-techname (host)
+  (mapcar (lambda (c)
+           (case c
+             ((?/ ?:) ?-)
+             (t c)))
+          host))
+
+(defun sshfs (host)
+  (interactive "sHost/Path: ")
+  (let ((path (concat sshfs-local-path "/" (sshfs-techname host))))
+    (make-directory path t)
+    (shell-command (concat sshfs-executable " " host " " path))))
+
 (provide 'shortcuts-for-lang)
+

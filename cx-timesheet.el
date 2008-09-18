@@ -1,3 +1,32 @@
+(defun buffer-suicide ()
+  (interactive)
+  (let ((self (current-buffer)))
+    (bury-buffer)
+    (kill-buffer self)))
+
+(define-minor-mode emacs-lisp-action-mode
+  "Load emacs-lisp, evaluate it"
+  nil
+  " EVAL"
+  '(("q" . buffer-suicide)
+    ("Q" . emacs-lisp-action-mode))
+  (if emacs-lisp-action-mode
+      (progn
+       (goto-char (point-max))
+       (eval-buffer))))
+
+;; (setq auto-mode-alist
+;;       (filter (lambda (x)
+;;                 (not (string-match "action" (car x))))
+;;               auto-mode-alist))
+
+(defun rc-emacs-lisp-action ()
+  "Prepend action-el-handler to auto-mode-alist"
+  (setq auto-mode-alist
+        (cons (cons "\\.action\\.el\\'" 'emacs-lisp-action-mode)
+              auto-mode-alist)))
+
+;;;; timesheet
 (defgroup cx-timesheet nil
   "Make timesheet entries at Coptix"
   :group 'tools
@@ -35,12 +64,6 @@
 
 (defvar cx-timesheet-host-buffer cx-timesheet-host)
 
-(defun cx-timesheet-rc ()
-  "Prepend action-el-handler to auto-mode-alist"
-  (setq auto-mode-alist
-        (cons (cons "\\.action\\.el$" 'action-el-handler)
-              auto-mode-alist)))
-
 (defun cx-timesheet-start-tunnel ()
   "Start the tunnel"
   (interactive)
@@ -58,13 +81,6 @@
   (interactive)
   (setq cx-timesheet-host-buffer cx-timesheet-host)
   (shell-command "killall emacs-ssh-tunnel"))
-
-(defun action-el-handler ()
-  (switch-to-buffer (current-buffer))
-  (emacs-lisp-mode)
-  (save-excursion
-    (eval-buffer)
-    (kill-buffer nil)))
 
 (defvar cx-timesheet-debug)
 (setq cx-timesheet-debug nil)
@@ -96,9 +112,7 @@
     (save-excursion
       (set-buffer req-buffer)
       (goto-char (point-min))
-      (search-forward "
-
-" (point-max) t)
+      (search-forward "\n\r\n\r" (point-max) t)
       (while (not (= (point) (point-max)))
         (cx-timesheet-convert-line)))))
 
@@ -120,10 +134,9 @@
            path
            (lambda ()
              (prin1
-              `(call-interactively
-                '(lambda (notes)
-                   (interactive "snotes: ")
-                   (cx-timesheet-entry ,(cdr strings) notes)))
+              `(let ((id ,(cdr strings)))
+                 (call-interactively
+                  'cx-timesheet-quicksilver))
               'insert))))
       (progn
         (beginning-of-line)
@@ -132,6 +145,11 @@
 ;; cxtms_.CX Business:General > Administration: Accounting/Taxes|576
 ;; (progn (beginning-of-line) (previous-line) (cx-timesheet-convert-line))
 
+(defun cx-timesheet-quicksilver (notes)
+  (interactive "snotes: ")
+  (cx-timesheet-entry id notes))
+
+;;;; urlencoding
 (defun with-output-file (path thunk)
   (save-excursion
     (set-buffer (create-file-buffer path))
@@ -139,8 +157,6 @@
     (setq buffer-file-name path)
     (save-buffer)
     (kill-buffer (current-buffer))))
-
-;;;; urlencoding
 (defun alphanumericp (ch)
   (or (and (>= ch ?a) (<= ch ?z))
       (and (>= ch ?A) (<= ch ?Z))
