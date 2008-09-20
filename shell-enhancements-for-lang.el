@@ -143,4 +143,36 @@
 ;; (defun abla-shell () (interactive) (shell-and-ssh "abla"))
 ;; (defun rove-shell () (interactive) (shell-and-ssh "rove"))
 
+(require 'term)
+
+(term-set-escape-char ?\C-x)
+
+(defun cx-term-host ()
+  (interactive)
+  (let ((str (buffer-name)))
+   (string-match "\\*\\(.*\\)\\*" str)
+   (let ((found (match-string 1 str)))
+     (if (or (equal found "local") (equal found "terminal"))
+         ""
+       (concat "/" found ":")))))
+
+(defun cx-term-cwd ()
+  "set the working directory of term mode in trampily"
+  (interactive)
+  (goto-char (point-max))
+  (term-send-raw-string "echo ::`pwd`::\n")
+  (sleep-for 2)
+  (goto-char (point-max))
+  (re-search-backward "::\\(.*\\)::")
+  (let* ((found (match-string 1))
+         (found (concat (cx-term-host) found)))
+    (message "current directory %s" found)
+    (setq default-directory found))
+  (goto-char (point-max)))
+
+(defun cx-term-fix-cwd ()
+  "fix cwd"
+  (interactive)
+  (setq default-directory "~"))
+
 (provide 'shell-enhancements-for-lang)
