@@ -87,8 +87,8 @@
   (interactive)
   (shell-and-thunk "local" (lambda () nil)))
 
-(defun shell-and-thunk (name thunk)
-  (let* ((final-name (concat "*shell " name "*"))
+(defun shell-and-thunk-raw (namer shell name thunk)
+  (let* ((final-name (funcall namer name))
          (final-buffer (get-buffer final-name)))
     (if final-buffer
         (switch-to-buffer final-buffer)
@@ -97,11 +97,26 @@
         (rename-buffer final-name)
         (funcall thunk)))))
 
+;;; (defun shell-and-thunk (name thunk)
+;;;   (shell-and-thunk-raw
+;;;    (lambda (name) (concat "*shell " name "*"))
+;;;    shell
+;;;    name
+;;;    thunk))
+
+(defun shell-and-thunk (name thunk)
+  (shell-and-thunk-raw
+   (lambda (name) (concat "*" name "*"))
+   (lambda () (term "/bin/zsh"))
+   name
+   thunk))
+
 (defun shell-and-ssh (name)
-  (shell-and-thunk name
-                   (lambda ()
-                     (sleep-for 0 2)
-                     (insert "cd; ssh " name))))
+  (shell-and-thunk
+   name
+   (lambda ()
+     (sleep-for 0 2)
+     (insert "cd; ssh " name))))
 
 (defmacro make-shell-and-ssh-aliases (&rest names)
   `(progn
@@ -147,6 +162,9 @@
 
 (term-set-escape-char ?\C-x)
 
+(add-hook 'term-mode-hook
+          (lambda () (local-set-key "\C-x\e-v" 'term-paste)))
+
 (defun cx-term-host ()
   (interactive)
   (let ((str (buffer-name)))
@@ -159,16 +177,12 @@
 (defun cx-term-cwd ()
   "set the working directory of term mode in trampily"
   (interactive)
-  (goto-char (point-max))
   (term-send-raw-string "echo ::`pwd`::\n")
-  (sleep-for 2)
-  (goto-char (point-max))
   (re-search-backward "::\\(.*\\)::")
   (let* ((found (match-string 1))
          (found (concat (cx-term-host) found)))
     (message "current directory %s" found)
-    (setq default-directory found))
-  (goto-char (point-max)))
+    (setq default-directory found)))
 
 (defun cx-term-fix-cwd ()
   "fix cwd"
