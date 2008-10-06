@@ -160,15 +160,14 @@
 
 (require 'term)
 
-(term-set-escape-char ?\C-x)
+(global-set-key "\C-x\C-y" 'term-paste)
 
-(add-hook 'term-mode-hook
-          (lambda () (local-set-key "\C-x\e-v" 'term-paste)))
+(term-set-escape-char ?\C-x)
 
 (defun cx-term-host ()
   (interactive)
   (let ((str (buffer-name)))
-   (string-match "\\*\\(.*\\)\\*" str)
+   (string-match "[*]\\(.*?\\)[* ]" str)
    (let ((found (match-string 1 str)))
      (if (or (equal found "local") (equal found "terminal"))
          ""
@@ -178,6 +177,8 @@
   "set the working directory of term mode in trampily"
   (interactive)
   (term-send-raw-string "echo ::`pwd`::\n")
+  (sleep-for 0.3)
+  (goto-char (point-max))
   (re-search-backward "::\\(.*\\)::")
   (let* ((found (match-string 1))
          (found (concat (cx-term-host) found)))
