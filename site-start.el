@@ -210,16 +210,17 @@ Set it intead of tab-width.")
   "Gambit-C scheme-mode extensions"
   (interactive)
   (setq gambit-highlight-color "gray")
-  (and t
-       ;; (require 'gambit "gambit.el" t)
-       (progn
-         (defun gambit-abort ()
-           "Return to top level. Equivalent to \",t\"."
-           (interactive)
-           (scheme-send-string ",t"))
-         (add-hook 'scheme-mode-hook
-                   (lambda () (local-set-key "\C-cx" 'gambit-abort)))
-         (setq scheme-program-name "gsi -:d-")))
+  (if nil (progn
+            (require 'gambit "gambit.el" t)
+            (defun gambit-abort ()
+              (interactive)
+              (scheme-send-string ",t")))
+    (defun gambit-abort ()
+      (interactive)
+      (comint-send-string (scheme-proc) ",t\n")))
+  (add-hook 'scheme-mode-hook
+            (lambda () (local-set-key "\C-cx" 'gambit-abort)))
+  (setq scheme-program-name "gsi -:d-")
   (scheme-extend-info "(gambit-c)General Index"))
 
 (defun scheme48-setup ()
