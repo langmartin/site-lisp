@@ -185,9 +185,9 @@
     (message "current directory %s" found)
     (setq default-directory found)))
 
-(defun cx-term-fix-cwd ()
+(defun fix-default-directory ()
   "fix cwd"
   (interactive)
-  (setq default-directory "~"))
+  (setq default-directory "~/"))
 
 (provide 'shell-enhancements-for-lang)

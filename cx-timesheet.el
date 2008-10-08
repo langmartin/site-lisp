@@ -13,7 +13,8 @@
   (if emacs-lisp-action-mode
       (progn
        (goto-char (point-max))
-       (eval-buffer))))
+       (eval-buffer)
+       (goto-char (point-min)))))
 
 ;; (setq auto-mode-alist
 ;;       (filter (lambda (x)
