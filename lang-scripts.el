@@ -92,5 +92,4 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
     (make-directory path t)
     (shell-command (concat sshfs-executable " " host " " path))))
 
-(provide 'shortcuts-for-lang)
-
+(provide 'lang-scripts)
