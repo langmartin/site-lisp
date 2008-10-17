@@ -618,7 +618,6 @@ repeated unfill entire region as one paragraph."
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
   (setq uniquify-buffer-name-style 'reverse)
-  (require 'shell-enhancements-for-lang)
   (require 'shortcuts-for-lang)
   (rc-js2-javascript-mode)
   )
