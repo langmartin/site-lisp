@@ -196,23 +196,7 @@
 
 (global-set-key [kp-4] 'underline-this-line)
 
-;; (add-hook
-;;  'view-mode-hook
-;;  (lambda ()
-;;    (local-set-key "q" (lambda ()
-;;                         (interactive)
-;;                         (kill-buffer (current-buffer))))))
+(require 'toggle-letter-case)
 
-;; (defun send-meta-tab ()
-;;   (funcall ()))
-
-(defun tail-f ()
-  "follow the file in this buffer, in the spirit of tail -f"
-  (interactive)
-  (let ((tail-f-buffer (current-buffer)))
-    (while tail-f-buffer
-      (revert-buffer t t)
-      (goto-char (point-max))
-      (message "tail-f reverted the buffer")
-      (sleep-for 30)
-      (message "tail-f looping"))))
+(require 'less)
+(add-hook 'find-file-hooks 'auto-less-minor-mode)
