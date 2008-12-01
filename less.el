@@ -59,7 +59,8 @@ With less-minor-mode enabled, you could use `less' like keys to view files.
     ("" . scroll-down)
     ("e" . less-quit)
     ("r" . less-revert-buffer)
-    ("R" . less-revert-buffer))
+    ("R" . less-revert-buffer)
+    ("q" . less-quit))
     (set (make-local-variable 'buffer-read-only) less-minor-mode))
 
 (defun less-scroll-up-one-line ()
