@@ -364,7 +364,7 @@ http://www.emacswiki.org/cgi-bin/wiki/TransposeWindows"
 
 (define-key ctl-x-4-map "\C-t" 'transpose-windows)
 
-(defun toggle-window-split ()
+(defun toggle-vertical-horizontal-window-split ()
   "In a frame with two windows, toggle between vertical and
 horizontal split. See:
 http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
@@ -392,7 +392,7 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
 	  (select-window first-win)
 	  (if this-win-2nd (other-window 1))))))
 
-(define-key ctl-x-4-map "s" 'toggle-window-split)
+(define-key ctl-x-4-map "v" 'toggle-vertical-horizontal-window-split)
 
 (defun rc-screen-ify-control-t (set-key)
   "Set a C-t map of buffer commands to make things work a bit
