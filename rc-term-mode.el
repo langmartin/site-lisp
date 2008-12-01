@@ -14,7 +14,8 @@
   (interactive)
   (term-set-escape-char ?\C-x)
   (rc-term-more-keys)
-  (define-key term-raw-map "\M-x" 'execute-extended-command))
+  (define-key term-raw-map "\M-x" 'execute-extended-command)
+  (define-key term-raw-map "\M-`" 'other-frame))
 
 (defun rc-term-more-termy-keys ()
   (interactive)
