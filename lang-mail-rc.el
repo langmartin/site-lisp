@@ -1,3 +1,11 @@
+(defun mail-send-and-exit-kill (&optional arg)
+  "send mail message, bury the buffer and kill it. See mail-send-and-exit."
+  (interactive "P")
+  (let ((mail-buffer (current-buffer)))
+    (mail-send)
+    (mail-bury arg)
+    (kill-buffer mail-buffer)))
+
 (progn
   (require 'starttls)
   (require 'smtpmail)
@@ -51,3 +59,5 @@
   (setq mm-discouraged-alternatives '("text/html" "text/richtext")))
 
 (rc-gnus)
+
+(provides 'lang-mail-rc)

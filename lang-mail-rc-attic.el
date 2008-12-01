@@ -1,20 +1,3 @@
-(defun rc-gnus ()
-  (require 'gnus)
-  (setq gnus-invalid-group-regexp "[:`'\"]\\|^$"
-        gnus-ignored-newsgroups "")
-  (require 'nnimap)
-  (setq gnus-select-method
-        '(nnimap "coptix"
-                 (nnimap-address "imap.gmail.com")
-                 (nnimap-server-port 993)
-                 (nnimap-stream ssl)))
-  (setq gnus-secondary-select-methods
-        '((nntp "newsgroups.bellsouth.net")))
-  (setq gnus-thread-sort-functions '((not gnus-thread-sort-by-number)))
-  (add-hooks '(gnus-summary-mode-hook)
-             (lambda ()
-               (rc-screen-ify-control-t 'local-set-key))))
-
 (defun rc-wanderlust ()
   (autoload 'wl "wl" "Wanderlust" t)
   (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)

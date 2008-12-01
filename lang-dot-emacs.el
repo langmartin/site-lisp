@@ -80,32 +80,7 @@
 
 (global-set-key "\C-z" nil)
 
-(defun mail-send-and-exit-kill (&optional arg)
-  "send mail message, bury the buffer and kill it. See mail-send-and-exit."
-  (interactive "P")
-  (let ((mail-buffer (current-buffer)))
-    (mail-send)
-    (mail-bury arg)
-    (kill-buffer mail-buffer)))
-
-(defun rc-gmail-smtp ()
-  (require 'starttls)
-  (require 'smtpmail)
-  (setq smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-auth-credentials "~/.authinfo"
-        smtpmail-sendto-domain "coptix.com"
-        smtpmail-smtp-service 587
-        smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
-  (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it)
-  ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
-  (add-hooks '(mail-mode-hook)
-             (lambda ()
-               (auto-fill-mode t)
-               (local-set-key "\C-c\C-c" 'mail-send-and-exit-kill))))
-
-(rc-gmail-smtp)
+(require 'lang-mail-rc)
 
 ;; (defun pykk-init ()
 ;;   (interactive)
@@ -137,3 +112,9 @@
 
 (require 'less)
 (add-hook 'find-file-hooks 'auto-less-minor-mode)
+
+(global-set-key "\M-`" 'other-frame)
+
+(progn
+  (require 'winner)
+  (winner-mode 1))
