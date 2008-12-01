@@ -60,4 +60,4 @@
 
 (rc-gnus)
 
-(provides 'lang-mail-rc)
+(provide 'lang-mail-rc)
