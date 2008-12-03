@@ -118,3 +118,5 @@
 (progn
   (require 'winner)
   (winner-mode 1))
+
+(global-set-key "\C-x\C-b" 'ibuffer)

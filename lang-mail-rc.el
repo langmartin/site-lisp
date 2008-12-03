@@ -6,22 +6,6 @@
     (mail-bury arg)
     (kill-buffer mail-buffer)))
 
-(progn
-  (require 'starttls)
-  (require 'smtpmail)
-  (setq smtpmail-smtp-default-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
-        smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
-        smtpmail-sendto-domain "coptix.com")
-  (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it)
-  ;; (setq smtpmail-debug-info t smtpmail-debug-verb t)
-  (add-hooks '(mail-mode-hook)
-             (lambda ()
-               (auto-fill-mode t)
-               (local-set-key "\C-c\C-c" 'mail-send-and-exit-kill))))
-
 (defun rc-coptix-smtp ()
   (interactive)
   (setq user-mail-address "lang.martin@coptix.com")
@@ -32,7 +16,21 @@
   (setq user-mail-address "lang.martin@gmail.com")
   (setq smtpmail-auth-credentials "~/.emacs.d/authinfo-gmail"))
 
-(rc-coptix-smtp)
+(progn
+  (require 'starttls)
+  (require 'smtpmail)
+  (rc-coptix-smtp)
+  (setq smtpmail-smtp-default-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
+        smtpmail-sendto-domain "coptix.com")
+  (setq send-mail-function 'smtpmail-send-it
+        message-send-mail-function 'smtpmail-send-it)
+  (setq smtpmail-debug-info t smtpmail-debug-verb t)
+  (add-hooks '(mail-mode-hook)
+             (lambda () (auto-fill-mode t))))
+
 
 (defun rc-gnus ()
   (require 'gnus)
@@ -56,7 +54,9 @@
   (add-hooks '(gnus-summary-mode-hook)
              (lambda ()
                (rc-screen-ify-control-t 'local-set-key)))
-  (setq mm-discouraged-alternatives '("text/html" "text/richtext")))
+  (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
+  (setq gnus-auto-expirable-newsgroups
+        "Christmas\\|INBOX\\|\\[Gmail\\]"))
 
 (rc-gnus)
 
