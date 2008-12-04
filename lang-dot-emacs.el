@@ -68,8 +68,6 @@
 (require 'cx-timesheet)
 (rc-emacs-lisp-action)
 
-(require 'rc-term-mode)
-
 (require 'lang-scripts)
 
 (require 'smooth-scrolling)
@@ -120,3 +118,5 @@
   (winner-mode 1))
 
 (global-set-key "\C-x\C-b" 'ibuffer)
+
+(require 'rc-term-mode)
