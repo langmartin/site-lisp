@@ -1,0 +1,6 @@
+[submodule "eproject"]
+	path = eproject
+	url = git://git.jrock.us/eproject
+[submodule "textmate"]
+	path = textmate
+	url = git://github.com/defunkt/textmate.el.git
