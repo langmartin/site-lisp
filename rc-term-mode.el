@@ -66,15 +66,17 @@ switch out smb or sshfs for tramp.")
   "set the working directory of term mode in trampily"
   (interactive)
   (let ((str (buffer-name)))
-    (string-match "[*]\\(.*?\\)[* ]")
+    (string-match "[*]\\(.*?\\)[* ]" str)
     (let ((found (match-string 1 str)))
       (if (equal found "terminal")
           (rc-term-rename-buffer)
-        (let ((dir (if (equal found "local")
-                       ""
-                     (funcall rc-term-hostname-wrap found))))
-          (message "current directory %s" found)
-          (setq default-directory found))))))
+        (let ((dir (concat
+                    (if (equal found "local")
+                        ""
+                      (funcall rc-term-hostname-wrap found))
+                    (rc-term-fetch-data "pwd"))))
+          (message "current directory %s" dir)
+          (setq default-directory dir))))))
 
 ;;;; default-directory mangling & pasting
 (defun cwd ()
