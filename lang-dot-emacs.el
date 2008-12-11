@@ -119,4 +119,11 @@
 
 (global-set-key "\C-x\C-b" 'ibuffer)
 
+(progn
+  (require 'bm)
+  (global-set-key [kp-3] 'bm-toggle)
+  (global-set-key [kp-6] 'bm-next)
+  (global-set-key [kp-9] 'bm-previous)
+  (global-set-key [kp-5] 'bm-show-all))
+
 (require 'rc-term-mode)
