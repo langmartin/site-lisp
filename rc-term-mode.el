@@ -8,7 +8,7 @@
 
 (defun rc-term-more-keys ()
   (define-key term-raw-escape-map "\C-y" 'term-paste)
-  (define-key term-raw-escape-map "\M-f" 'cx-term-cwd))
+  (define-key term-raw-escape-map "\M-f" 'rc-term-cwd))
 
 (defun rc-term-more-emacsy-keys ()
   (interactive)
@@ -26,34 +26,57 @@
 (require 'term)
 (rc-term-more-emacsy-keys)
 
-(defun cx-term-host ()
-  (interactive)
-  (let ((str (buffer-name)))
-   (string-match "[*]\\(.*?\\)[* ]" str)
-   (let ((found (match-string 1 str)))
-     (if (or (equal found "local") (equal found "terminal"))
-         ""
-       (concat "/" found ":")))))
+(defvar rc-term-hostname-wrap
+  (lambda (host)
+    (concat "/" host ":"))
+"Procedure to wrap the hostname, when identified. A place to
+switch out smb or sshfs for tramp.")
+(make-variable-buffer-local 'rc-term-hostname-wrap)
 
-(defun cx-term-cwd ()
-  "set the working directory of term mode in trampily"
+(defun rc-term-use-tramp ()
+  "Set rc-term-hostname-wrap to the default procedure"
   (interactive)
-  (term-send-raw-string "echo ::`pwd`::\n")
+  (setq rc-term-hostname-wrap
+        (lambda (host)
+          (concat "/" host ":"))))
+
+(defun rc-term-use-smb (mount)
+  "Set rc-term-hostname-wrap to use paths in /Volumes"
+  (interactive)
+  (setq rc-term-hostname-wrap
+        (lambda (host)
+          (concat "/Volumes" host "/"))))
+
+(defvar rc-term-hostname "hostname")
+(make-variable-buffer-local 'rc-term-hostname)
+
+(defun rc-term-fetch-data (command)
+  (term-send-raw-string (concat "echo ::`" command "`::\n"))
   (sleep-for 0.3)
   (goto-char (point-max))
   (re-search-backward "::\\(.*\\)::")
-  (let* ((found (match-string 1))
-         (found (concat (cx-term-host) found)))
-    (message "current directory %s" found)
-    (setq default-directory found)))
+  (match-string 1))
+
+(defun rc-term-rename-buffer ()
+  "automatically rename the buffer to *`hostname`*"
+  (interactive)
+  (rename-buffer (concat "*" (rc-term-fetch-data "hostname") "*")))
+
+(defun rc-term-cwd ()
+  "set the working directory of term mode in trampily"
+  (interactive)
+  (let ((str (buffer-name)))
+    (string-match "[*]\\(.*?\\)[* ]")
+    (let ((found (match-string 1 str)))
+      (if (equal found "terminal")
+          (rc-term-rename-buffer)
+        (let ((dir (if (equal found "local")
+                       ""
+                     (funcall rc-term-hostname-wrap found))))
+          (message "current directory %s" found)
+          (setq default-directory found))))))
 
 ;;;; default-directory mangling & pasting
-(defun default-directory (&optional home)
-  "Show and (with the prefix) reset the default directory of the current buffer"
-  (interactive "P")
-  (if home (setq default-directory "~/"))
-  (message "%s" default-directory))
-
 (defun cwd ()
   "Copy the local version of the current working directory to the paste buffer"
   (interactive)
