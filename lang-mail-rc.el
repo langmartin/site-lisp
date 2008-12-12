@@ -96,3 +96,28 @@
   (setq wl-icon-directory
         "/Applications/Emacs.app/Contents/Resources/etc/wl/icons")
   (setq wl-highlight-folder-with-icon nil))
+
+(defun rc-mew ()
+  (require 'mew)
+  ;; (progn
+  ;;     (autoload 'mew-user-agent-compose "mew" nil t)
+  ;;     (if (boundp 'mail-user-agent)
+  ;;         (setq mail-user-agent 'mew-user-agent))
+  ;;     (if (fboundp 'define-mail-user-agent)
+  ;;         (define-mail-user-agent
+  ;;           'mew-user-agent
+  ;;           'mew-user-agent-compose
+  ;;           'mew-draft-send-message
+  ;;           'mew-draft-kill
+  ;;           'mew-send-hook)))
+  ;; (setq mew-name "your name") ;; (user-full-name)
+  (setq mew-user "lang.martin")
+  (setq mew-mail-domain "coptix.com")
+  (setq mew-proto "%")
+  (setq mew-imap-user "lang.martin@coptix.com")
+  (setq mew-imap-server "imap.coptix.com")
+  (setq mew-prog-ssl "/coptix/local/bin/stunnel")
+  (setq mew-ssl-ver 4.23)
+  (setq mew-imap-ssl t)
+  (setq mew-imap-ssl-port 993))
+;; (rc-mew)
