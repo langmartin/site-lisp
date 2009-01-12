@@ -127,3 +127,4 @@
   (global-set-key [kp-5] 'bm-show-all))
 
 (require 'rc-term-mode)
+(require 'rc-anything)
