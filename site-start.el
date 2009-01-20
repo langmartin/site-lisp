@@ -567,7 +567,8 @@ repeated unfill entire region as one paragraph."
 (defun customize-sql-mode-postgres ()
   (turn-on-font-lock)
   (cond
-   ((string= (file-name-extension (buffer-file-name)) "psql")
+   ((and (buffer-file-name)
+         (string= (file-name-extension (buffer-file-name)) "psql"))
     (progn
       (sql-highlight-postgres-keywords)
       (local-set-key "\C-c!" 'sql-postgres)))))
