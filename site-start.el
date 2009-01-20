@@ -281,7 +281,11 @@ Set it intead of tab-width.")
    (with-form-data 1)
    (let-conversion 1)
    (sxml-convert 1)
+
+   (c-define 5)
    
+   (with-pg 1)
+
    (let-fluids with-...)
    (call-with-values 0)
    (let-unspec* 2)
