@@ -106,7 +106,7 @@
 
 (global-set-key [kp-4] 'underline-this-line)
 
-(require 'toggle-letter-case)
+;; (require 'toggle-letter-case)
 
 (require 'less)
 (add-hook 'find-file-hooks 'auto-less-minor-mode)
@@ -128,3 +128,4 @@
 
 (require 'rc-term-mode)
 (require 'rc-anything)
+(require 'w3m)

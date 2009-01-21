@@ -45,6 +45,7 @@
   ;;                (rc-screen-ify-control-t 'local-set-key)))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   ;; (setq gnus-auto-expirable-newsgroups "Christmas\\|INBOX\\|Starred")
+  (setq gnus-use-full-window nil)
   )
 
 (rc-gnus)

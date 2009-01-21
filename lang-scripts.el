@@ -92,4 +92,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
     (make-directory path t)
     (shell-command (concat sshfs-executable " " host " " path))))
 
+(fset 'tex-define-to-rst
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 92 105 116 101 109 13 M-backspace backspace 4 134217828 67108911 134217820 19 93 13 backspace return return 21 32 134217841 16 11] 0 "%d")) arg)))
+
 (provide 'lang-scripts)
