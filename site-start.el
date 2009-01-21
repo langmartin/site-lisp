@@ -118,7 +118,9 @@ Set it intead of tab-width.")
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
 
-(require 'rst)                          ; defines a slow, recursive filter
+(progn
+  (require 'rst)                    ; defines a slow, recursive filter
+  (add-hook 'rst-mode-hook (lambda () (auto-fill-mode t))))
 
 (defun filter (proc lst)
   (let ((value nil))
