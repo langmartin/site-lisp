@@ -120,7 +120,7 @@ Set it intead of tab-width.")
 
 (progn
   (require 'rst)                    ; defines a slow, recursive filter
-  (add-hook 'rst-mode-hook (lambda () (auto-fill-mode t))))
+  (add-hook 'rst-mode-hook 'turn-on-auto-fill))
 
 (defun filter (proc lst)
   (let ((value nil))
