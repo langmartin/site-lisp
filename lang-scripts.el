@@ -5,14 +5,6 @@
     "GRANT select,insert,update,delete ON " db ".* TO " user "@'%.mysqlsrc' "
     "IDENTIFIED BY '" pass "'; FLUSH PRIVILEGES;")))
 
-(defun iago-smb-conf ()
-  (interactive)
-  (find-file "/multi:ssh:lang@iago:sudo:root@iago:/etc/samba/smb.conf"))
-
-(defun cerf-apache-php5 ()
-  (interactive)
-  (find-file "/cerf:/service/apache-php5/php5.conf"))
-
 (defun etc-hosts ()
   (interactive)
   (find-file "/sudo:root@localhost:/etc/hosts"))
@@ -37,8 +29,8 @@
 Allow from 75.148.111.133
 Deny from all
 AuthType Basic
-AuthName \"Login Required\"
-AuthUserFile /usr/local/apache/etc/.htpasswd-allusers
+AuthName \"Webtools\"
+AuthUserFile /coptix/admin/scripts/share/htpasswd
 Require valid-user
 Satisfy any"))
 
