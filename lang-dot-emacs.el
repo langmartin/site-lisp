@@ -4,9 +4,15 @@
   (global-set-key [wheel-down] 'mwheel-scroll)
   (global-set-key [wheel-up] 'mwheel-scroll)
   (global-set-key "\M-`" 'other-frame)
-  (require 'tramp))
+  (require 'tramp)
+  (setq tramp-default-proxies-alist
+        `(("localhost" "\\`root\\'" nil)
+          (nil "\\`root\\'" "/ssh:%h:")))
+  (setq tramp-backup-directory-alist backup-directory-alist))
 
 (load "site-start")
+
+(desktop-save-mode 1)
 
 (progn
  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
@@ -40,15 +46,13 @@
              )))
 
 (rc-lang)
-(global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
+;;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 (global-set-key "\C-w" 'kill-backward-word-or-region)
 (global-set-key "\C-h" 'help)
 
 (iswitchb-mode 1)
 
 (setq ring-bell-function nil)
-
-(setq tramp-backup-directory-alist backup-directory-alist)
 
 (defvar programming-mode-hooks
   '(c-mode-common-hook
@@ -116,5 +120,5 @@
 ;;;   (global-set-key [kp-5] 'bm-show-all))
 
 (require 'rc-term-mode)
-(require 'rc-anything)
-(require 'w3m)
+;;; (require 'rc-anything)
+;;; (require 'w3m)
