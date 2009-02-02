@@ -136,11 +136,12 @@ Set it intead of tab-width.")
           (filter (lambda (x)
                     (not (member (car x) files)))
                   auto-mode-alist))
-    (mapc (lambda (x)
-            (setq auto-mode-alist
-                  (cons (cons x mode)
-                        auto-mode-alist)))
-          files)))
+    (if mode
+        (mapc (lambda (x)
+                (setq auto-mode-alist
+                      (cons (cons x mode)
+                            auto-mode-alist)))
+              files))))
 
 (defun rc-c-like-javascript-mode-which-crashes-emacs ()
   (require 'javascript-mode "javascript")
@@ -151,7 +152,9 @@ Set it intead of tab-width.")
   (require 'js2-mode)
   (custom-set-variables
    (list 'js2-basic-offset rc-coptix-tab-width))
-  (rc-javascript-auto-mode-alist 'js2-mode))
+  (rc-javascript-auto-mode-alist nil)
+  (add-to-list 'auto-mode-alist
+               '("\\.js\\'" . js2-mode)))
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
@@ -399,26 +402,6 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
 	  (if this-win-2nd (other-window 1))))))
 
 (define-key ctl-x-4-map "v" 'toggle-vertical-horizontal-window-split)
-
-(defun rc-screen-ify-control-t (set-key)
-  "Set a C-t map of buffer commands to make things work a bit
-like GNU screen with a C-t command key."
-  (funcall set-key "\C-t" nil)
-  (funcall set-key "\C-tt" 'transpose-chars)
-  (funcall set-key "\C-t\C-t" 'iswitchb-buffer)
-  (funcall set-key "\C-t\C-i" 'other-window)
-  (funcall set-key "\C-tn" 'next-buffer)
-  (funcall set-key "\C-t\C-n" 'next-buffer)
-  (funcall set-key "\C-tp" 'previous-buffer)
-  (funcall set-key "\C-t\C-p" 'previous-buffer)
-  (funcall set-key "\C-tS" 'split-window-vertically)
-  (funcall set-key "\C-tX" 'delete-window)
-  ;; these are kind of my own riff on screen commands
-  (funcall set-key "\C-tr" 'iswitchb-display-buffer)
-  ;; these are like vi's f
-  ;; (funcall set-key "\C-tf" 'mark-and-search-forward)
-  ;; (funcall set-key "\C-tb" 'mark-and-search-backward)
-  )
 
 ;;;; Growl
 (defun growl (title message)
