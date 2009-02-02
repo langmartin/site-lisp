@@ -8,8 +8,11 @@
   (setq tramp-default-proxies-alist
         `(("localhost" "\\`root\\'" nil)
           (nil "\\`root\\'" "/ssh:%h:")))
-  ;; (setq tramp-backup-directory-alist backup-directory-alist)
-  )
+  (mapc (lambda (x)
+          (add-to-list 'tramp-default-method-alist
+                       `(,x nil "sshx")))
+        '("rove" "abla" "drok"))
+  (setq tramp-backup-directory-alist backup-directory-alist))
 
 (load "site-start")
 
@@ -74,8 +77,6 @@
 (require 'smooth-scrolling)
 
 (blink-cursor-mode -1)
-
-(rc-screen-ify-control-t 'global-set-key)
 
 (global-set-key "\C-z" nil)
 
