@@ -25,7 +25,7 @@
 
 (defun htaccess-login ()
   (interactive)
-  (insert "Order Allow,Deny
+  (insert "Order Deny,Allow
 Allow from 75.148.111.133
 Deny from all
 AuthType Basic

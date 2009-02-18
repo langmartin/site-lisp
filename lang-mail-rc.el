@@ -38,6 +38,11 @@
                  (nnimap-address "imap.coptix.com")
                  (nnimap-server-port 993)
                  (nnimap-stream ssl)))
+  (setq gnus-secondary-select-methods
+        '((nnimap "noc"
+                  (nnimap-address "noc.imap.coptix.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil))
 

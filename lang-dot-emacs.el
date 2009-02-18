@@ -1,4 +1,7 @@
-;;; things for cocoa emacs 23
+(load "site-start")
+(rc-lang)
+
+;; things for cocoa emacs 23
 (progn
   (require 'mwheel)
   (global-set-key [wheel-down] 'mwheel-scroll)
@@ -14,8 +17,6 @@
         '("rove" "abla" "drok"))
   (setq tramp-backup-directory-alist backup-directory-alist))
 
-(load "site-start")
-
 (desktop-save-mode 1)
 
 (progn
@@ -25,7 +26,8 @@
  (defun erc-hide-notices () "hide all notices in a very busy channel"
    (interactive)
    (make-local-variable 'erc-echo-notice-always-hook)
-   (setq erc-echo-notice-always-hook nil)))
+   (setq erc-echo-notice-always-hook nil))
+ (defalias 'irc 'erc))
 
 (require 'kmacro)
 
@@ -39,8 +41,7 @@
              (color-grey)
              )))
 
-(rc-lang)
-;;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
+;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 (global-set-key "\C-w" 'kill-backward-word-or-region)
 (global-set-key "\C-h" 'help)
 
@@ -104,13 +105,13 @@
 
 (global-set-key "\C-x\C-b" 'ibuffer)
 
-;;; (progn
-;;;   (require 'bm)
-;;;   (global-set-key [kp-3] 'bm-toggle)
-;;;   (global-set-key [kp-6] 'bm-next)
-;;;   (global-set-key [kp-9] 'bm-previous)
-;;;   (global-set-key [kp-5] 'bm-show-all))
+;; (progn
+;;   (require 'bm)
+;;   (global-set-key [kp-3] 'bm-toggle)
+;;   (global-set-key [kp-6] 'bm-next)
+;;   (global-set-key [kp-9] 'bm-previous)
+;;   (global-set-key [kp-5] 'bm-show-all))
 
 (require 'rc-term-mode)
-;;; (require 'rc-anything)
-;;; (require 'w3m)
+;; (require 'rc-anything)
+;; (require 'w3m)
