@@ -105,13 +105,30 @@
 
 (global-set-key "\C-x\C-b" 'ibuffer)
 
-;; (progn
-;;   (require 'bm)
-;;   (global-set-key [kp-3] 'bm-toggle)
-;;   (global-set-key [kp-6] 'bm-next)
-;;   (global-set-key [kp-9] 'bm-previous)
-;;   (global-set-key [kp-5] 'bm-show-all))
+(progn
+  (require 'rc-term-mode)
+  ;; this seems to be a bug in nightly-build, and matches my theme
+  (setq term-default-bg-color "gray80"
+        term-default-fg-color "black"))
 
-(require 'rc-term-mode)
 ;; (require 'rc-anything)
-;; (require 'w3m)
+;; (require 'w3m) ; pushes the os x menus right
+
+;; (progn
+;;   (require 'timeclock-x)
+;;   (display-time-mode)
+;;   (setq timeclock-query-project-interval (* 60 90))
+;;   (timeclock-query-project-on)
+;;   (timeclock-modeline-display 1)
+;;   (add-hook 'emacs-startup-hook 'timeclock-query-in)
+;;   (timeclock-setup-keys))
+
+(progn
+  (require 'timeclock)
+  (define-key ctl-x-map "ti" 'timeclock-in)
+  (define-key ctl-x-map "to" 'timeclock-out)
+  (define-key ctl-x-map "tc" 'timeclock-change)
+  (define-key ctl-x-map "tr" 'timeclock-reread-log)
+  (define-key ctl-x-map "tv" 'timeclock-visit-timelog)
+  (define-key ctl-x-map "ts" 'timeclock-status-string)
+  (define-key ctl-x-map "tw" 'timeclock-when-to-leave-string))

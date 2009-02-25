@@ -6,16 +6,20 @@
     (mail-bury arg)
     (kill-buffer mail-buffer)))
 
-;; (defun rc-gmail-smtp ()
-;;   (interactive)
-;;   (setq user-mail-address "lang.martin@gmail.com")
-;;   (setq smtpmail-auth-credentials "~/.emacs.d/authinfo-gmail"))
+(defun rc-gmail-smtp ()
+  (interactive)
+  (setq user-mail-address "lang.martin@gmail.com"
+        smtpmail-auth-credentials "~/.emacs.d/authinfo-gmail"))
+
+(defun rc-coptix-smtp ()
+  (interactive)
+  (setq user-mail-address "lang.martin@coptix.com"
+        smtpmail-auth-credentials "~/.emacs.d/authinfo-coptix"))
 
 (progn
   (require 'starttls)
   (require 'smtpmail)
-  (setq user-mail-address "lang.martin@coptix.com"
-        smtpmail-auth-credentials "~/.emacs.d/authinfo-coptix")
+  (rc-coptix-smtp)
   (setq smtpmail-smtp-default-server "smtp.gmail.com"
         smtpmail-smtp-server "smtp.gmail.com"
         smtpmail-smtp-service 587
@@ -34,13 +38,17 @@
   (require 'nnimap)
   (setq gnus-nntp-server nil)
   (setq gnus-select-method
-        '(nnimap "coptix"
-                 (nnimap-address "imap.coptix.com")
-                 (nnimap-server-port 993)
-                 (nnimap-stream ssl)))
+        '(nnimap "gmail"
+                  (nnimap-address "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl)))
   (setq gnus-secondary-select-methods
         '((nnimap "noc"
                   (nnimap-address "noc.imap.coptix.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))
+          (nnimap "coptix"
+                  (nnimap-address "imap.coptix.com")
                   (nnimap-server-port 993)
                   (nnimap-stream ssl))))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))

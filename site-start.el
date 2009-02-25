@@ -178,18 +178,16 @@ Set it intead of tab-width.")
   (global-set-key "\C-xc" 'cx-comment)
   (global-set-key "\C-x+" 'goto-line))
 
-(defun rc-function-keys-mlm (key-fn)
+(defun rc-function-keys-mlm (&optional key-fn)
   "bind some function keys [kp-[01enter]], C-xC-h, [home]"
   (interactive)
-  (global-set-key [kp-1] 'imenu)
-  (global-set-key [super-1] 'imenu)
-  (global-set-key [kp-0] 'repeat)
-  (global-set-key [super-0] 'repeat)
-  (global-set-key [kp-enter] 'help)
-  (global-set-key [super-enter] 'help)
-  (funcall key-fn [home] 'jump-to-register)
-  (add-hooks '(erc-mode-hook)
-             '(lambda () (local-set-key [home] 'jump-to-register))))
+  (global-set-key (kbd "H-i") 'imenu)
+  (global-set-key (kbd "H-r") 'repeat)
+  (global-set-key (kbd "H-h") 'help)
+  (global-set-key [home] 'jump-to-register)
+  (add-hook 'erc-mode-hook
+            '(lambda () (local-set-key [home] 'jump-to-register)))
+  (global-set-key (kbd "H-<tab>") 'PC-lisp-complete-symbol))
 
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"
@@ -602,22 +600,23 @@ repeated unfill entire region as one paragraph."
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
   (global-set-key "\C-x\C-b" 'buffer-menu)
-  ;;   (progn
-  ;;     (global-set-key "\M-/" 'hippie-expand)
-  ;;     (setq hippie-expand-try-functions-list
-  ;;           '(try-expand-all-abbrevs
-  ;;             try-expand-dabbrev
-  ;;             try-expand-dabbrev-from-kill
-  ;;             try-expand-dabbrev-all-buffers
-  ;;             try-complete-lisp-symbol-partially
-  ;;             try-complete-lisp-symbol)))
+  (progn
+    (global-set-key "\M-/" 'hippie-expand)
+    (setq hippie-expand-try-functions-list
+          '(try-expand-all-abbrevs
+            try-expand-dabbrev
+            try-expand-dabbrev-from-kill
+            try-expand-dabbrev-all-buffers
+            try-complete-file-name-partially
+            try-complete-file-name
+            try-complete-lisp-symbol-partially
+            try-complete-lisp-symbol)))
   (rc-function-keys-mlm 'global-set-key)
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
   (setq uniquify-buffer-name-style 'reverse)
-  (rc-js2-javascript-mode)
-  )
+  (rc-js2-javascript-mode))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
