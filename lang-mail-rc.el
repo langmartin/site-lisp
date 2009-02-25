@@ -46,9 +46,9 @@
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
         '((".*"
-           (address "lang.martin@gmail.com"))
-          ("^nnimap"
-           (address "lang.martin@coptix.com"))))
+           (address "lang.martin@coptix.com"))
+          ("^\\[Gmail\\]"
+           (address "lang.martin@gmail.com"))))
   (progn
     (require 'starttls)
     (require 'smtpmail)
