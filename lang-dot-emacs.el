@@ -19,16 +19,6 @@
 
 (desktop-save-mode 1)
 
-(progn
- (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
- (add-hook 'erc-text-matched-hook 'erc-growl-match)
- (erc-match-mode 1)
- (defun erc-hide-notices () "hide all notices in a very busy channel"
-   (interactive)
-   (make-local-variable 'erc-echo-notice-always-hook)
-   (setq erc-echo-notice-always-hook nil))
- (defalias 'irc 'erc))
-
 (require 'kmacro)
 
 (progn
@@ -132,3 +122,81 @@
   (define-key ctl-x-map "tv" 'timeclock-visit-timelog)
   (define-key ctl-x-map "ts" 'timeclock-status-string)
   (define-key ctl-x-map "tw" 'timeclock-when-to-leave-string))
+
+(defmacro define-buffer-visitor (visitor-name buffer-name command)
+  "http://jfm3-repl.blogspot.com/2009/02/fast-emacs-buffer-flipping.html"
+   `(defun ,visitor-name ()
+      (interactive)
+      (if (get-buffer ,buffer-name)
+	  (switch-to-buffer (if (equal ,buffer-name (buffer-name))
+				nil
+			      ,buffer-name))
+	(call-interactively ,command))))
+
+(progn
+  (defun irc-bitlbee ()
+    (interactive)
+    (erc-tls :server "testing.bitlbee.org"
+	     :port 6668
+	     :nick "langmartin"
+	     :full-name "Lang Martin"))
+
+  ;; (defun bitlbee-identify ()
+  ;;   (when (and (string= "testing.bitlbee.org" erc-session-server)
+  ;; 	       (string= "&bitlbee" (buffer-name)))
+  ;;     (erc-message "PRIVMSG" (format "%s identify %s" 
+  ;; 				     (erc-default-target) 
+  ;; 				     "<password>"))))
+  ;; (custom-set-variables
+  ;;  '(erc-join-hook (quote (bitlbee-identify))))
+
+  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
+  (add-hook 'erc-text-matched-hook 'erc-growl-match)
+  (erc-match-mode 1)
+
+  (defun erc-hide-notices () "hide all notices in a very busy channel"
+    (interactive)
+    (make-local-variable 'erc-echo-notice-always-hook)
+    (setq erc-echo-notice-always-hook nil))
+
+  '(setq erc-autojoin-channels-alist
+	 '(("freenode.net" "#emacs" "#scheme" "#medium")))
+  
+  (defun irc-freenode ()
+    (interactive)
+    (erc :server "irc.freenode.net"
+	 :nick "langmartin"
+	 :full-name "Lang Martin"
+	 :password freenode-password))
+  
+  (define-buffer-visitor visit-medium "#medium" 'irc)
+  (global-set-key (kbd "H-m") 'visit-medium)
+  
+  (defun irc () (interactive) (irc-freenode)))
+
+(progn
+  (defmacro define-shellcmd (name cmd)
+    `(defun ,name ()
+       (interactive)
+       (shell-command ,cmd)))
+  (define-shellcmd git-status "git-status")
+  (define-shellcmd git-push "git-push -q")
+  (define-shellcmd git-pull "git-pull -q")
+  (defun git-merge (branch)
+    (interactive "branch: S")
+    (shell-command (concat "git-merge -q " branch)))
+
+  (define-minor-mode git-commands
+    "quick bindings for a bunch of git-commands"
+    t
+    nil
+    '(("s" . git-status)
+      ("p" . git-pull)
+      ("m" . git-merge)))
+  (define-key ctl-x-map "g" git-commands-map)
+  ;; (setq git-commands-map
+  ;;  (easy-mmode-define-keymap '(("s" . 'git-status)
+  ;; 			       ("p" . 'git-pull)
+  ;; 			       ("m" . 'git-merge))
+  ;; 			     git-commands-map))
+  )
