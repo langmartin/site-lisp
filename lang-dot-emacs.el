@@ -179,24 +179,23 @@
     `(defun ,name ()
        (interactive)
        (shell-command ,cmd)))
-  (define-shellcmd git-status "git-status")
-  (define-shellcmd git-push "git-push -q")
-  (define-shellcmd git-pull "git-pull -q")
+  (define-shellcmd git-status "git status")
+  (define-shellcmd git-pull "git pull -q")
   (defun git-merge (branch)
-    (interactive "branch: S")
-    (shell-command (concat "git-merge -q " branch)))
+    (interactive "sBranch: ")
+    (shell-command (concat "git merge -q " branch)))
+  (defun git-push (extra)
+    (interactive "sPush: ")
+    (shell-command (concat "git push " extra)))
+  (define-shellcmd git-branches "git branches -av")
+  (defun git-checkout (branch)
+    (interactive "sBranch: ")
+    (shell-command (concat "git checkout " branch)))
 
-  (define-minor-mode git-commands
-    "quick bindings for a bunch of git-commands"
-    t
-    nil
-    '(("s" . git-status)
-      ("p" . git-pull)
-      ("m" . git-merge)))
-  (define-key ctl-x-map "g" git-commands-map)
-  ;; (setq git-commands-map
-  ;;  (easy-mmode-define-keymap '(("s" . 'git-status)
-  ;; 			       ("p" . 'git-pull)
-  ;; 			       ("m" . 'git-merge))
-  ;; 			     git-commands-map))
-  )
+  (define-key ctl-x-map "g"
+    (easy-mmode-define-keymap
+     '(("s" . git-status)
+       ("p" . git-pull)
+       ("m" . git-merge)
+       ("b" . git-branches)
+       ("c" . git-checkout)))))
