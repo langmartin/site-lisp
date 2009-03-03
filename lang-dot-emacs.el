@@ -187,11 +187,10 @@
   (defun git-push (extra)
     (interactive "sPush: ")
     (shell-command (concat "git push " extra)))
-  (define-shellcmd git-branches "git branches -av")
+  (define-shellcmd git-branches "git branch -av")
   (defun git-checkout (branch)
     (interactive "sBranch: ")
     (shell-command (concat "git checkout " branch)))
-
   (define-key ctl-x-map "g"
     (easy-mmode-define-keymap
      '(("s" . git-status)
