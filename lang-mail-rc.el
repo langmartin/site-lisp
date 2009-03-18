@@ -34,10 +34,10 @@
                  (nnimap-server-port 993)
                  (nnimap-stream ssl)))
   (setq gnus-secondary-select-methods
-        '((nnimap "noc"
-                  (nnimap-address "noc.imap.coptix.com")
-                  (nnimap-server-port 993)
-                  (nnimap-stream ssl))
+        '(;; (nnimap "noc"
+          ;;         (nnimap-address "noc.imap.coptix.com")
+          ;;         (nnimap-server-port 993)
+          ;;         (nnimap-stream ssl))
           (nnimap "coptix"
                   (nnimap-address "imap.coptix.com")
                   (nnimap-server-port 993)
@@ -45,10 +45,8 @@
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
-        '((".*"
-           (address "lang.martin@coptix.com"))
-          ("^\\[Gmail\\]"
-           (address "lang.martin@gmail.com"))))
+        '(("." (address "lang.martin@gmail.com"))
+          ("coptix:" (address "lang.martin@coptix.com"))))
   (progn
     (require 'starttls)
     (require 'smtpmail)
