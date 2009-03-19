@@ -198,3 +198,6 @@
        ("m" . git-merge)
        ("b" . git-branches)
        ("c" . git-checkout)))))
+
+(require 'nav)
+(require 'timeclock-extra)
