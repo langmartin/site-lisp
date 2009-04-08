@@ -21,15 +21,15 @@
 
 (require 'kmacro)
 
-(progn
- (defun color-grey () (color-theme-fischmeister) t)
- (defun color-slate () (color-theme-subtle-hacker) t)
- (and (require 'color-theme "color-theme" t)
-      (progn (color-theme-initialize)
-             ;; (color-slate)
-             ;; (show-paren-mode nil)
-             (color-grey)
-             )))
+;; (progn
+;;  (defun color-grey () (color-theme-fischmeister) t)
+;;  (defun color-slate () (color-theme-subtle-hacker) t)
+;;  (and (require 'color-theme "color-theme" t)
+;;       (progn (color-theme-initialize)
+;;              ;; (color-slate)
+;;              ;; (show-paren-mode nil)
+;;              (color-grey)
+;;              )))
 
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 (global-set-key "\C-w" 'kill-backward-word-or-region)
