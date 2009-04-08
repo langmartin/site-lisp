@@ -1,6 +1,7 @@
 (defvar smtpmail-account-authinfo
   '(("lang.martin@gmail.com" . "~/.emacs.d/authinfo-gmail")
-    ("lang.martin@coptix.com" . "~/.emacs.d/authinfo-coptix")))
+    ;; ("lang.martin@coptix.com" . "~/.emacs.d/authinfo-coptix")
+    ))
 
 (defun message-extract-from-address ()
   (let ((from (save-excursion
@@ -34,19 +35,21 @@
                  (nnimap-server-port 993)
                  (nnimap-stream ssl)))
   (setq gnus-secondary-select-methods
-        '(;; (nnimap "noc"
-          ;;         (nnimap-address "noc.imap.coptix.com")
-          ;;         (nnimap-server-port 993)
-          ;;         (nnimap-stream ssl))
-          (nnimap "coptix"
-                  (nnimap-address "imap.coptix.com")
-                  (nnimap-server-port 993)
-                  (nnimap-stream ssl))))
+        ;; '((nnimap "noc"
+        ;;           (nnimap-address "noc.imap.coptix.com")
+        ;;           (nnimap-server-port 993)
+        ;;           (nnimap-stream ssl))
+        ;;   (nnimap "coptix"
+        ;;           (nnimap-address "imap.coptix.com")
+        ;;           (nnimap-server-port 993)
+        ;;           (nnimap-stream ssl)))
+        nil)
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
         '(("." (address "lang.martin@gmail.com"))
-          ("coptix:" (address "lang.martin@coptix.com"))))
+          ;; ("coptix:" (address "lang.martin@coptix.com"))
+          ))
   (progn
     (require 'starttls)
     (require 'smtpmail)
@@ -55,7 +58,7 @@
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
           smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
-          smtpmail-sendto-domain "coptix.com")
+          smtpmail-sendto-domain "gmail.com")
     (setq send-mail-function 'smtpmail-send-it
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
