@@ -87,4 +87,16 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 (fset 'tex-define-to-rst
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([19 92 105 116 101 109 13 M-backspace backspace 4 134217828 67108911 134217820 19 93 13 backspace return return 21 32 134217841 16 11] 0 "%d")) arg)))
 
+(defun share-itunes ()
+  (interactive)
+  (shell-command "share -o /Users/friends/Music/iTunes"))
+
+(defun flush-cache ()
+  (interactive)
+  (shell-command "dscacheutil -flushcache"))
+
+(defun hibernate ()
+  (interactive)
+  (shell-command "/Users/lang/bin/hiber"))
+
 (provide 'lang-scripts)
