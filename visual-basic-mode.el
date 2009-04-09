@@ -7,11 +7,16 @@
 ;; Copyright (C) 1996 Fred White <fwhite@alum.mit.edu>
 ;; Copyright (C) 1998 Free Software Foundation, Inc.
 ;;   (additions by Dave Love)
+;; Copyright (C) 2008 Free Software Foundation, Inc.
+;;   (additions by Randolph Fritz and Vincent Belaiche (VB1) )
 
 ;; Author: Fred White <fwhite@alum.mit.edu>
 ;; Adapted-by: Dave Love <d.love@dl.ac.uk>
 ;;           : Kevin Whitefoot <kevin.whitefoot@nopow.abb.no>
-;; Version: 1.3 (May 1, 1996)
+;;           : Randolph Fritz <rfritz@u.washington.edu>
+;;           : Vincent Belaiche <vincentb1@users.sourceforge.net>
+;; Version: 1.4.3 (Oct 8, 2008)
+;; Serial Version: %Id: 11%
 ;; Keywords: languages, basic, Evil
 
 
@@ -49,12 +54,20 @@
 ;;  convenience functions.
 
 ;; Installation instructions
-;;  Put basic-mode.el somewhere in your path, compile it, and add the
-;;  following to your init file:
+;;  Put visual-basic-mode.el somewhere in your path, compile it, and add 
+;;  the following to your init file:
 
 ;;  (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
 ;;  (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
 ;;                                  visual-basic-mode)) auto-mode-alist))
+;;
+;;  If you are doing Rhino scripts, add:
+;;  (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\|rvb\\)$" .
+;;                                  visual-basic-mode)) auto-mode-alist))
+
+;;  If you had visual-basic-mode already installed, you may need to call
+;;  visual-basic-upgrade-keyword-abbrev-table the first time that 
+;;  visual-basic-mode is loaded.
 
 ;; Of course, under Windows 3.1, you'll have to name this file
 ;; something shorter than visual-basic-mode.el
@@ -96,6 +109,13 @@
 ;;     Partially fixed failure to recognise if statements with
 ;;     continuations (still fails on 'single line' if with
 ;;     continuation, ugh).
+;; 1.4.2 RF added "class" and "null" keywords, "Rhino" script note.
+;; 1.4.3 VB1 added 
+;;     1) function visual-basic-if-not-on-single-line to recognize single line
+;;      if statements, even when line is broken.  variable
+;;      visual-basic-allow-single-line-if default set to t again.  
+;;     2) use of 'words in calling regexp-opt rather than concat \\< ...\\>
+;;     3) new keywords Preserve and Explicit
 
 ;;
 ;; Notes:
@@ -125,7 +145,7 @@
 ;; fi
 
 ;; exec etags --lang=none -c '/\(global\|public\)[ \t]+\(\(const\|type\)[ \t]+\)*\([a-z_0-9]+\)/\4/' \
-;;     -c '/public[ \t]+\(sub\|function\)[ \t]+\([a-z_0-9]+\)/\2/' \
+;;     -c '/public[ \t]+\(sub\|function\|class\)[ \t]+\([a-z_0-9]+\)/\2/' \
 ;;   "$@"
 
 ;; End Notes Dave Love
@@ -133,8 +153,7 @@
 
 ;; Known bugs:
 ;;  Doesn't know about ":" separated stmts
-;;  Doesn't recognize single line if statements if these are broken by
-;;  line continuation characters
+
 
 
 ;; todo:
@@ -164,8 +183,8 @@
   "*Wildcard pattern for BASIC source files.")
 (defvar visual-basic-ide-pathname nil
   "*The full pathname of your Visual Basic exe file, if any.")
-;; KJW Provide for my preference in if statements
-(defvar visual-basic-allow-single-line-if nil
+;; VB
+(defvar visual-basic-allow-single-line-if t
   "*Whether to allow single line if")
 
 
@@ -235,12 +254,12 @@
   (defconst visual-basic-defun-start-regexp
     (concat
      "^[ \t]*\\([Pp]ublic \\|[Pp]rivate \\|[Ss]tatic\\|[Ff]riend \\)?"
-     "\\([Ss]ub\\|[Ff]unction\\|[Pp]roperty +[GgSsLl]et\\|[Tt]ype\\|[Ee]num\\)"
+     "\\([Ss]ub\\|[Ff]unction\\|[Pp]roperty +[GgSsLl]et\\|[Tt]ype\\|[Ee]num\\|[Cc]lass\\)"
      "[ \t]+\\(\\w+\\)[ \t]*(?")))
 
 
 (defconst visual-basic-defun-end-regexp
-  "^[ \t]*[Ee]nd \\([Ss]ub\\|[Ff]unction\\|[Pp]roperty\\|[Tt]ype\\|[Ee]num\\)")
+  "^[ \t]*[Ee]nd \\([Ss]ub\\|[Ff]unction\\|[Pp]roperty\\|[Tt]ype\\|[Ee]num\\|[Cc]lass\\)")
 
 
 ;; Includes the compile-time #if variation.
@@ -250,7 +269,8 @@
 ;; Two versions; one recognizes single line if just as though it were
 ;; a multi-line and the other does not.  Modified again to remove the
 ;; requirement for then so as to allow it to match if statements that
-;; have continuations.
+;; have continuations -- VB1 further elaborated on this for single line
+;; if statement to be recognized on broken lines.
 ;;(defconst visual-basic-if-regexp
 ;;   "^[ \t]*#?[Ii]f[ \t]+.*[ \t]+[Tt]hen[ \t]*.*\\('\\|$\\)")
 (defconst visual-basic-if-regexp
@@ -301,7 +321,7 @@
     "Beep" "Begin" "BeginTrans" "Boolean" "ByVal" "ByRef"
     "CBool" "CByte" "CCur"
     "CDate" "CDbl" "CInt" "CLng" "CSng" "CStr" "CVErr" "CVar" "Call"
-    "Case" "ChDir" "ChDrive" "Character" "Choose" "Chr" "ChrB"
+    "Case" "ChDir" "ChDrive" "Character" "Choose" "Chr" "ChrB" "Class"
     "ClassModule" "Clipboard" "Close" "Collection" "Column" "Columns"
     "Command" "CommitTrans" "CompactDatabase" "Component" "Components"
     "Const" "Container" "Containers" "Cos" "CreateDatabase" "CreateObject"
@@ -311,7 +331,7 @@
     "Debug" "Declare" "Deftype" "DeleteSetting" "Dim" "Dir" "Do"
     "DoEvents" "Domain"
     "Double" "Dynaset" "EOF" "Each" "Else" "End" "EndProperty"
-    "Enum" "Environ" "Erase" "Err" "Error" "Exit" "Exp" "FV" "False" "Field"
+    "Enum" "Environ" "Erase" "Err" "Error" "Exit" "Exp" "Explicit" "FV" "False" "Field"
     "Fields" "FileAttr" "FileCopy" "FileDateTime" "FileLen" "Fix" "Font" "For"
     "Form" "FormTemplate" "Format" "Forms" "FreeFile" "FreeLocks" "Friend"
     "Function"
@@ -323,12 +343,12 @@
     "Load" "LoadPicture" "LoadResData" "LoadResPicture" "LoadResString" "Loc"
     "Lock" "Log" "Long" "Loop" "MDIForm" "MIRR" "Me" "MenuItems"
     "MenuLine" "Mid" "Minute" "MkDir" "Month" "MsgBox" "NPV" "NPer" "Name"
-    "New" "Next" "Not" "Now" "Nothing" "Object" "Oct" "On" "Open"
+    "New" "Next" "Not" "Now" "Nothing" "Null" "Object" "Oct" "On" "Open"
     "OpenDatabase"
     "Operator" "Option" "Optional"
     "Or" "PPmt" "PV" "Parameter" "Parameters" "Partition"
-    "Picture" "Pmt" "Print" "Printer" "Printers" "Private" "ProjectTemplate"
-    "Property"
+    "Picture" "Pmt" "Preserve" "Print" "Printer" "Printers" "Private" 
+	"ProjectTemplate" "Property"
     "Properties" "Public" "Put" "QBColor" "QueryDef" "QueryDefs"
     "RSet" "RTrim" "Randomize" "Rate" "ReDim" "Recordset" "Recordsets"
     "RegisterDatabase" "Relation" "Relations" "Rem" "RepairDatabase"
@@ -360,15 +380,14 @@
      (list "^[ \t]*case[ \t]+\\([^'\n]+\\)" 1 'font-lock-keyword-face t)
 
      ;; Any keywords you like.
-     (list (concat "\\<" (regexp-opt
-                          '("Dim" "If" "Then" "Else" "ElseIf" "End If") t)
-                   "\\>")
+     (list (regexp-opt
+                          '("Dim" "If" "Then" "Else" "ElseIf" "End If") 'words)
            1 'font-lock-keyword-face))))
 
 (defvar visual-basic-font-lock-keywords-2
   (append visual-basic-font-lock-keywords-1
           (eval-when-compile
-            `((,(concat "\\<" (regexp-opt visual-basic-all-keywords t) "\\>")
+            `((, (regexp-opt visual-basic-all-keywords 'words)
                    1 font-lock-keyword-face)))))
 
 (defvar visual-basic-font-lock-keywords visual-basic-font-lock-keywords-1)
@@ -472,6 +491,20 @@ Commands:
 
 ;; Would like to do this at compile-time.
 (visual-basic-construct-keyword-abbrev-table)
+
+
+(defun visual-basic-upgrade-keyword-abbrev-table ()
+  "Use this in case of upgrading visual-basic-mode.el"
+  (interactive)
+  
+  (let ((words visual-basic-all-keywords)
+		(word nil)
+		(list nil))
+	(while words
+	  (setq word (car words)
+			words (cdr words))
+	  (setq list (cons (list (downcase word) word) list)))
+	(define-abbrev-table 'visual-basic-mode-abbrev-table list)))
 
 
 (defun visual-basic-in-code-context-p ()
@@ -687,20 +720,66 @@ changed files."
       (visual-basic-previous-line-of-code))
     (goto-char here)))
 
-(defun visual-basic-find-matching-stmt (open-regexp close-regexp)
+(defun visual-find-matching-stmt (open-p close-p)
   ;; Searching backwards
   (let ((level 0))
     (while (and (>= level 0) (not (bobp)))
       (visual-basic-previous-line-of-code)
       (visual-basic-find-original-statement)
-      (cond ((looking-at close-regexp)
+      (cond ((funcall close-p)
              (setq level (+ level 1)))
-            ((looking-at open-regexp)
+            ((funcall open-p)
              (setq level (- level 1)))))))
 
+(defun visual-basic-find-matching-stmt (open-regexp close-regexp)
+  (visual-find-matching-stmt 
+   (lambda () (looking-at open-regexp))
+   (lambda () (looking-at close-regexp))))
+
+(defun visual-basic-if-not-on-single-line ()
+  (if (looking-at visual-basic-if-regexp)
+	  (save-excursion
+		(beginning-of-line)
+		;; 1st reconstruct complete line
+		(let* ((start-point (point)) (complete-line) (line-beg start-point) line-end )
+		  (while (null line-end)
+			(end-of-line)
+			(setq line-end (point))
+			(if (search-backward "_" line-beg t)
+			  (if (looking-at  "_[ \t]+$")
+				;; folded line
+				  (progn
+					(setq line-end (1- (point))
+						  complete-line (cons (buffer-substring-no-properties line-beg line-end) complete-line)
+						  line-end nil)
+					(beginning-of-line 2)
+					(setq line-beg (point)))
+				;; _ found, but not a folded line (this is a syntax error)
+				(setq complete-line (cons (buffer-substring-no-properties line-beg line-end) complete-line)))
+			  ;; not a folded line
+			  (setq complete-line (cons (buffer-substring-no-properties line-beg line-end) complete-line))))
+		  (setq complete-line (mapconcat (lambda (x) x) (nreverse complete-line) " "))
+		  ;; not complete line has been reconstructed, drop confusing elements
+		  (let (p1 p2)
+			;; remove any VB string from complete line, as strings may disrupt : and ' detection
+			(while (and (setq p1 (string-match "\"" complete-line))
+						(setq p2 (string-match "\"" complete-line (1+ p1))))
+			  (setq complete-line (concat (substring complete-line 0 p1)
+										  (substring complete-line (1+ p2)))))
+			;; now drop tailing comment if any
+			(when (setq p1 (string-match "'" complete-line))
+			  (setq complete-line (substring complete-line p1)))
+			;; now drop 1st concatenated instruction is any
+			(when (setq p1 (string-match ":" complete-line))
+			  (setq complete-line (substring complete-line p1))))
+		  ;;
+		  (string-match "Then\\s-*$" complete-line))); end (save-excursion ...)
+	;; else, not a basic if
+	nil))
+
 (defun visual-basic-find-matching-if ()
-  (visual-basic-find-matching-stmt visual-basic-if-regexp
-                                   visual-basic-endif-regexp))
+  (visual-find-matching-stmt 'visual-basic-if-not-on-single-line
+							 (lambda () (looking-at visual-basic-endif-regexp))))
 
 (defun visual-basic-find-matching-select ()
   (visual-basic-find-matching-stmt visual-basic-select-regexp
@@ -826,10 +905,10 @@ changed files."
                  (cond ((looking-at visual-basic-defun-start-regexp)
                         (+ indent visual-basic-mode-indent))
 
-                       ((and (or (looking-at visual-basic-if-regexp)
-                                 (looking-at visual-basic-else-regexp))
-                             (not (and visual-basic-allow-single-line-if
-                                       (looking-at visual-basic-ifthen-regexp))))
+                       ((or (visual-basic-if-not-on-single-line)
+							(and (looking-at visual-basic-else-regexp)
+								 (not (and visual-basic-allow-single-line-if
+										   (looking-at visual-basic-ifthen-regexp)))))
                         (+ indent visual-basic-mode-indent))
 
                        ((or (looking-at visual-basic-select-regexp)
@@ -932,3 +1011,7 @@ If file is relative then default-directory provides the path"
 
 
 ;;; visual-basic-mode.el ends here
+
+
+;; External Links
+;; * [http://visualbasic.freetutes.com/ Visual Basic tutorials]
