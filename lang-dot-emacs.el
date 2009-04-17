@@ -1,6 +1,14 @@
 (load "site-start")
 (rc-lang)
 
+(progn
+  (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
+  (defun rc-js2-mode ()
+    (setq js2-basic-offset 2
+          indent-tabs-mode nil
+          moz-minor-mode 1))
+  (add-hook 'js2-mode-hook 'rc-js2-mode))
+
 ;; things for cocoa emacs 23
 (progn
   (require 'mwheel)
@@ -69,7 +77,7 @@
 
 (blink-cursor-mode -1)
 
-(global-set-key "\C-z" nil)
+(global-set-key "\C-z" 'undo)
 
 (require 'lang-mail-rc)
 
