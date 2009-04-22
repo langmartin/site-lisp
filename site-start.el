@@ -31,6 +31,7 @@ Set it intead of tab-width.")
    ;; over the filesystem.
    backup-by-copying t
    backup-directory-alist (cons '("." . "~/.emacs.d/backup/") backup-directory-alist)
+   version-control t
    ;; version control settings
    vc-follow-symlinks t
    vc-suppress-confirm t
