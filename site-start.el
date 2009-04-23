@@ -104,15 +104,7 @@ Set it intead of tab-width.")
 
   ;;; Load if it's there
   (require 'php-mode "php-mode" t)
-  ;; (add-to-list 'vc-handled-backends 'DARCS)
-  ;; (load "darcsum" t)
-  (defun rc-broken-version-of-css-mode-so-please-dont ()
-    (if (require 'css-mode "css-mode-fixed" t)
-        (progn
-          (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
-          (add-hook 'css-mode-hook
-                    '(lambda ()
-                       (setq css-indent-offset 4))))))
+
   ;; (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
   (rc-maybe-session)
@@ -152,10 +144,13 @@ Set it intead of tab-width.")
   (interactive)
   (require 'js2-mode)
   (custom-set-variables
-   (list 'js2-basic-offset rc-coptix-tab-width))
+   '(js2-basic-offset 2))
   (rc-javascript-auto-mode-alist nil)
   (add-to-list 'auto-mode-alist
-               '("\\.js\\'" . js2-mode)))
+               '("\\.js\\'" . js2-mode))
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil))))
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))

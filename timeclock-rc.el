@@ -1,3 +1,5 @@
+(require 'timeclock)
+
 (defun timeclock-projects-to-seconds ()
   (mapcar (lambda (proj)
             (cons (car proj)
@@ -36,4 +38,14 @@ time, rounded to the quarter hour."
          (setq total (+ total time)))))
     (insert (format "%s, %.2f\n" "total" total))))
 
-(provide 'timeclock-extra)
+(progn
+  (require 'timeclock)
+  (define-key ctl-x-map "ti" 'timeclock-in)
+  (define-key ctl-x-map "to" 'timeclock-out)
+  (define-key ctl-x-map "tc" 'timeclock-change)
+  (define-key ctl-x-map "tr" 'timeclock-reread-log)
+  (define-key ctl-x-map "tv" 'timeclock-visit-timelog)
+  (define-key ctl-x-map "ts" 'timeclock-status-string)
+  (define-key ctl-x-map "tw" 'timeclock-when-to-leave-string))
+
+(provide 'timeclock-rc)

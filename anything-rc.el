@@ -97,4 +97,4 @@
 (global-set-key "\C-x " 'anything)
 (global-set-key "\C-x\C-y" (something-command anything-c-source-kill-ring))
 
-(provide 'rc-anything)
+(provide 'anything-rc)
