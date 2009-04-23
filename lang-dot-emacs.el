@@ -32,7 +32,7 @@
 ;;              )))
 
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
-(global-set-key "\C-w" 'kill-backward-word-or-region)
+;; (global-set-key "\C-w" 'kill-backward-word-or-region)
 (global-set-key "\C-h" 'help)
 
 (iswitchb-mode 1)
@@ -180,7 +180,6 @@
        ("c" . git-checkout)))))
 
 (require 'nav)
-(require 'timeclock-extra)
 (require 'hide-region)
 (require 'moz-rc)
 
