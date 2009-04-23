@@ -96,7 +96,7 @@
 (global-set-key "\C-x\C-b" 'ibuffer)
 
 (progn
-  (require 'rc-term-mode)
+  (require 'term-mode-rc)
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "gray80"
         term-default-fg-color "black"))

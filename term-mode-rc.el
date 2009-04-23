@@ -121,4 +121,4 @@ switch out smb or sshfs for tramp.")
 ;;          (concat "/" host ":" (tramp-localname default-directory))
 ;;        default-directory))))
 
-(provide 'rc-term-mode)
+(provide 'term-mode-rc)
