@@ -184,3 +184,10 @@
 (require 'moz-rc)
 
 (column-number-mode t)
+
+(progn
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (auto-fill-mode 1))))
