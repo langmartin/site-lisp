@@ -147,28 +147,37 @@
  "Pull all of the definitions out of the data returned from
 google, and print in a temp-buffer"
  (let ((count 0)
-       (header (concat "Definitions for " search-word))
        (temp-buffer-show-hook #'google-define-font-lock))
-   (with-output-to-temp-buffer 
-       (concat "*Definitions: " search-word "*")
-     (princ (concat header "\n\n"))
-     (set-buffer data-buffer)
-     (goto-char (point-min))
-     (while (search-forward-regexp "<li>\\([^<]+\\)" nil t)
-       (incf count)
-       (let ((definition 
-               (replace-regexp-in-string "\\(\n\\|\r\\|\t\\)" "" 
-                                         (match-string 1))))
-         (princ
-          (with-temp-buffer
-            (setf fill-prefix "     ")
-            (save-excursion
-              (insert (format "%3d. %s\n\n" count definition)))
-            (fill-paragraph nil)
-            (google-define-replace-html)
-            (google-define-replace-unicode)
-            (buffer-string))))))
-   (message header)))
+   (set-buffer data-buffer)
+   (goto-char (point-min))
+   (let* ((did-you-mean (search-forward-regexp "Did you mean: .*<i>\\([^<]+\\)" nil t))
+          (header (concat (if did-you-mean "Did you mean "
+                            "Definitions for ")
+                          search-word))
+          (headerb (concat (if did-you-mean "*Did you mean: "
+                             "*Definitions: ")
+                           search-word
+                           "*")))
+     (with-output-to-temp-buffer 
+         (concat headerb search-word "*")
+       (princ (concat header "\n\n"))
+       (while (or did-you-mean
+                  (search-forward-regexp "<li>\\([^<]+\\)" nil t))
+         (incf count)
+         (if did-you-mean (setq did-you-mean nil))
+         (let ((definition 
+                 (replace-regexp-in-string "\\(\n\\|\r\\|\t\\)" "" 
+                                           (match-string 1))))
+           (princ
+            (with-temp-buffer
+              (setf fill-prefix "     ")
+              (save-excursion
+                (insert (format "%3d. %s\n\n" count definition)))
+              (fill-paragraph nil)
+              (google-define-replace-html)
+              (google-define-replace-unicode)
+              (buffer-string))))))
+     (message header))))
 
 (defun google-define ()
   "Ask google for the definition of a word.
