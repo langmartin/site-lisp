@@ -191,3 +191,7 @@
   (add-hook 'org-mode-hook
             (lambda ()
               (auto-fill-mode 1))))
+
+(progn
+  (require 'google-define)
+  (global-set-key "\M-$" 'google-define))
