@@ -150,33 +150,34 @@ google, and print in a temp-buffer"
        (temp-buffer-show-hook #'google-define-font-lock))
    (set-buffer data-buffer)
    (goto-char (point-min))
-   (let* ((did-you-mean (search-forward-regexp "Did you mean: .*<i>\\([^<]+\\)" nil t))
-          (header (concat (if did-you-mean "Did you mean "
-                            "Definitions for ")
-                          search-word))
-          (headerb (concat (if did-you-mean "*Did you mean: "
-                             "*Definitions: ")
-                           search-word
-                           "*")))
+   (let* ((did-you-mean
+           (if (search-forward-regexp "Did you mean: .*<i>\\([^<]+\\)" nil t)
+               (match-string 1)
+             nil))
+          (header (concat (if did-you-mean "Did you mean " "Definitions for ")
+                          (or did-you-mean search-word))))
      (with-output-to-temp-buffer 
-         (concat headerb search-word "*")
+         (concat (if did-you-mean "*Did you mean: " "*Definitions: ")
+                 (or did-you-mean search-word)
+                 "*")
        (princ (concat header "\n\n"))
        (while (or did-you-mean
                   (search-forward-regexp "<li>\\([^<]+\\)" nil t))
          (incf count)
-         (if did-you-mean (setq did-you-mean nil))
-         (let ((definition 
-                 (replace-regexp-in-string "\\(\n\\|\r\\|\t\\)" "" 
-                                           (match-string 1))))
-           (princ
-            (with-temp-buffer
-              (setf fill-prefix "     ")
-              (save-excursion
-                (insert (format "%3d. %s\n\n" count definition)))
-              (fill-paragraph nil)
-              (google-define-replace-html)
-              (google-define-replace-unicode)
-              (buffer-string))))))
+         (let ((match (or did-you-mean (match-string 1))))
+           (setq did-you-mean nil)
+           (let ((definition 
+                   (replace-regexp-in-string "\\(\n\\|\r\\|\t\\)" "" 
+                                             match)))
+             (princ
+              (with-temp-buffer
+                (setf fill-prefix "     ")
+                (save-excursion
+                  (insert (format "%3d. %s\n\n" count definition)))
+                (fill-paragraph nil)
+                (google-define-replace-html)
+                (google-define-replace-unicode)
+                (buffer-string)))))))
      (message header))))
 
 (defun google-define ()
