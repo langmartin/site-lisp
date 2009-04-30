@@ -124,8 +124,8 @@
   ;; (defun bitlbee-identify ()
   ;;   (when (and (string= "testing.bitlbee.org" erc-session-server)
   ;; 	       (string= "&bitlbee" (buffer-name)))
-  ;;     (erc-message "PRIVMSG" (format "%s identify %s" 
-  ;; 				     (erc-default-target) 
+  ;;     (erc-message "PRIVMSG" (format "%s identify %s"
+  ;; 				     (erc-default-target)
   ;; 				     "<password>"))))
   ;; (custom-set-variables
   ;;  '(erc-join-hook (quote (bitlbee-identify))))
@@ -141,17 +141,17 @@
 
   '(setq erc-autojoin-channels-alist
 	 '(("freenode.net" "#emacs" "#scheme" "#medium")))
-  
+
   (defun irc-freenode ()
     (interactive)
     (erc :server "irc.freenode.net"
 	 :nick "langmartin"
 	 :full-name "Lang Martin"
 	 :password freenode-password))
-  
+
   (define-buffer-visitor visit-medium "#medium" 'irc)
   (global-set-key (kbd "H-m") 'visit-medium)
-  
+
   (defun irc () (interactive) (irc-freenode)))
 
 (progn
@@ -186,12 +186,15 @@
 (column-number-mode t)
 
 (progn
+  (require 'htmlize)
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
   (add-hook 'org-mode-hook
             (lambda ()
               (auto-fill-mode 1))))
 
-(progn
-  (require 'google-define)
-  (global-set-key "\M-$" 'google-define))
+(require 'google-define)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+(require 'asp-rc)

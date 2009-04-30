@@ -47,7 +47,8 @@ Set it intead of tab-width.")
   (show-paren-mode 1)
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
-  (add-to-list 'auto-mode-alist '("/tmp/mutt.*" . mail-mode))
+  (add-to-auto-mode-alist '("/tmp/mutt.*" . mail-mode)
+                          '("mail\\.google\\.com.*" . mail-mode))
 
   (add-hook '2C-mode-hook
             '(lambda ()
@@ -123,31 +124,20 @@ Set it intead of tab-width.")
       (setq lst (cdr lst)))
     value))
 
-(defun rc-javascript-auto-mode-alist (mode)
-  (let ((files `("\\.js\\'" "\\.inc\\'" "\\.asp\\'" "\\.asa\\'")))
-    (setq auto-mode-alist
-          (filter (lambda (x)
-                    (not (member (car x) files)))
-                  auto-mode-alist))
-    (if mode
-        (mapc (lambda (x)
-                (setq auto-mode-alist
-                      (cons (cons x mode)
-                            auto-mode-alist)))
-              files))))
-
-(defun rc-c-like-javascript-mode-which-crashes-emacs ()
-  (require 'javascript-mode "javascript")
-  (rc-javascript-auto-mode-alist 'javascript-mode))
+(defun add-to-auto-mode-alist (&rest lst)
+  (mapc (lambda (new)
+          (setq auto-mode-alist
+                (cons new
+                      auto-mode-alist)))
+        lst))
 
 (defun rc-js2-javascript-mode ()
   (interactive)
   (require 'js2-mode)
   (custom-set-variables
    '(js2-basic-offset 2))
-  (rc-javascript-auto-mode-alist nil)
-  (add-to-list 'auto-mode-alist
-               '("\\.js\\'" . js2-mode))
+  (add-to-auto-mode-alist
+   '("\\.js\\'" . js2-mode))
   (add-hook 'js2-mode-hook
             (lambda ()
               (setq indent-tabs-mode nil))))
@@ -543,7 +533,7 @@ repeated unfill entire region as one paragraph."
             (add-hook x function append local))
           hooks))
 
-(add-to-list 'auto-mode-alist '("\\.psql$" . sql-mode))
+(add-to-auto-mode-alist '("\\.psql$" . sql-mode))
 
 (defun customize-sql-mode-postgres ()
   (turn-on-font-lock)
