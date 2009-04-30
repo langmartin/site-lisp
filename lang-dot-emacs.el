@@ -21,15 +21,16 @@
 
 (require 'kmacro)
 
-;; (progn
-;;  (defun color-grey () (color-theme-fischmeister) t)
-;;  (defun color-slate () (color-theme-subtle-hacker) t)
-;;  (and (require 'color-theme "color-theme" t)
-;;       (progn (color-theme-initialize)
-;;              ;; (color-slate)
-;;              ;; (show-paren-mode nil)
-;;              (color-grey)
-;;              )))
+(progn
+  (require 'color-theme)
+  (color-theme-initialize)
+  ;; (color-theme-fischmeister)
+  ;; (color-theme-subtle-hacker)
+  ;; (color-theme-montz)
+  ;; (color-theme-shaman)
+  ;; (color-theme-bharadwaj)
+  (color-theme-langmartin)
+  )
 
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
@@ -147,6 +148,7 @@
     (erc :server "irc.freenode.net"
 	 :nick "langmartin"
 	 :full-name "Lang Martin"
+         :port 8001
 	 :password freenode-password))
 
   (define-buffer-visitor visit-medium "#medium" 'irc)
@@ -191,7 +193,8 @@
   (global-set-key "\C-ca" 'org-agenda)
   (add-hook 'org-mode-hook
             (lambda ()
-              (auto-fill-mode 1))))
+              (auto-fill-mode 1)))
+  (require 'org-collector))
 
 (require 'google-define)
 (menu-bar-mode -1)
