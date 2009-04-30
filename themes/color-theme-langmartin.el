@@ -11,7 +11,7 @@
       nil
       (erc-timestamp-face ((t (:bold t :foreground "green4"))))
       (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
-      (eshell-prompt-face ((t (:bold t :foreground "DarkRed"))))
+      (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
       (font-lock-comment-face ((t (:foreground "grey50"))))
       (font-lock-function-name-face ((t (:bold t :foreground "SlateBlue"))))
       (match ((t ,match)))
