@@ -114,75 +114,14 @@
 
 (require 'timeclock-rc)
 
-(progn
-  (defun irc-bitlbee ()
-    (interactive)
-    (erc-tls :server "testing.bitlbee.org"
-	     :port 6668
-	     :nick "langmartin"
-	     :full-name "Lang Martin"))
+(require 'irc-rc)
 
-  ;; (defun bitlbee-identify ()
-  ;;   (when (and (string= "testing.bitlbee.org" erc-session-server)
-  ;; 	       (string= "&bitlbee" (buffer-name)))
-  ;;     (erc-message "PRIVMSG" (format "%s identify %s"
-  ;; 				     (erc-default-target)
-  ;; 				     "<password>"))))
-  ;; (custom-set-variables
-  ;;  '(erc-join-hook (quote (bitlbee-identify))))
-
-  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
-  (add-hook 'erc-text-matched-hook 'erc-growl-match)
-  (erc-match-mode 1)
-
-  (defun erc-hide-notices () "hide all notices in a very busy channel"
-    (interactive)
-    (make-local-variable 'erc-echo-notice-always-hook)
-    (setq erc-echo-notice-always-hook nil))
-
-  '(setq erc-autojoin-channels-alist
-	 '(("freenode.net" "#emacs" "#scheme" "#medium")))
-
-  (defun irc-freenode ()
-    (interactive)
-    (erc :server "irc.freenode.net"
-	 :nick "langmartin"
-	 :full-name "Lang Martin"
-         :port 8001
-	 :password freenode-password))
-
-  (define-buffer-visitor visit-medium "#medium" 'irc)
-  (global-set-key (kbd "H-m") 'visit-medium)
-
-  (defun irc () (interactive) (irc-freenode)))
-
-(progn
-  (defmacro define-shellcmd (name cmd)
-    `(defun ,name ()
-       (interactive)
-       (shell-command ,cmd)))
-  (define-shellcmd git-status "git status")
-  (define-shellcmd git-pull "git pull -q")
-  (defun git-merge (branch)
-    (interactive "sBranch: ")
-    (shell-command (concat "git merge -q " branch)))
-  (defun git-push (extra)
-    (interactive "sPush: ")
-    (shell-command (concat "git push " extra)))
-  (define-shellcmd git-branches "git branch -av")
-  (defun git-checkout (branch)
-    (interactive "sBranch: ")
-    (shell-command (concat "git checkout " branch)))
-  (define-key ctl-x-map "g"
-    (easy-mmode-define-keymap
-     '(("s" . git-status)
-       ("p" . git-pull)
-       ("m" . git-merge)
-       ("b" . git-branches)
-       ("c" . git-checkout)))))
+(require 'git-commands)
 
 (require 'nav)
+
 (require 'hide-region)
+
 (require 'moz-rc)
 
 (column-number-mode t)
@@ -191,12 +130,14 @@
   (require 'htmlize)
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-c." 'org-time-stamp)
   (add-hook 'org-mode-hook
             (lambda ()
               (auto-fill-mode 1)))
   (require 'org-collector))
 
 (require 'google-define)
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
