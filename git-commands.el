@@ -28,3 +28,5 @@
      ("m" . git-merge)
      ("b" . git-branches)
      ("c" . git-checkout))))
+
+(provide 'git-commands)
