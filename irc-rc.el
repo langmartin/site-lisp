@@ -15,7 +15,7 @@
 ;;  '(erc-join-hook (quote (bitlbee-identify))))
 
 (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
-(add-hook 'erc-text-matched-hook 'erc-growl-match)
+;; (add-hook 'erc-text-matched-hook 'erc-growl-match)
 (erc-match-mode 1)
 
 (defun erc-hide-notices () "hide all notices in a very busy channel"
