@@ -21,44 +21,6 @@
 
 (require 'kmacro)
 
-(progn
-  (require 'color-theme)
-  (color-theme-initialize)
-  ;; (color-theme-fischmeister)
-  ;; (color-theme-subtle-hacker)
-  ;; (color-theme-montz)
-  ;; (color-theme-shaman)
-  ;; (color-theme-bharadwaj)
-
-  (defun color-theme-langmartin ()
-    (interactive)
-    (color-theme-bharadwaj)
-    (let ((color-theme-is-cumulative t)
-          (match '((t (:background "lightgoldenrod2"))))
-          (string '((t (:foreground "DarkRed"))))
-          (string-b '((t (:bold t :foreground "DarkRed"))))
-          (comment '((t (:foreground "grey50"))))
-          )
-      (color-theme-install
-       `(color-theme-langmartin
-         ((background-color . "ivory"))
-         nil
-         (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
-         (erc-notice-face ,comment)
-         (erc-timestamp-face ((t (:bold t :foreground "green4"))))
-         (eshell-prompt ,string-b)
-         (font-lock-comment-face ,comment)
-         (font-lock-function-name-face ((t (:bold t :foreground "SlateBlue"))))
-         (match ,match)
-         (minibuffer-noticeable-prompt ,match)
-         (org-agenda-restriction-lock ,match)
-         (org-clock-overlay ,match)
-         (org-todo ,string)
-         ))))
-  
-  (color-theme-langmartin)
-  )
-
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
 (global-set-key "\C-h" 'help)
@@ -169,3 +131,38 @@
 (tool-bar-mode -1)
 
 (require 'asp-rc)
+
+(progn
+  (require 'color-theme)
+  (color-theme-initialize)
+  ;; (color-theme-fischmeister)
+  ;; (color-theme-subtle-hacker)
+  ;; (color-theme-montz)
+  ;; (color-theme-shaman)
+  ;; (color-theme-bharadwaj)
+
+  (defun color-theme-langmartin ()
+    (interactive)
+    (color-theme-bharadwaj)
+    (setq isearch nil)
+    (let ((color-theme-is-cumulative t))
+      (color-theme-install
+       '(color-theme-langmartin
+         ((background-color . "ivory"))
+         nil
+         (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
+         (erc-notice-face ((t (:foreground "grey70"))))
+         (erc-timestamp-face ((t (:bold t :foreground "green4"))))
+         (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
+         (isearch ((t (:inherit match))))
+         (iswitchb-single-match ((t (:inherit font-lock-function-name-face))))
+         (font-lock-comment-face ((t (:foreground "grey50"))))
+         (font-lock-function-name-face ((t (:foreground "SlateBlue" :slant normal :weight bold))))
+         (match ((t (:background "lightgoldenrod2"))))
+         (minibuffer-noticeable-prompt ((t (:inherit match))))
+         (org-agenda-restriction-lock ((t (:inherit match))))
+         (org-clock-overlay ((t (:inherit match))))
+         (org-todo ((t (:inherit font-lock-string-face))))
+         ))))
+
+  (color-theme-langmartin))
