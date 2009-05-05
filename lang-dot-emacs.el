@@ -144,8 +144,9 @@
   (defun color-theme-langmartin ()
     (interactive)
     (color-theme-bharadwaj)
-    (setq isearch nil)
     (let ((color-theme-is-cumulative t))
+      (setq isearch nil
+            erc-notice-face nil)
       (color-theme-install
        '(color-theme-langmartin
          ((background-color . "ivory"))
