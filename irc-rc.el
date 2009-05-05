@@ -1,3 +1,5 @@
+(require 'erc)
+
 (defun irc-bitlbee ()
   (interactive)
   (erc-tls :server "testing.bitlbee.org"
