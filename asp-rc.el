@@ -21,6 +21,7 @@
 (put 'narrow-to-region 'disabled nil)
 
 (progn
+  (global-set-key [f4] 'nav)
   (global-set-key [M-f4] 'delete-frame)
   (global-set-key [f5] 'eshell)
   (global-set-key [f6] 'imenu)

@@ -122,7 +122,8 @@
   (global-set-key "\C-c." 'org-time-stamp)
   (add-hook 'org-mode-hook
             (lambda ()
-              (auto-fill-mode 1)))
+              (auto-fill-mode 1)
+              (set-variable 'comment-start nil 'make-local)))
   (require 'org-collector))
 
 (require 'google-define)
@@ -145,8 +146,7 @@
     (interactive)
     (color-theme-bharadwaj)
     (let ((color-theme-is-cumulative t))
-      (setq isearch nil
-            erc-notice-face nil)
+      (setq isearch nil)
       (color-theme-install
        '(color-theme-langmartin
          ((background-color . "ivory"))
