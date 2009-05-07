@@ -84,11 +84,6 @@
 
 (defun end-of-linep () (looking-at "$"))
 
-;; (require 'toggle-letter-case)
-
-(require 'less)
-;; (add-hook 'find-file-hooks 'auto-less-minor-mode)
-
 (progn
   (require 'winner)
   (winner-mode 1))
@@ -110,8 +105,6 @@
 				nil
 			      ,buffer-name))
 	(call-interactively ,command))))
-
-(require 'timeclock-rc)
 
 (require 'irc-rc)
 
