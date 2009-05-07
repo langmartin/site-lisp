@@ -131,17 +131,6 @@ Set it intead of tab-width.")
                       auto-mode-alist)))
         lst))
 
-(defun rc-js2-javascript-mode ()
-  (interactive)
-  (require 'js2-mode)
-  (custom-set-variables
-   '(js2-basic-offset 2))
-  (add-to-auto-mode-alist
-   '("\\.js\\'" . js2-mode))
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode nil))))
-
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
        (progn
@@ -601,8 +590,7 @@ repeated unfill entire region as one paragraph."
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
-  (setq uniquify-buffer-name-style 'reverse)
-  (rc-js2-javascript-mode))
+  (setq uniquify-buffer-name-style 'reverse))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
