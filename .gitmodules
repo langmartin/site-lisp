@@ -1,9 +1,0 @@
-[submodule "eproject"]
-	path = eproject
-	url = git://git.jrock.us/eproject
-[submodule "textmate"]
-	path = textmate
-	url = git://github.com/defunkt/textmate.el.git
-[submodule "org-mode"]
-	path = org-mode
-	url = http://repo.or.cz/r/org-mode.git
