@@ -65,7 +65,7 @@ Set it intead of tab-width.")
   (add-hooks '(html-mode-hook)
              'turn-off-auto-fill)
 
-  (global-set-key "\C-h" 'delete-backward-char) 
+  (global-set-key "\C-h" 'delete-backward-char)
   (global-set-key "\M-h" 'help)         ; was mark-paragraph
   (global-set-key [f1] 'help)
   (global-set-key "OP" 'help)
@@ -259,7 +259,7 @@ Set it intead of tab-width.")
    (sxml-convert 1)
 
    (c-define 5)
-   
+
    (with-pg 1)
 
    (let-fluids with-...)
@@ -272,7 +272,7 @@ Set it intead of tab-width.")
    (conde 0)
    (match 1)
    (receive 2)
-   
+
    ;; ykk-ports
    (with-current-output-port 1)
    (let-current-output-port 1)

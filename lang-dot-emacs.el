@@ -25,7 +25,9 @@
 
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
+
 (global-set-key "\C-h" 'help)
+(global-set-key "\M-h" 'mark-paragraph)
 
 (iswitchb-mode 1)
 
@@ -174,7 +176,7 @@
 
 (progn
   (global-set-key (kbd "C-x C-c") nil)
-  
+
   (global-set-key [f1] 'vi-mode)
   (global-set-key [f4] 'nav)
   (global-set-key [M-f4] 'delete-frame)
