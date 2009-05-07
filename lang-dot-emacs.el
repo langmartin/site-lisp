@@ -143,6 +143,8 @@
 
 (require 'asp-rc)
 
+(require 'compile-site-lisp)
+
 (progn
   (require 'color-theme)
   (color-theme-initialize)
@@ -177,8 +179,6 @@
          ))))
 
   (color-theme-langmartin))
-
-
 
 (progn
   (global-set-key (kbd "C-x C-c") nil)
