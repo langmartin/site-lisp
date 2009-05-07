@@ -29,6 +29,12 @@
 (global-set-key "\C-h" 'help)
 (global-set-key "\M-h" 'mark-paragraph)
 
+(require 'winner)
+(winner-mode 1)
+
+(global-set-key (kbd "C-M-$") 'google-define)
+(global-set-key "\C-z" 'undo)
+
 (iswitchb-mode 1)
 
 (setq ring-bell-function nil)

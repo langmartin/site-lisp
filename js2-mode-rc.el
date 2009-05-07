@@ -6,7 +6,7 @@
  )
 
 (add-to-auto-mode-alist
- '("\\.js\\'" . js2-mode))
+ '(("\\.js\\'" . js2-mode)))
 
 (add-hook 'js2-mode-hook
           (lambda ()

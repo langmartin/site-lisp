@@ -5,13 +5,9 @@
   (widen)
   (html-mode))
 
-(setq auto-mode-alist
-      (cons '("\\.asp$" . html-mode)
-	    auto-mode-alist))
-
 (add-to-auto-mode-alist
- '("\\.asp$" . html-mode)
- '("\\.asa$" . html-mode))
+ '(("\\.asp$" . html-mode)
+   ("\\.asa$" . html-mode)))
 
 (add-hook 'sgml-mode-hook
 	  (lambda ()

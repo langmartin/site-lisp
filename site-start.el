@@ -47,8 +47,8 @@ Set it intead of tab-width.")
   (show-paren-mode 1)
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
-  (add-to-auto-mode-alist '("/tmp/mutt.*" . mail-mode)
-                          '("mail\\.google\\.com.*" . mail-mode))
+  (add-to-auto-mode-alist '(("/tmp/mutt.*" . mail-mode)
+                            ("mail\\.google\\.com.*" . mail-mode)))
 
   (add-hook '2C-mode-hook
             '(lambda ()
@@ -124,11 +124,23 @@ Set it intead of tab-width.")
       (setq lst (cdr lst)))
     value))
 
-(defun add-to-auto-mode-alist (&rest lst)
+(defun add-to-auto-mode-alist (lst)
+  "Add an alist to the front of auto-mode-alist"
   (mapc (lambda (new)
           (setq auto-mode-alist
                 (cons new
                       auto-mode-alist)))
+        lst))
+
+(defun add-to-path (lst)
+  "Add a list of paths to the ends of PATH and exec-path"
+  (mapc (lambda (path)
+          (add-to-list 'exec-path path 'append)
+          (setenv "PATH"
+                  (concat (getenv "PATH")
+                          (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
+                                (t ":"))
+                          path)))
         lst))
 
 (defun rc-emacs22-only ()
@@ -522,7 +534,7 @@ repeated unfill entire region as one paragraph."
             (add-hook x function append local))
           hooks))
 
-(add-to-auto-mode-alist '("\\.psql$" . sql-mode))
+(add-to-auto-mode-alist '(("\\.psql$" . sql-mode)))
 
 (defun customize-sql-mode-postgres ()
   (turn-on-font-lock)
