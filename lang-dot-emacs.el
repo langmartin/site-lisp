@@ -91,7 +91,7 @@
 (progn
   (require 'term-mode-rc)
   ;; this seems to be a bug in nightly-build, and matches my theme
-  (setq term-default-bg-color "gray80"
+  (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
 
 (defmacro define-buffer-visitor (visitor-name buffer-name command)
