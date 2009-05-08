@@ -177,7 +177,7 @@
   (global-set-key (kbd "C-x C-c") nil)
 
   (global-set-key [f1] 'vi-mode)
-  (global-set-key [f4] 'nav)
+
   (global-set-key [M-f4] 'delete-frame)
   (global-set-key [f5] 'eshell)
   (global-set-key [f6] 'imenu)
@@ -188,3 +188,14 @@
   (global-set-key [f9] 'css-mode)
   (global-set-key [f11] 'js2-mode)
   (global-set-key [f12] 'rc-sgml-mode-for-asp))
+
+(progn
+ (defun split-window-horizontally-minsize (&optional size)
+   "Wrapper for spit-window-horizontally that gives 80 columns"
+   (interactive "P")
+   (let ((size (if size (prefix-numeric-value size)
+                 85)))
+     (message (format "size: %d" size))
+     (split-window-horizontally size)))
+ (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
+ (setq truncate-partial-width-windows 80))
