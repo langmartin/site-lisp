@@ -25,6 +25,7 @@
   (easy-mmode-define-keymap
    '(("s" . git-status)
      ("p" . git-pull)
+     ("P" . git-push)
      ("m" . git-merge)
      ("b" . git-branches)
      ("c" . git-checkout))))
