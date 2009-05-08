@@ -1,3 +1,13 @@
+(custom-set-variables
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+ '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
+ '(erc-match-mode 1)
+ '(erc-autoaway-mode t)
+ '(erc-generate-log-file-name-function erc-generate-log-file-name-short)
+ '(erc-log-channels-directory "~/.emacs.d/log")
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#jquery" "#scheme"))))
+ )
+
 (require 'erc)
 
 (defun irc-bitlbee ()
@@ -15,13 +25,6 @@
 ;; 				     "<password>"))))
 ;; (custom-set-variables
 ;;  '(erc-join-hook (quote (bitlbee-identify))))
-
-(custom-set-variables
- '(erc-track-exclude-types ("JOIN" "NICK" "PART" "QUIT"))
- '(erc-match-mode 1)
- '(erc-autoaway-mode t)
- '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
- '(erc-log-channels-directory "~/.emacs.d/log"))
 
 (defun erc-hide-notices () "hide all notices in a very busy channel"
   (interactive)

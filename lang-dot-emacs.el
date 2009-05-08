@@ -47,7 +47,8 @@
     perl-mode-hook
     html-mode-hook
     css-mode-hook
-    python-mode-hook))
+    python-mode-hook
+    js2-mode-hook))
 
 (add-hooks programming-mode-hooks
            (lambda ()
@@ -56,9 +57,6 @@
 
 (add-hooks '(emacs-lisp-mode-hook python-mode-hook)
            (lambda () (eldoc-mode 1)))
-
-(add-hooks '(javascript-mode-hook)
-           (lambda () (local-set-key "\C-m" 'newline)))
 
 (require 'cx-timesheet)
 (rc-emacs-lisp-action)

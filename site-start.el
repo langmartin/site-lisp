@@ -143,6 +143,12 @@ Set it intead of tab-width.")
                           path)))
         lst))
 
+(defun set-variables (&rest lst)
+  "Set a list of variables using the same syntax as custom-set-variables"
+  (mapc (lambda (args)
+          (apply 'set args))
+        lst))
+
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))
        (progn
@@ -599,7 +605,6 @@ repeated unfill entire region as one paragraph."
             try-complete-lisp-symbol-partially
             try-complete-lisp-symbol)))
   (rc-function-keys-mlm 'global-set-key)
-  (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
   (setq uniquify-buffer-name-style 'reverse))
