@@ -3,7 +3,7 @@
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-match-mode 1)
  '(erc-autoaway-mode t)
- '(erc-generate-log-file-name-function erc-generate-log-file-name-short)
+ '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
  '(erc-log-channels-directory "~/.emacs.d/log")
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#jquery" "#scheme"))))
  )
