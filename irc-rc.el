@@ -1,4 +1,6 @@
-(custom-set-variables
+(require 'erc)
+
+(set-variables
  '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-match-mode 1)
@@ -7,8 +9,6 @@
  '(erc-log-channels-directory "~/.emacs.d/log")
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#jquery" "#scheme"))))
  )
-
-(require 'erc)
 
 (defun irc-bitlbee ()
   (interactive)

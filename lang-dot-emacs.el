@@ -125,7 +125,13 @@
             (lambda ()
               (auto-fill-mode 1)
               (set-variable 'comment-start nil 'make-local)))
-  (require 'org-collector))
+  (require 'org-collector)
+  (set-variables
+   '(nav-boring-file-regexps (quote ("\\.py[co]$" "\\.o$" "~$" "\\.bak$" "^\\.[^/]" "^\\./?$" "/\\." "\\.min\\.js$" "\\.elc$")))
+   '(org-agenda-files (quote ("c:/Documents and Settings/lmartin/My Documents/Code/sample-yui-dds/docs/spec.txt")))
+   '(org-enforce-todo-dependencies t)
+   '(org-log-done (quote time))
+   ))
 
 (require 'google-define)
 

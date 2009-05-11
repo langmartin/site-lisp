@@ -12,7 +12,7 @@ Set it intead of tab-width.")
 
 (defun rc-coptix ()
   "Common initialization options for Coptix"
-  (custom-set-variables
+  (set-variables
    `(tab-width ,rc-coptix-tab-width)
    `(c-basic-offset ,rc-coptix-tab-width)
    `(standard-indent ,rc-coptix-tab-width)
@@ -146,7 +146,8 @@ Set it intead of tab-width.")
 (defun set-variables (&rest lst)
   "Set a list of variables using the same syntax as custom-set-variables"
   (mapc (lambda (args)
-          (apply 'set args))
+          (set (car args)
+               (eval (cadr args))))
         lst))
 
 (defun rc-emacs22-only ()
