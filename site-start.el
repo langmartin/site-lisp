@@ -27,11 +27,6 @@ Set it intead of tab-width.")
    ;; end sentences w/ just one space in text modes (french spacing
    sentence-end  "[.?!][]\"')]*\\($\\|\t\\| \\)[ \t\n]*"
    sentence-end-double-space nil
-   ;; make backup files in ~/emacs~/ rather than scattered around all
-   ;; over the filesystem.
-   backup-by-copying t
-   backup-directory-alist (cons '("." . "~/.emacs.d/backup/") backup-directory-alist)
-   version-control t
    ;; version control settings
    vc-follow-symlinks t
    vc-suppress-confirm t
@@ -43,6 +38,8 @@ Set it intead of tab-width.")
    ispell-local-dictionary "american"
    tex-default-mode 'plain-tex-mode
    tex-run-command "pdfetex")
+
+  (rc-backups-and-autosave-directory "~/.emacs.d/backup")
 
   (show-paren-mode 1)
   (transient-mark-mode 1)
@@ -111,6 +108,21 @@ Set it intead of tab-width.")
   (rc-maybe-session)
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
+
+(defun rc-backups-and-autosave-directory (backup)
+  "Set all the variables to move backups & autosave files out of
+the working directory"
+  (make-directory backup t)
+  (setq backup-by-copying t
+        delete-old-versions t
+        kept-new-versions 10
+        kept-old-versions 1
+        version-control t
+        backup-directory-alist `(("." . ,backup))
+        tramp-backup-directory-alist backup-directory-alist
+        auto-save-list-file-prefix (concat backup ".auto-saves-")
+        auto-save-file-name-transforms `((".*" ,backup t))
+        ))
 
 (progn
   (require 'rst)                    ; defines a slow, recursive filter
