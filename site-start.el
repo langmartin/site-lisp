@@ -39,8 +39,6 @@ Set it intead of tab-width.")
    tex-default-mode 'plain-tex-mode
    tex-run-command "pdfetex")
 
-  (rc-backups-and-autosave-directory "~/.emacs.d/backup")
-
   (show-paren-mode 1)
   (transient-mark-mode 1)
   (global-font-lock-mode 1)
@@ -109,20 +107,26 @@ Set it intead of tab-width.")
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
 
+(require 'cx-timesheet)
+
 (defun rc-backups-and-autosave-directory (backup)
   "Set all the variables to move backups & autosave files out of
 the working directory"
-  (make-directory backup t)
-  (setq backup-by-copying t
-        delete-old-versions t
-        kept-new-versions 10
-        kept-old-versions 1
-        version-control t
-        backup-directory-alist `(("." . ,backup))
-        tramp-backup-directory-alist backup-directory-alist
-        auto-save-list-file-prefix (concat backup ".auto-saves-")
-        auto-save-file-name-transforms `((".*" ,backup t))
-        ))
+  (let ((backup (if (eql "/" (string-ref backup (length backup)))
+                    backup
+                  (concat backup "/"))))
+   (make-directory backup t)
+   (setq backup-by-copying t
+         delete-old-versions t
+         kept-new-versions 10
+         kept-old-versions 1
+         version-control t
+         backup-directory-alist `(("." . ,backup))
+         tramp-backup-directory-alist backup-directory-alist
+         auto-save-list-file-prefix (concat backup ".auto-saves-")
+         auto-save-file-name-transforms `((".*" ,backup t)))))
+
+(rc-backups-and-autosave-directory "~/.emacs.d/backup")
 
 (defun global-set-keys (alist &optional local)
   "Set an alist of '(\"kbd\" . function) pairs globally. Locally
