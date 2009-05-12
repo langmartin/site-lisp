@@ -27,23 +27,18 @@
 ;; (global-set-key "\C-xl" (lambda () (interactive) (insert "lambda")))
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
 
-(global-set-key "\C-h" 'help)
-(global-set-key "\M-h" 'mark-paragraph)
+(global-set-keys
+ '(("C-h" . help)
+   ("M-h" . mark-paragraph)
+   ("C-M-$" . google-define)
+   ("C-z" . undo)
+
+   ("C-x C-b" . switch-to-buffer)
+   ("C-x x b" . ibuffer)))
 
 (require 'winner)
 (winner-mode 1)
-
-(global-set-key (kbd "C-M-$") 'google-define)
-(global-set-key "\C-z" 'undo)
-
-(progn
-
-  (global-set-keys
-   '(("C-x C-b" . switch-to-buffer)
-     ("C-x x b" . ibuffer))))
-
 (iswitchb-mode 1)
-
 (setq ring-bell-function nil)
 
 (defvar programming-mode-hooks
@@ -69,13 +64,8 @@
 (rc-emacs-lisp-action)
 
 (require 'lang-scripts)
-
 (require 'smooth-scrolling)
-
 (blink-cursor-mode -1)
-
-(global-set-key "\C-z" 'undo)
-
 (require 'lang-mail-rc)
 
 ;; (defun pykk-init ()
@@ -110,15 +100,10 @@
 	(call-interactively ,command))))
 
 (require 'irc-rc)
-
 (require 'git-commands)
-
 (require 'nav)
-
 (require 'hide-region)
-
 (require 'moz-rc)
-
 (column-number-mode t)
 
 (progn
@@ -145,7 +130,6 @@
 (tool-bar-mode -1)
 
 (require 'asp-rc)
-
 (require 'compile-site-lisp)
 
 (progn
@@ -180,7 +164,6 @@
          (org-clock-overlay ((t (:inherit match))))
          (org-todo ((t (:inherit font-lock-string-face))))
          ))))
-
   (color-theme-langmartin))
 
 (global-set-keys
@@ -199,12 +182,17 @@
    ("<f12>" . rc-sgml-mode-for-asp)))
 
 (progn
- (defun split-window-horizontally-minsize (&optional size)
-   "Wrapper for spit-window-horizontally that gives 80 columns"
-   (interactive "P")
-   (let ((size (if size (prefix-numeric-value size)
-                 85)))
-     (message (format "size: %d" size))
-     (split-window-horizontally size)))
- (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
- (setq truncate-partial-width-windows 80))
+  (scroll-bar-mode -1)
+
+  (defun split-window-horizontally-minsize (&optional other)
+    "Wrapper for spit-window-horizontally that gives 80 columns"
+    (interactive "P")
+    (let* ((extra 2) (size (+ extra 80)))
+      (if (< (window-width) (+ size extra window-min-width))
+          (split-window-horizontally other)
+        (if other
+            (split-window-horizontally (- (window-width) (- size extra)))
+          (split-window-horizontally size)))))
+  
+  (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
+  (setq truncate-partial-width-windows 80))
