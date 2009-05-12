@@ -27,29 +27,30 @@
    (list
     (read-from-minibuffer
      "Run git-grep (like this): "
-     "git-grep -n -H -e")))
+     "git-grep -n -H -e ")))
   (grep command))
 
-;; (defun lines-to-list ()
-;;   (save-excursion
-;;     (goto-char (point-min))
-;;     (let ((acc '()))
-;;       (while (not (eobp))
-;;         (search-forward-regexp "^[:space:]*\\(.*\\)[:space:]*$" nil t)
-;;         (setq acc (cons (match-string 1)
-;;                         acc)))
-;;       acc)))
+(defun lines-to-list ()
+  (let ((body (buffer-substring-no-properties (point-min) (point-max))))
+    (let ((acc '()) (idx 0) (len (length body)))
+      (while (< idx len)
+        (setq idx (+ (string-match "^[[:space:]]*\\(.*?\\)[[:space:]]*$" body idx)
+                     1))
+        (let ((got (match-string 1 body)))
+          (if (> (length got) 0)
+              (setq acc (cons got acc)))))
+      acc)))
 
-;; (defun git-grep-dired (command)
-;;   (interactive
-;;    (list
-;;     (read-from-minibuffer
-;;      "Run git-grep (like this): "
-;;      "git-grep -n -H -e")))
-;;   (with-temp-buffer
-;;     (let ((coding-system-for-read 'dos))
-;;      (shell-command command (current-buffer))
-;;      (dired ))))
+(defun git-grep-dired (command)
+  (interactive
+   (list
+    (read-from-minibuffer
+     "Run git-grep for dired (like this): "
+     "git-grep -l -e ")))
+  (with-temp-buffer
+    (shell-command command (current-buffer))
+    (dired (cons "*git-grep-dired*"
+                 (lines-to-list)))))
 
 (define-key ctl-x-map "g"
   (easy-mmode-define-keymap
@@ -59,6 +60,8 @@
      ("P" . git-push)
      ("m" . git-merge)
      ("b" . git-branches)
-     ("c" . git-checkout))))
+     ("c" . git-checkout)
+     ("g" . git-grep)
+     ("G" . git-grep-dired))))
 
 (provide 'git-commands)
