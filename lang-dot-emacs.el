@@ -35,6 +35,12 @@
 (global-set-key (kbd "C-M-$") 'google-define)
 (global-set-key "\C-z" 'undo)
 
+(progn
+
+  (global-set-keys
+   '(("C-x C-b" . switch-to-buffer)
+     ("C-x x b" . ibuffer))))
+
 (iswitchb-mode 1)
 
 (setq ring-bell-function nil)
@@ -86,8 +92,6 @@
   (require 'winner)
   (winner-mode 1))
 
-(global-set-key "\C-x\C-b" 'ibuffer)
-
 (progn
   (require 'term-mode-rc)
   ;; this seems to be a bug in nightly-build, and matches my theme
@@ -118,9 +122,10 @@
 
 (progn
   (require 'htmlize)
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-c." 'org-time-stamp)
+  (global-set-keys
+   '(("C-c l" . org-store-link)
+     ("C-c a" . org-agenda)
+     ("C-c ." . org-time-stamp)))
   (add-hook 'org-mode-hook
             (lambda ()
               (auto-fill-mode 1)
@@ -177,21 +182,20 @@
 
   (color-theme-langmartin))
 
-(progn
-  (global-set-key (kbd "C-x C-c") nil)
+(global-set-keys
+ '(("C-x C-c" . nil)
+   ("<f1>" . vi-mode)
 
-  (global-set-key [f1] 'vi-mode)
+   ("M-<f4>" . delete-frame)
+   ("<f5>" . eshell)
+   ("<f6>" . imenu)
+   ("<f7>" . normal-mode)
+   ("<f8>" . toggle-truncate-lines)
 
-  (global-set-key [M-f4] 'delete-frame)
-  (global-set-key [f5] 'eshell)
-  (global-set-key [f6] 'imenu)
-  (global-set-key [f7] 'normal-mode)
-  (global-set-key [f8] 'toggle-truncate-lines)
-
-  (global-set-key [f10] 'visual-basic-mode)
-  (global-set-key [f9] 'css-mode)
-  (global-set-key [f11] 'js2-mode)
-  (global-set-key [f12] 'rc-sgml-mode-for-asp))
+   ("<f10>" . visual-basic-mode)
+   ("<f9>" . css-mode)
+   ("<f11>" . js2-mode)
+   ("<f12>" . rc-sgml-mode-for-asp)))
 
 (progn
  (defun split-window-horizontally-minsize (&optional size)

@@ -124,6 +124,16 @@ the working directory"
         auto-save-file-name-transforms `((".*" ,backup t))
         ))
 
+(defun global-set-keys (alist &optional local)
+  "Set an alist of (\"kbd\" . 'function) pairs globally. Locally
+with optional second argument."
+  (mapc (lambda (pair)
+          (funcall
+           (if local 'local-set-key 'global-set-key)
+           (read-kbd-macro (car pair)) ; the function called by kbd
+           (cdr pair)))
+        alist))
+
 (progn
   (require 'rst)                    ; defines a slow, recursive filter
   (add-hook 'rst-mode-hook 'turn-on-auto-fill))
