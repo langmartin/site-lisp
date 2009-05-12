@@ -6,9 +6,10 @@
 ;; things for cocoa emacs 23
 (progn
   (require 'mwheel)
-  (global-set-key [wheel-down] 'mwheel-scroll)
-  (global-set-key [wheel-up] 'mwheel-scroll)
-  (global-set-key "\M-`" 'other-frame)
+  (global-set-keys
+   '(("<wheel-down>" . mwheel-scroll)
+     ("<wheel-up>"   . mwheel-scroll)
+     ("M-`"          . other-frame)))
   (require 'tramp)
   (setq tramp-default-proxies-alist
         `(("localhost" "\\`root\\'" nil)

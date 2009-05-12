@@ -125,12 +125,16 @@ the working directory"
         ))
 
 (defun global-set-keys (alist &optional local)
-  "Set an alist of (\"kbd\" . 'function) pairs globally. Locally
-with optional second argument."
+  "Set an alist of '(\"kbd\" . function) pairs globally. Locally
+with the optional second argument.
+
+You can find any kbd name by creating a keyboard macro, striking
+the keys, and editing the macro with C-x C-k e. Examples include
+the preceding, RET, <home>, and M-<f4>."
   (mapc (lambda (pair)
           (funcall
            (if local 'local-set-key 'global-set-key)
-           (read-kbd-macro (car pair)) ; the function called by kbd
+           (read-kbd-macro (car pair))  ; the function called by kbd
            (cdr pair)))
         alist))
 
