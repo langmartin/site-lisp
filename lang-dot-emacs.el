@@ -39,7 +39,6 @@
 (require 'winner)
 (winner-mode 1)
 (iswitchb-mode 1)
-(setq ring-bell-function nil)
 
 (defvar programming-mode-hooks
   '(c-mode-common-hook
@@ -60,9 +59,6 @@
 (add-hooks '(emacs-lisp-mode-hook python-mode-hook)
            (lambda () (eldoc-mode 1)))
 
-(require 'cx-timesheet)
-(rc-emacs-lisp-action)
-
 (require 'lang-scripts)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
@@ -82,12 +78,6 @@
 (progn
   (require 'winner)
   (winner-mode 1))
-
-(progn
-  (require 'term-mode-rc)
-  ;; this seems to be a bug in nightly-build, and matches my theme
-  (setq term-default-bg-color "ivory"
-        term-default-fg-color "black"))
 
 (defmacro define-buffer-visitor (visitor-name buffer-name command)
   "http://jfm3-repl.blogspot.com/2009/02/fast-emacs-buffer-flipping.html"
@@ -197,3 +187,14 @@
   (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
   (setq truncate-partial-width-windows 80))
 
+(defun switch-to-last-buffer ()
+  (interactive)
+  (switch-to-buffer nil))
+
+(global-set-keys '(("M-`" . switch-to-last-buffer)))
+
+(progn
+  (require 'term-mode-rc)
+  ;; this seems to be a bug in nightly-build, and matches my theme
+  (setq term-default-bg-color "ivory"
+        term-default-fg-color "black"))
