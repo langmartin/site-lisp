@@ -191,7 +191,7 @@
       (if (< (window-width) (+ size extra window-min-width))
           (split-window-horizontally other)
         (if other
-            (split-window-horizontally (- (window-width) (- size extra)))
+            (split-window-horizontally (- (window-width) (- size extra 1)))
           (split-window-horizontally size)))))
   
   (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
