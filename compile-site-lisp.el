@@ -6,7 +6,6 @@
         "buffer-time-stamp.el"
         "color-theme.el"
         "csv-nav.el"
-        "cx-timesheet.el"
         "gambit.el"
         "gforth.el"
         "git-commands.el"
@@ -30,6 +29,7 @@
         "smooth-scrolling.el"
         "srfi-1.el"
         "textmate.el"
+        "utility.el"
         "visual-basic-mode.el"
         ))
 

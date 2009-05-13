@@ -1,6 +1,8 @@
 ;;; User rc-* procs are at the bottom of this file.
 ;;;     the rest of this file is support functions.
 
+(require 'utility)
+
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'exit-emacs 'save-buffers-kill-emacs)
 (defalias 'close-emacs 'save-buffers-kill-emacs)
@@ -107,8 +109,6 @@ Set it intead of tab-width.")
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t))
 
-(require 'cx-timesheet)
-
 (defun rc-backups-and-autosave-directory (backup)
   "Set all the variables to move backups & autosave files out of
 the working directory"
@@ -128,57 +128,9 @@ the working directory"
 
 (rc-backups-and-autosave-directory "~/.emacs.d/backup")
 
-(defun global-set-keys (alist &optional local)
-  "Set an alist of '(\"kbd\" . function) pairs globally. Locally
-with the optional second argument.
-
-You can find any kbd name by creating a keyboard macro, striking
-the keys, and editing the macro with C-x C-k e. Examples include
-the preceding, RET, <home>, and M-<f4>."
-  (mapc (lambda (pair)
-          (funcall
-           (if local 'local-set-key 'global-set-key)
-           (read-kbd-macro (car pair))  ; the function called by kbd
-           (cdr pair)))
-        alist))
-
 (progn
   (require 'rst)                    ; defines a slow, recursive filter
   (add-hook 'rst-mode-hook 'turn-on-auto-fill))
-
-(defun filter (proc lst)
-  (let ((value nil))
-    (while lst
-      (if (funcall proc (car lst))
-          (setq value (cons (car lst) value)))
-      (setq lst (cdr lst)))
-    value))
-
-(defun add-to-auto-mode-alist (lst)
-  "Add an alist to the front of auto-mode-alist"
-  (mapc (lambda (new)
-          (setq auto-mode-alist
-                (cons new
-                      auto-mode-alist)))
-        lst))
-
-(defun add-to-path (lst)
-  "Add a list of paths to the ends of PATH and exec-path"
-  (mapc (lambda (path)
-          (add-to-list 'exec-path path 'append)
-          (setenv "PATH"
-                  (concat (getenv "PATH")
-                          (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
-                                (t ":"))
-                          path)))
-        lst))
-
-(defun set-variables (&rest lst)
-  "Set a list of variables using the same syntax as custom-set-variables"
-  (mapc (lambda (args)
-          (set (car args)
-               (eval (cadr args))))
-        lst))
 
 (defun rc-emacs22-only ()
   (and (string-match "Emacs 22" (emacs-version))

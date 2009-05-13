@@ -40,4 +40,15 @@
 (assert (equal (intersperse '(1 2 3) 8)
                '(1 8 2 8 3)))
 
+
+(defun filter (proc lst)
+  "Like mapcar, but the new list is constructed using only the
+true values returned by proc."
+  (let ((value nil))
+    (while lst
+      (if (funcall proc (car lst))
+          (setq value (cons (car lst) value)))
+      (setq lst (cdr lst)))
+    value))
+
 (provide 'srfi-1)
