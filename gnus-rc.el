@@ -1,6 +1,6 @@
 (defvar smtpmail-account-authinfo
-  '(("lang.martin@gmail.com" . "~/.emacs.d/authinfo-gmail")
-    ;; ("lang.martin@coptix.com" . "~/.emacs.d/authinfo-coptix")
+  `(("@gmail.com" . "~/.emacs.d/authinfo-gmail")
+    ("@work.com" . "~/.emacs.d/authinfo-work")
     ))
 
 (defun message-extract-from-address ()
@@ -35,25 +35,21 @@
                  (nnimap-server-port 993)
                  (nnimap-stream ssl)))
   (setq gnus-secondary-select-methods
-        ;; '((nnimap "noc"
-        ;;           (nnimap-address "noc.imap.coptix.com")
-        ;;           (nnimap-server-port 993)
-        ;;           (nnimap-stream ssl))
-        ;;   (nnimap "coptix"
-        ;;           (nnimap-address "imap.coptix.com")
+        ;;   (nnimap "work"
+        ;;           (nnimap-address "imap.work.com")
         ;;           (nnimap-server-port 993)
         ;;           (nnimap-stream ssl)))
         nil)
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
-        '(("." (address "lang.martin@gmail.com"))
-          ;; ("coptix:" (address "lang.martin@coptix.com"))
+        `(("." (address ,email-private))
+          ;; ("work:" (address ,email-work))
           ))
   (progn
     (require 'starttls)
     (require 'smtpmail)
-    (setq user-mail-address "lang.martin@gmail.com")
+    (setq user-mail-address email-private)
     (setq smtpmail-smtp-default-server "smtp.gmail.com"
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
@@ -69,4 +65,4 @@
 
 (rc-gnus)
 
-(provide 'lang-mail-rc)
+(provide 'gnus-rc)

@@ -62,7 +62,7 @@
 (require 'lang-scripts)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
-(require 'lang-mail-rc)
+(require 'gnus-rc)
 
 ;; (defun pykk-init ()
 ;;   (interactive)
