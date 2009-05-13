@@ -125,7 +125,7 @@
 (require 'compile-site-lisp)
 
 (progn
-  (require 'color-theme)
+  (eval-when-compile (require 'color-theme))
   (defun color-theme-langmartin ()
     (interactive)
     (color-theme-bharadwaj)

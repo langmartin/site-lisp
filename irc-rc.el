@@ -7,7 +7,6 @@
  '(erc-autoaway-mode t)
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
  '(erc-log-channels-directory "~/.emacs.d/log")
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#jquery" "#scheme"))))
  )
 
 (defun irc-bitlbee ()
