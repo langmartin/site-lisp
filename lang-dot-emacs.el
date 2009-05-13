@@ -1,3 +1,5 @@
+;; -*- no-byte-compile: t -*-
+
 (load "site-start")
 (rc-lang)
 
