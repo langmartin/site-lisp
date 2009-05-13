@@ -1,4 +1,4 @@
-* Tips of the Day
+* Emacs
   :PROPERTIES:
   :VISIBILITY: all
   :END:
@@ -17,6 +17,19 @@
        : Q <pattern> RET <replacement>
     4. Save all modified files
        : C-x s
+
+* Git
+  :PROPERTIES:
+  :VISIBILITY: all
+  :END:
+
+** Search History
+   It is possible to search through your entire history. First, try
+   : git log -S'pattern'=
+   
+   If you know the context a little bit more, it might also work to
+   simply pipe the output of git diff
+   : git diff p1 p2 | grep 'pattern'
 
 * COMMENT Org Mode
   These Org Mode notes are just for reference, the comments in this
