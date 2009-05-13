@@ -38,15 +38,8 @@
                  (nnimap-address "imap.coptix.com")
                  (nnimap-server-port 993)
                  (nnimap-stream ssl)))
-  ;; (setq gnus-thread-sort-functions '((not gnus-thread-sort-by-number)))
-  ;; (setq gnus-agent nil)
-  ;; (add-hooks '(gnus-summary-mode-hook)
-  ;;              (lambda ()
-  ;;                (rc-screen-ify-control-t 'local-set-key)))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-  ;; (setq gnus-auto-expirable-newsgroups "Christmas\\|INBOX\\|Starred")
-  (setq gnus-use-full-window nil)
-  )
+  (setq gnus-use-full-window nil))
 
 (rc-gnus)
 

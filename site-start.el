@@ -619,7 +619,15 @@ repeated unfill entire region as one paragraph."
   (setq rc-coptix-tab-width 8)
   (rc-schemers)
   (global-set-key "\C-x\C-b" 'buffer-menu)
-  (global-set-key "\M-/" 'hippie-expand)
+  ;;   (progn
+  ;;     (global-set-key "\M-/" 'hippie-expand)
+  ;;     (setq hippie-expand-try-functions-list
+  ;;           '(try-expand-all-abbrevs
+  ;;             try-expand-dabbrev
+  ;;             try-expand-dabbrev-from-kill
+  ;;             try-expand-dabbrev-all-buffers
+  ;;             try-complete-lisp-symbol-partially
+  ;;             try-complete-lisp-symbol)))
   (rc-function-keys-mlm 'global-set-key)
   (setq truncate-lines t)
   (fset 'yes-or-no-p 'y-or-n-p)

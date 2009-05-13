@@ -8,7 +8,8 @@
   (setq tramp-default-proxies-alist
         `(("localhost" "\\`root\\'" nil)
           (nil "\\`root\\'" "/ssh:%h:")))
-  (setq tramp-backup-directory-alist backup-directory-alist))
+  ;; (setq tramp-backup-directory-alist backup-directory-alist)
+  )
 
 (load "site-start")
 
@@ -16,18 +17,8 @@
 
 (progn
  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
-
- (defun irc () "using erc"
-   (interactive)
-   (erc-select :server "irc.freenode.net"
-               :port 6667
-               :nick "langmartin"
-
-               :full-name "Lang Martin"))
-
  (add-hook 'erc-text-matched-hook 'erc-growl-match)
  (erc-match-mode 1)
-
  (defun erc-hide-notices () "hide all notices in a very busy channel"
    (interactive)
    (make-local-variable 'erc-echo-notice-always-hook)
