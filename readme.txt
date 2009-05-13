@@ -1,3 +1,7 @@
+This repository is my collection of elisp packages from all over the
+Internet, and also a collection of my own code, all mixed together. It
+is not well organized.
+
 * Emacs
   :PROPERTIES:
   :VISIBILITY: all
@@ -32,21 +36,6 @@
    : git diff p1 p2 | grep 'pattern'
 
 * COMMENT Org Mode
-  These Org Mode notes are just for reference, the comments in this
-  section are configuration flags.
-
-  - S-<left> :: previous date
-  - C-c . :: insert a date
-  - C-c C-e :: export menu
-
-  - C-c C-j :: jump around while searching.
-  - M-<left> :: promote this heading
-  - M-C-<left> :: promote this subtree
-
-  - C-c C-u :: up to next headline.
-  - C-<RET> :: make a new headline
-  - C-c C-t :: cycle TODO status.
-
 # Local Variables:
 # mode:org
 # End:

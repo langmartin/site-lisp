@@ -2,6 +2,7 @@
 ;;;     the rest of this file is support functions.
 
 (require 'utility)
+(require 'srfi-1)
 
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'exit-emacs 'save-buffers-kill-emacs)

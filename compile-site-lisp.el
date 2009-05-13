@@ -1,9 +1,7 @@
 (setq site-lisp-directory "~/site-lisp")
 
 (setq compile-site-lisp-sources
-      '("anything-config.el"
-        "anything.el"
-        "buffer-time-stamp.el"
+      '("buffer-time-stamp.el"
         "color-theme.el"
         "csv-nav.el"
         "gambit.el"
