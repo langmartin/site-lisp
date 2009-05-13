@@ -134,36 +134,36 @@
 
 (progn
   (require 'color-theme)
-  (color-theme-initialize)
-  ;; (color-theme-fischmeister)
-  ;; (color-theme-subtle-hacker)
-  ;; (color-theme-montz)
-  ;; (color-theme-shaman)
-  ;; (color-theme-bharadwaj)
-
   (defun color-theme-langmartin ()
     (interactive)
     (color-theme-bharadwaj)
     (let ((color-theme-is-cumulative t))
-      (setq isearch nil)
       (color-theme-install
-       '(color-theme-langmartin
-         ((background-color . "ivory"))
-         nil
-         (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
-         (erc-notice-face ((t (:foreground "grey70"))))
-         (erc-timestamp-face ((t (:bold t :foreground "green4"))))
-         (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
-         (isearch ((t (:inherit match))))
-         (iswitchb-single-match ((t (:inherit font-lock-function-name-face))))
-         (font-lock-comment-face ((t (:foreground "grey50"))))
-         (font-lock-function-name-face ((t (:foreground "SlateBlue" :slant normal :weight bold))))
-         (match ((t (:background "lightgoldenrod2"))))
-         (minibuffer-noticeable-prompt ((t (:inherit match))))
-         (org-agenda-restriction-lock ((t (:inherit match))))
-         (org-clock-overlay ((t (:inherit match))))
-         (org-todo ((t (:inherit font-lock-string-face))))
-         ))))
+       (let ((match '((t (:background "lightgoldenrod2"))))
+             (modeline '((t (:background "grey75" :foreground "black")))))
+         `(color-theme-langmartin
+           ((background-color . "ivory"))
+           nil
+           (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
+           (erc-notice-face ((t (:foreground "grey70"))))
+           (erc-timestamp-face ((t (:bold t :foreground "green4"))))
+           (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
+           (isearch ,match)
+           (iswitchb-single-match ((t (:inherit font-lock-function-name-face))))
+           (font-lock-comment-face ((t (:foreground "grey50"))))
+           (font-lock-function-name-face ((t (:foreground "SlateBlue" :slant normal :weight bold))))
+           (match ,match)
+           (minibuffer-noticeable-prompt ((t (:inherit match))))
+           (modeline ,modeline)
+           (modeline-buffer-id ((t (:background "LightSlateGrey" :foreground "black"))))
+           (modeline-mousable ,modeline)
+           (modeline-mousable-minor-mode ,modeline)
+           (mode-line-inactive ((t (:background "grey90" :foreground "grey20"))))
+           (org-agenda-restriction-lock ((t (:inherit match))))
+           (org-clock-overlay ((t (:inherit match))))
+           (org-todo ((t (:inherit font-lock-string-face))))
+           )))))
+  (color-theme-initialize)
   (color-theme-langmartin))
 
 (global-set-keys
@@ -196,3 +196,4 @@
   
   (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
   (setq truncate-partial-width-windows 80))
+
