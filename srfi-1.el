@@ -8,11 +8,11 @@
       (setq lst (cdr lst)))
     acc))
 
-(assert (eql 6 (fold '+ 0 '(1 2 3)))
-        (let* ((test '(1 2 3))
-               (ref test))
-          (fold '+0 ref)
-          (eq ref test)))
+;; (assert (eql 6 (fold '+ 0 '(1 2 3)))
+;;         (let* ((test '(1 2 3))
+;;                (ref test))
+;;           (fold '+0 ref)
+;;           (eq ref test)))
 
 (defun foldr (proc nil-value lst)
   "Traditional fold-right, will blow up the stack"
@@ -22,11 +22,11 @@
              (car lst)
              (foldr proc nil-value (cdr lst)))))
 
-(assert (eql 6 (foldr '+ 0 '(1 2 3)))
-        (let* ((test '(1 2 3))
-               (ref test))
-          (foldr '+0 ref)
-          (eq ref test)))
+;; (assert (eql 6 (foldr '+ 0 '(1 2 3)))
+;;         (let* ((test '(1 2 3))
+;;                (ref test))
+;;           (foldr '+0 ref)
+;;           (eq ref test)))
 
 (defun intersperse (lst el)
   (cons (car lst)
@@ -37,8 +37,8 @@
                '()
                (cdr lst))))
 
-(assert (equal (intersperse '(1 2 3) 8)
-               '(1 8 2 8 3)))
+;; (assert (equal (intersperse '(1 2 3) 8)
+;;                '(1 8 2 8 3)))
 
 
 (defun filter (proc lst)
