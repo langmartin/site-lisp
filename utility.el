@@ -41,7 +41,7 @@
              string
              ""))
 
-;; (assert (equal "foo+bar+%28baz%29" (urlencode "foo bar (baz)")))
+(assert (equal "foo+bar+%28baz%29" (urlencode "foo bar (baz)")))
 
 (defun global-set-keys (alist &optional local)
   "Set an alist of '(\"kbd\" . function) pairs globally. Locally
