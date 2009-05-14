@@ -1,4 +1,7 @@
 (require 'visual-basic-mode)
+(setq visual-basic-mode-indent 4)
+(add-hook 'visual-basic-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
 
 (defun rc-sgml-mode-for-asp ()
   (interactive)
@@ -6,13 +9,15 @@
   (html-mode))
 
 (add-to-auto-mode-alist
- '(("\\.asp$" . html-mode)
+ '(("\\.asp$" . visual-basic-mode)
    ("\\.asa$" . html-mode)))
 
 (add-hook 'sgml-mode-hook
 	  (lambda ()
-	    (local-set-key "\C-c\C-p" 'sgml-skip-tag-backward)
-	    (local-set-key "\C-c\C-n" 'sgml-skip-tag-forward)))
+            (global-set-keys
+             '(("C-c C-p" . sgml-skip-tag-backward)
+               ("C-c C-n" . sgml-skip-tag-forward))
+             'local)))
 
 (put 'narrow-to-region 'disabled nil)
 

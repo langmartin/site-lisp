@@ -1,3 +1,5 @@
+;; -*- no-byte-compile: t -*-
+
 (setq site-lisp-directory "~/site-lisp")
 
 (setq compile-site-lisp-sources
@@ -38,12 +40,24 @@
     0))
 
 (defun compile-site-lisp ()
+  "compile a configured list of .el files in the user site-lisp
+directory. See site-lisp-directory and
+compile-site-lisp-sources."
   (interactive)
-  (mapc (lambda (file)
-          (if (> (file-mtime file)
-                 (file-mtime (concat file "c")))
-              (byte-compile-file file)))
-        compile-site-lisp-sources))
+  (with-temp-buffer
+    (cd site-lisp-directory)
+    (mapc (lambda (file)
+            (if (> (file-mtime file)
+                   (file-mtime (concat file "c")))
+                (byte-compile-file file)))
+          compile-site-lisp-sources)))
+
+;;; 1) See the first line of this file; it's a good idea to mark files
+;;;    with this modeline that shouldn't be compiled.
+;;;
+;;; 2) Use C-x M-e to evaluate the functions in place. That binding is
+;;;    defined in site-lisp. The functions below will insert valid
+;;;    list fragments, which makes updating the list more convenient.
 
 (defun site-lisp-missing-files ()
   (fold (lambda (x acc)
