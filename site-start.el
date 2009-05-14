@@ -3,6 +3,7 @@
 ;;; User rc-* procs are at the bottom of this file.
 ;;;     the rest of this file is support functions.
 
+(load "cl-macs")
 (require 'utility)
 (require 'srfi-1)
 
