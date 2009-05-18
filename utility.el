@@ -1,15 +1,35 @@
 (defun with-output-file (path thunk)
   (save-excursion
     (set-buffer (create-file-buffer path))
-    (funcall thunk)
-    (setq buffer-file-name path)
-    (save-buffer)
-    (kill-buffer (current-buffer))))
+    (prog1
+        (funcall thunk)
+      (setq buffer-file-name path)
+      (save-buffer)
+      (kill-buffer (current-buffer)))))
+
+(defun with-input-file (path thunk)
+  (with-temp-buffer
+    (insert-file-contents-literally path)
+    (prog1
+        (funcall thunk))))
+
+(defun slurp-file-contents (path)
+  (with-input-file
+   path
+   (lambda ()
+     (buffer-substring-no-properties (point-min) (point-max)))))
 
 (defun alphanumericp (ch)
   (or (and (>= ch ?a) (<= ch ?z))
       (and (>= ch ?A) (<= ch ?Z))
       (and (>= ch ?0) (<= ch ?9))))
+
+(defun whitespacep (ch)
+  (member ch '(?  ?\t ?\n ?\r ?\f ?\v)))
+
+(defun chomp (str)
+  (string-match "^\\(.*?\\)[::whitespace::]*$" str)
+  (match-string 1 str))
 
 (defvar hex-values "0123456789ABCDEF")
 
@@ -73,7 +93,7 @@ the preceding, RET, <home>, and M-<f4>."
                   (concat (getenv "PATH")
                           (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
                                 (t ":"))
-                          path)))
+                          (expand-file-name path))))
         lst))
 
 (defun set-variables (&rest lst)
