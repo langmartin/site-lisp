@@ -1,11 +1,10 @@
-(defun fold (proc nil-value lst0)
-  "Traditional fold-left, iterative style since we don't have tail calls."
-  (let ((acc nil-value)
-        (lst lst0))
-    (while lst
-      (setq acc
-            (funcall proc (car lst) acc))
-      (setq lst (cdr lst)))
+(defun fold (proc nil-value seq)
+  "Traditional fold-left, iterative style since we don't have
+tail calls. We use mapc, so this can handle sequences."
+  (let ((acc nil-value))
+    (mapc (lambda (el)
+            (setq acc (funcall proc el acc)))
+          seq)
     acc))
 
 (assert (eql 6 (fold '+ 0 '(1 2 3)))
