@@ -33,15 +33,7 @@
 
 (defvar hex-values "0123456789ABCDEF")
 
-(defun string-ref (string offset)
-  (let ((idx offset))
-    (catch
-        'char
-      (mapc (lambda (ch)
-              (if (= idx 0)
-                  (throw 'char ch)
-                (setq idx (- idx 1))))
-            string))))
+(defalias 'string-ref 'aref)
 
 (defun hex-nibble (ch)
   (char-to-string

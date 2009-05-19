@@ -116,7 +116,7 @@ Set it intead of tab-width.")
 (defun rc-backups-and-autosave-directory (backup)
   "Set all the variables to move backups & autosave files out of
 the working directory"
-  (let ((backup (if (eql "/" (string-ref backup (length backup)))
+  (let ((backup (if (eql "/" (aref backup (- (length backup) 1)))
                     backup
                   (concat backup "/"))))
    (make-directory backup t)
