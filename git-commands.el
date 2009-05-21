@@ -27,7 +27,7 @@
    (list
     (read-from-minibuffer
      "Run git-grep (like this): "
-     "git-grep -n -H -e ")))
+     "git-grep -n -H -I -e ")))
   (grep command))
 
 (defun lines-to-list ()
