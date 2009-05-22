@@ -6,6 +6,7 @@
 (define-shellcmd git-status "git status")
 (define-shellcmd git-pull "git pull -q")
 (define-shellcmd git-fetch "git fetch")
+(define-shellcmd git-log "git log --graph")
 
 (defun git-merge (branch)
   (interactive "sBranch: ")
@@ -54,14 +55,15 @@
 
 (define-key ctl-x-map "g"
   (easy-mmode-define-keymap
-   '(("s" . git-status)
+   '(("b" . git-branches)
+     ("c" . git-checkout)
      ("f" . git-fetch)
+     ("G" . git-grep-dired)
+     ("g" . git-grep)
+     ("l" . git-log)
+     ("m" . git-merge)
      ("p" . git-pull)
      ("P" . git-push)
-     ("m" . git-merge)
-     ("b" . git-branches)
-     ("c" . git-checkout)
-     ("g" . git-grep)
-     ("G" . git-grep-dired))))
+     ("s" . git-status))))
 
 (provide 'git-commands)
