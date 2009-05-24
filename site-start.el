@@ -3,7 +3,7 @@
 ;;; User rc-* procs are at the bottom of this file.
 ;;;     the rest of this file is support functions.
 
-(load "cl-macs")
+(require 'cl)
 (require 'utility)
 (require 'srfi-1)
 
@@ -66,13 +66,17 @@ Set it intead of tab-width.")
   (add-hooks '(html-mode-hook)
              'turn-off-auto-fill)
 
-  (global-set-key "\C-h" 'delete-backward-char)
-  (global-set-key "\M-h" 'help)         ; was mark-paragraph
-  (global-set-key [f1] 'help)
-  (global-set-key "OP" 'help)
+  (defun rc-C-h-delete-M-h-help ()
+    (global-set-key "\C-h" 'backward-delete-char-untabify)
+    (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
+    (define-key paredit-mode-map "\C-h" 'paredit-backward-delete)
+    (global-set-key "\M-h" 'help)       ; was mark-paragraph
+    (global-set-key [f1] 'help)
+    (global-set-key "OP" 'help))
+  
   (global-unset-key [insert])
 
-  ;;;; Home, End, Pgup and Pgdown
+;;;; Home, End, Pgup and Pgdown
   (global-set-key [home] 'beginning-of-line)
   (global-set-key "\e[7~" 'beginning-of-line)
   (global-set-key "[H" 'beginning-of-line)
@@ -104,7 +108,7 @@ Set it intead of tab-width.")
   (global-set-key "[5;5~" 'scroll-other-window-down)
   (global-set-key [f5] 'call-last-kbd-macro)
 
-  ;;; Load if it's there
+;;; Load if it's there
   (require 'php-mode "php-mode" t)
 
   ;; (require 'html-helper-mode "html-helper-mode" t)
