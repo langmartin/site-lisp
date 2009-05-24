@@ -12,18 +12,19 @@
 (defun irc-bitlbee ()
   (interactive)
   (erc-tls :server "testing.bitlbee.org"
-           :port 8001
+           :port 6668
            :nick "langmartin"
            :full-name "Lang Martin"))
 
-;; (defun bitlbee-identify ()
-;;   (when (and (string= "testing.bitlbee.org" erc-session-server)
-;; 	       (string= "&bitlbee" (buffer-name)))
-;;     (erc-message "PRIVMSG" (format "%s identify %s"
-;; 				     (erc-default-target)
-;; 				     "<password>"))))
-;; (custom-set-variables
-;;  '(erc-join-hook (quote (bitlbee-identify))))
+(defun bitlbee-identify ()
+  (when (and (string= "testing.bitlbee.org" erc-session-server)
+	       (string= "&bitlbee" (buffer-name)))
+    (erc-message "PRIVMSG" (format "%s identify %s"
+				     (erc-default-target)
+				     bitlbee-password))))
+
+(set-variables
+ '(erc-join-hook (quote (bitlbee-identify))))
 
 (defun erc-hide-notices () "hide all notices in a very busy channel"
   (interactive)
