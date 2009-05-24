@@ -30,11 +30,8 @@
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
 
 (global-set-keys
- '(("C-h" . help)
-   ("M-h" . mark-paragraph)
-   ("C-M-$" . google-define)
+ '(("C-M-$" . google-define)
    ("C-z" . undo)
-
    ("C-x C-b" . switch-to-buffer)
    ("C-x x b" . ibuffer)))
 
@@ -111,15 +108,11 @@
   (require 'org-collector)
   (set-variables
    '(nav-boring-file-regexps (quote ("\\.py[co]$" "\\.o$" "~$" "\\.bak$" "^\\.[^/]" "^\\./?$" "/\\." "\\.min\\.js$" "\\.elc$")))
-   '(org-agenda-files (quote ("c:/Documents and Settings/lmartin/My Documents/Code/sample-yui-dds/docs/spec.txt")))
    '(org-enforce-todo-dependencies t)
    '(org-log-done (quote time))
    ))
 
 (require 'google-define)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
 
 (require 'asp-rc)
 (require 'compile-site-lisp)
@@ -160,6 +153,9 @@
 
 (global-set-keys
  '(("C-x C-c" . nil)
+   ("C-x C-j" . execute-extended-command)
+   ("C-c C-j" . execute-extended-command)
+
    ("<f1>" . vi-mode)
 
    ("M-<f4>" . delete-frame)
@@ -174,18 +170,20 @@
    ("<f12>" . rc-sgml-mode-for-asp)))
 
 (progn
-  (scroll-bar-mode -1)
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
   (defun split-window-horizontally-minsize (&optional other)
     "Wrapper for spit-window-horizontally that gives 80 columns"
     (interactive "P")
-    (let* ((extra 2) (size (+ extra 80)))
+    (let* ((extra (if scroll-bar-mode 5 2)) (size (+ extra 80)))
       (if (< (window-width) (+ size extra window-min-width))
           (split-window-horizontally other)
         (if other
             (split-window-horizontally (- (window-width) (- size extra 1)))
           (split-window-horizontally size)))))
-  
+
   (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
   (setq truncate-partial-width-windows 80))
 
