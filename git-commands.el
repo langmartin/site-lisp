@@ -53,17 +53,25 @@
     (dired (cons "*git-grep-dired*"
                  (lines-to-list)))))
 
-(define-key ctl-x-map "g"
-  (easy-mmode-define-keymap
-   '(("b" . git-branches)
-     ("c" . git-checkout)
-     ("f" . git-fetch)
-     ("G" . git-grep-dired)
-     ("g" . git-grep)
-     ("l" . git-log)
-     ("m" . git-merge)
-     ("p" . git-pull)
-     ("P" . git-push)
-     ("s" . git-status))))
+(defvar git-commands-map)
+
+(setq git-commands-map
+      (easy-mmode-define-keymap
+       '(("\C-x g b" . git-branches)
+         ("\C-x g c" . git-checkout)
+         ("\C-x g f" . git-fetch)
+         ("\C-x g G" . git-grep-dired)
+         ("\C-x g g" . git-grep)
+         ("\C-x g l" . git-log)
+         ("\C-x g m" . git-merge)
+         ("\C-x g p" . git-pull)
+         ("\C-x g P" . git-push)
+         ("\C-x g s" . git-status))))
+
+(define-minor-mode git-commands-mode
+  "Some git commands bound to C-x g * for operating in the current directory."
+  t
+  nil
+  git-commands-map)
 
 (provide 'git-commands)
