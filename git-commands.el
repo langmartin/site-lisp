@@ -57,16 +57,16 @@
 
 (setq git-commands-map
       (easy-mmode-define-keymap
-       '(("\C-x g b" . git-branches)
-         ("\C-x g c" . git-checkout)
-         ("\C-x g f" . git-fetch)
-         ("\C-x g G" . git-grep-dired)
-         ("\C-x g g" . git-grep)
-         ("\C-x g l" . git-log)
-         ("\C-x g m" . git-merge)
-         ("\C-x g p" . git-pull)
-         ("\C-x g P" . git-push)
-         ("\C-x g s" . git-status))))
+       '(("\C-xgb" . git-branches)
+         ("\C-xgc" . git-checkout)
+         ("\C-xgf" . git-fetch)
+         ("\C-xgG" . git-grep-dired)
+         ("\C-xgg" . git-grep)
+         ("\C-xgl" . git-log)
+         ("\C-xgm" . git-merge)
+         ("\C-xgp" . git-pull)
+         ("\C-xgP" . git-push)
+         ("\C-xgs" . git-status))))
 
 (define-minor-mode git-commands-mode
   "Some git commands bound to C-x g * for operating in the current directory."
