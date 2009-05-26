@@ -9,7 +9,7 @@
 
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'exit-emacs 'save-buffers-kill-emacs)
-(defalias 'close-emacs 'save-buffers-kill-emacs)
+(defalias 'quit-emacs 'save-buffers-kill-emacs)
 
 (defvar rc-coptix-tab-width 4
   "* The tab-width is a bit tricky to set, so this

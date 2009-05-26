@@ -11,6 +11,9 @@ is not well organized.
 *** Filter Dired by Filename
     Open a dired buffer containing css files in directory =dir=
     : C-x d ~/dir/*.css
+
+*** Mark by Filename Regexp
+    : % m
     
 *** Multi-File Search & Replace
     1. Open a dired buffer containing files containing a string
