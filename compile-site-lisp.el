@@ -28,7 +28,6 @@
         "site-start.el"
         "smooth-scrolling.el"
         "srfi-1.el"
-        "textmate.el"
         "utility.el"
         "visual-basic-mode.el"
         ))
