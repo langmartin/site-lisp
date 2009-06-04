@@ -1,12 +1,14 @@
 (defmacro define-shellcmd (name cmd)
   `(defun ,name ()
      (interactive)
-     (shell-command ,cmd)))
+     (let ((bufname (concat "*" ,cmd " in " default-directory "*")))
+       (shell-command ,cmd bufname))))
 
-(define-shellcmd git-status "git status")
-(define-shellcmd git-pull "git pull -q")
-(define-shellcmd git-fetch "git fetch")
-(define-shellcmd git-log "git log --graph")
+(progn
+ (define-shellcmd git-status "git status")
+ (define-shellcmd git-pull "git pull -q")
+ (define-shellcmd git-fetch "git fetch")
+ (define-shellcmd git-log "git log --graph"))
 
 (defun git-merge (branch)
   (interactive "sBranch: ")
