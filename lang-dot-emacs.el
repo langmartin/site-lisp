@@ -94,26 +94,8 @@
 (require 'hide-region)
 (require 'moz-rc)
 (column-number-mode t)
-
-(progn
-  (require 'htmlize)
-  (global-set-keys
-   '(("C-c l" . org-store-link)
-     ("C-c a" . org-agenda)
-     ("C-c ." . org-time-stamp)))
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (auto-fill-mode 1)
-              (set-variable 'comment-start nil 'make-local)))
-  (require 'org-collector)
-  (set-variables
-   '(nav-boring-file-regexps (quote ("\\.py[co]$" "\\.o$" "~$" "\\.bak$" "^\\.[^/]" "^\\./?$" "/\\." "\\.min\\.js$" "\\.elc$")))
-   '(org-enforce-todo-dependencies t)
-   '(org-log-done (quote time))
-   ))
-
+(require 'org-mode-rc)
 (require 'google-define)
-
 (require 'asp-rc)
 (require 'compile-site-lisp)
 
