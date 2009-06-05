@@ -143,7 +143,7 @@
    ("M-<f4>" . delete-frame)
    ("<f5>" . eshell)
    ("<f6>" . imenu)
-   ("<f7>" . normal-mode)
+   ("<f7>" . revert-buffer)
    ("<f8>" . toggle-truncate-lines)
 
    ("<f10>" . visual-basic-mode)
