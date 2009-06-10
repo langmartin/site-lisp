@@ -17,6 +17,9 @@
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time)))
 
+(if (not (boundp 'org-export-latex-classes))
+    (setq org-export-latex-classes nil))
+
 (add-to-list
  'org-export-latex-classes
  '("langmartin"
