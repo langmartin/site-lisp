@@ -2,31 +2,34 @@ This repository is my collection of elisp packages from all over the
 Internet, and also a collection of my own code, all mixed together. It
 is not well organized.
 
-* Emacs
+* Dired Mode
+ :PROPERTIES:
+ :VISIBILITY: all
+ :END:
+
+** Filter Dired by Filename
+   : C-x d ~/dir/*.css
+
+** Mark by Filename Regexp
+   : % m
+   
+** Multi-File Search & Replace
+   1. Open a dired buffer containing files containing a string
+      : M-x find-grep-dired RET <pattern>
+   2. Mark all js files
+      : % m .js$ RET
+   3. Run query-replace on marked files
+      : Q <pattern> RET <replacement>
+   4. Save all modified files
+      : C-x s
+
+* Eshell
   :PROPERTIES:
   :VISIBILITY: all
   :END:
 
-** Dired Mode
-*** Filter Dired by Filename
-    Open a dired buffer containing css files in directory =dir=
-    : C-x d ~/dir/*.css
-
-*** Eshell pipe to a buffer
-    : diff > #<buffer *scratch*>
-
-*** Mark by Filename Regexp
-    : % m
-    
-*** Multi-File Search & Replace
-    1. Open a dired buffer containing files containing a string
-       : M-x find-grep-dired RET <pattern>
-    2. Mark all js files
-       : m .js$ RET
-    3. Run query-replace on marked files
-       : Q <pattern> RET <replacement>
-    4. Save all modified files
-       : C-x s
+** Eshell redirect (not pipe) to a buffer
+   : diff > #<buffer *scratch*>
 
 * Git
   :PROPERTIES:
@@ -34,14 +37,13 @@ is not well organized.
   :END:
 
 ** Search History
-   It is possible to search through your entire history. First, try
-   : git log -S'pattern'=
-   
-   If you know the context a little bit more, it might also work to
-   simply pipe the output of git diff
-   : git diff p1 p2 | grep 'pattern'
+   : git log -S'pattern'
 
 * MozREPL
+  :PROPERTIES:
+  :VISIBILITY: all
+  :END:
+
 ** Flush the cache from anywhere
    : repl._creationContext.webdeveloper_clearCache()
 
