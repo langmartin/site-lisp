@@ -1,14 +1,18 @@
-(defmacro define-shellcmd (name cmd)
+(defmacro define-shellcmd (name cmd &optional hook)
   `(defun ,name ()
      (interactive)
-     (let ((bufname (concat "*" ,cmd " in " default-directory "*")))
-       (shell-command ,cmd bufname))))
+     (let ((bufname (concat "*" ,cmd "*")))
+       (shell-command ,cmd bufname)
+       (if ,hook
+           (with-buffer (get-buffer bufname)
+             (funcall ,hook))))))
 
 (progn
  (define-shellcmd git-status "git status")
  (define-shellcmd git-pull "git pull -q")
  (define-shellcmd git-fetch "git fetch")
- (define-shellcmd git-log "git log --graph"))
+ (define-shellcmd git-log "git log --graph")
+ (define-shellcmd git-diff "git diff ." 'diff-mode))
 
 (defun git-merge (branch)
   (interactive "sBranch: ")
@@ -61,6 +65,7 @@
       (easy-mmode-define-keymap
        '(("\C-xgb" . git-branches)
          ("\C-xgc" . git-checkout)
+         ("\C-xgd" . git-diff)
          ("\C-xgf" . git-fetch)
          ("\C-xgG" . git-grep-dired)
          ("\C-xgg" . git-grep)
