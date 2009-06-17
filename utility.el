@@ -10,14 +10,40 @@
 (defun with-input-file (path thunk)
   (with-temp-buffer
     (insert-file-contents-literally path)
-    (prog1
-        (funcall thunk))))
+    (let ((standard-input (current-buffer)))
+      (funcall thunk))))
 
 (defun slurp-file-contents (path)
   (with-input-file
    path
    (lambda ()
      (buffer-substring-no-properties (point-min) (point-max)))))
+
+(defun slurp-file-list (path)
+  (let ((result nil))
+    (with-input-file
+     path
+     (lambda ()
+       (goto-char (point-min))
+       (while (not (eobp))
+         (setq result
+               (cons (filter-buffer-substring
+                      (point)
+                      (save-excursion
+                        (end-of-visible-line)
+                        (point)))
+                     result))
+         (forward-line))))
+    result))
+
+(defun read-all (&optional stream)
+  (let ((result nil))
+    (condition-case nil
+        (while t
+          (setq result
+                (cons (read stream)
+                      result)))
+      (error result))))
 
 (defun alphanumericp (ch)
   (or (and (>= ch ?a) (<= ch ?z))
@@ -27,8 +53,12 @@
 (defun whitespacep (ch)
   (member ch '(?  ?\t ?\n ?\r ?\f ?\v)))
 
+(defun trim (str)
+  (string-match "^[[:space:]]*\\(.*?\\)[[:space:]]*$" str)
+  (match-string 1 str))
+
 (defun chomp (str)
-  (string-match "^\\(.*?\\)[::whitespace::]*$" str)
+  (string-match "^\\(.*?\\)[[:space:]\r\n]*$" str)
   (match-string 1 str))
 
 (defvar hex-values "0123456789ABCDEF")

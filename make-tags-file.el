@@ -104,9 +104,17 @@
         (error "Can't find a project in this path")
       (progn
         (cd dir)
-        (find-lisp-find-files-internal
-         "."
-         'make-tags-file-filep
-         'make-tags-file-directoryp)))))
+        (if (file-exists-p ".make-tags-file.el")
+            (mapcar (lambda (x)
+                      (if (symbolp x)
+                          (symbol-name x)
+                        x))
+                    (with-input-file ".make-tags-file.el" 'read-all))
+          (find-lisp-find-files-internal
+           "."
+           'make-tags-file-filep
+           'make-tags-file-directoryp))))))
+
+(make-tags-file-list 'make-tags-file-gitp)
 
 (provide 'make-tags-file)
