@@ -108,14 +108,15 @@ Set it intead of tab-width.")
   (global-set-key "[5;5~" 'scroll-other-window-down)
   (global-set-key [f5] 'call-last-kbd-macro)
 
-;;; Load if it's there
+  ;; Load if it's there
   (require 'php-mode "php-mode" t)
 
   ;; (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
   (rc-maybe-session)
   (rc-emacs22-only)
-  (require 'http-twiddle "http-twiddle" t))
+  (require 'http-twiddle "http-twiddle" t)
+  (require 'make-tags-file))
 
 (defun rc-backups-and-autosave-directory (backup)
   "Set all the variables to move backups & autosave files out of
@@ -352,44 +353,6 @@ repeated unfill entire region as one paragraph."
 
 ;; this turns out to be bad, since it needs to be mapped in lots of places
 ;; (global-set-key "\C-w" 'kill-backward-word-or-region)
-
-(defun cx-build-tags ()
-  "Create a tags table in the top of your darcs project."
-  (interactive)
-  (cx-build-tags-primitive
-   (lambda () (or (file-exists-p "_darcs")
-                  (file-exists-p ".git")))))
-
-(defun cx-build-tags-cvs ()
-  "Create a tags table in the top of your CVS project."
-  (interactive)
-  (cx-build-tags-primitive (lambda () (not (file-exists-p "../CVS")))))
-
-(defun cx-build-tags-primitive (top-dir-pred)
-  "Create a tags table in the top of your project"
-  (let ((dir (cx-find-top-dir top-dir-pred)))
-    (message "top directory here is %s" dir)
-    (if (string-equal dir "/")
-        (message "Can't find a _darcs directory in this path")
-      (shell-command
-       (concat
-        "find . -type f"
-        "| grep -v -e '_darcs/' -e 'CVS/'"
-        "| grep -v -f /coptix/admin/scripts/share/etags-grep-anti-patterns.txt"
-        "| grep -f /coptix/admin/scripts/share/etags-grep-patterns.txt"
-        "| tr '\\n' '\\0'"
-        "| xargs -0 etags"
-        )))))
-
-(defun cx-find-top-dir (pred)
-  "Find the top directory containing the name contains, bail out at the top"
-  (if (or (funcall pred)
-          (= (nth 10 (file-attributes "."))
-             (nth 10 (file-attributes ".."))))
-      (file-truename ".")
-    (progn
-      (cd "..")
-      (cx-find-top-dir pred))))
 
 (defun doctype-xhtml ()
   (interactive)
