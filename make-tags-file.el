@@ -115,6 +115,4 @@
            'make-tags-file-filep
            'make-tags-file-directoryp))))))
 
-(make-tags-file-list 'make-tags-file-gitp)
-
 (provide 'make-tags-file)
