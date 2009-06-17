@@ -8,7 +8,8 @@
         "\\.el$"))
 
 (defvar make-tags-file-anti-patterns)
-(setq make-tags-file-anti-patterns nil)
+(setq make-tags-file-anti-patterns
+      '("\\.min\\.js$"))
 
 (defvar make-tags-file-cvs-style '("CVS" "svn"))
 
@@ -87,7 +88,9 @@
 (defun make-tags-file-filep (file dir)
   (if (file-directory-p file)
       nil
-    (match-regexp-list file make-tags-file-patterns)))
+    (if (match-regexp-list file make-tags-file-anti-patterns)
+        nil
+      (match-regexp-list file make-tags-file-patterns))))
 
 (defun make-tags-file-directoryp (dir parent)
   (if (generalized-member 'string= dir make-tags-file-skip-directories)
