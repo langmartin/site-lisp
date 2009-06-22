@@ -69,6 +69,21 @@
   (string-match "^\\(.*?\\)[[:space:]\r\n]*$" str)
   (match-string 1 str))
 
+(defun generalized-member (compare element sequence)
+  (let ((lst sequence)
+        (result nil))
+    (while lst
+      (if (funcall compare element (car lst))
+          (progn
+            (setq result lst)
+            (setq lst nil))
+        (setq lst (cdr lst))))
+    result))
+
+(assert
+ (equal (generalized-member 'eql 'a '(b c a d))
+        '(a d)))
+
 (defvar hex-values "0123456789ABCDEF")
 
 (defalias 'string-ref 'aref)

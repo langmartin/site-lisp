@@ -1,5 +1,6 @@
 (require 'find-lisp)
 (require 'srfi-2)
+(require 'utility)
 
 (defvar make-tags-file-patterns)
 (setq make-tags-file-patterns
@@ -30,21 +31,6 @@
     (progn
       (cd "..")
       (find-root-directory procedure))))
-
-(defun generalized-member (compare element sequence)
-  (let ((lst sequence)
-        (result nil))
-    (while lst
-      (if (funcall compare element (car lst))
-          (progn
-            (setq result lst)
-            (setq lst nil))
-        (setq lst (cdr lst))))
-    result))
-
-(assert
- (equal (generalized-member 'eql 'a '(b c a d))
-        '(a d)))
 
 (defun match-regexp-list (str regexp-list)
   (and-let* ((match (generalized-member
