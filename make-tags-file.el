@@ -73,17 +73,22 @@
 (defun make-tags-file ()
   "Make an etags file in the current project"
   (interactive)
-  (make-tags-file-make
-   (if (file-exists-p "CVS")
-       (lambda () (not (file-exists-p "../CVS")))
-     'make-tags-file-gitp)))
+  (let ((dir (find-root-directory
+              (or (and-let* ((dir (make-tags-file-cvsp))
+                             (dir (concat "../" (car dir))))
+                    `(lambda () (not (file-exists-p ,dir))))
+                  'make-tags-file-gitp))))
+    (message "top directory here is %s" dir)
+    (save-excursion
+      (cd dir)
+      (exec-etags (make-tags-file-list)))))
 
-(defun make-tags-file-make (pred)
+(defun exec-etags (lst)
   (apply
    'call-process
    (append
     (list "etags" nil nil nil)
-    (make-tags-file-list pred))))
+    lst)))
 
 (defun make-tags-file-filep (file dir)
   (if (file-directory-p file)
@@ -97,22 +102,16 @@
       nil
     (find-lisp-default-directory-predicate dir parent)))
 
-(defun make-tags-file-list (pred)
-  (let ((dir (find-root-directory pred)))
-    (message "top directory here is %s" dir)
-    (if (string-equal dir "/")
-        (error "Can't find a project in this path")
-      (progn
-        (cd dir)
-        (if (file-exists-p ".make-tags-file.el")
-            (mapcar (lambda (x)
-                      (if (symbolp x)
-                          (symbol-name x)
-                        x))
-                    (with-input-file ".make-tags-file.el" 'read-all))
-          (find-lisp-find-files-internal
-           "."
-           'make-tags-file-filep
-           'make-tags-file-directoryp))))))
+(defun make-tags-file-list ()
+  (if (file-exists-p ".make-tags-file.el")
+      (mapcar (lambda (x)
+                (if (symbolp x)
+                    (symbol-name x)
+                  x))
+              (with-input-file ".make-tags-file.el" 'read-all))
+    (find-lisp-find-files-internal
+     "."
+     'make-tags-file-filep
+     'make-tags-file-directoryp)))
 
 (provide 'make-tags-file)
