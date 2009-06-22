@@ -1,17 +1,25 @@
 (defun with-output-file (path thunk)
   (save-excursion
     (set-buffer (create-file-buffer path))
-    (prog1
-        (funcall thunk)
+    (let ((standard-output (current-buffer)))
+      (funcall thunk)
       (setq buffer-file-name path)
       (save-buffer)
       (kill-buffer (current-buffer)))))
+
+(defmacro let-output-file (path &rest body)
+  (declare (indent 1))
+  `(with-output-file ,path (lambda () ,@body)))
 
 (defun with-input-file (path thunk)
   (with-temp-buffer
     (insert-file-contents-literally path)
     (let ((standard-input (current-buffer)))
       (funcall thunk))))
+
+(defmacro let-input-file (path &rest body)
+  (declare (indent 1))
+  `(with-input-file ,path (lambda () ,@body)))
 
 (defun slurp-file-contents (path)
   (with-input-file
