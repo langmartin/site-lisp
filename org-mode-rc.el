@@ -3,7 +3,8 @@
 (global-set-keys
  '(("C-c l" . org-store-link)
    ("C-c a" . org-agenda)
-   ("C-c ." . org-time-stamp)))
+   ("C-c ." . org-time-stamp)
+   ("C-c C-x C-j" . org-clock-goto)))
 
 (add-hook 'org-mode-hook
           (lambda ()
