@@ -12,7 +12,8 @@
  (define-shellcmd git-pull "git pull -q")
  (define-shellcmd git-fetch "git fetch")
  (define-shellcmd git-log "git log --graph")
- (define-shellcmd git-diff "git diff ." 'diff-mode))
+ (define-shellcmd git-diff "git diff ." 'diff-mode)
+ (define-shellcmd git-remote "git remote -v"))
 
 (defun git-merge (branch)
   (interactive "sBranch: ")
@@ -85,6 +86,7 @@
          ("\C-xgm" . git-merge)
          ("\C-xgp" . git-pull)
          ("\C-xgP" . git-push)
+         ("\C-xgr" . git-remote)
          ("\C-xgs" . git-status))))
 
 (define-minor-mode git-commands-mode
