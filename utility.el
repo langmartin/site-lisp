@@ -108,7 +108,7 @@
 
 (assert (equal "foo+bar+%28baz%29" (urlencode "foo bar (baz)")))
 
-(defun global-set-keys (alist &optional local)
+(defun global-set-keys (alist &rest hooks)
   "Set an alist of '(\"kbd\" . function) pairs globally. Locally
 with the optional second argument.
 
@@ -116,11 +116,25 @@ You can find any kbd name by creating a keyboard macro, striking
 the keys, and editing the macro with C-x C-k e. Examples include
 the preceding, RET, <home>, and M-<f4>."
   (mapc (lambda (pair)
-          (funcall
-           (if local 'local-set-key 'global-set-key)
-           (read-kbd-macro (car pair))  ; the function called by kbd
-           (cdr pair)))
+          (let ((binding (read-kbd-macro (car pair)))
+                (cmd (cdr pair)))
+            (funcall (if (and (boundp 'local-set-keys) local-set-keys)
+                         'local-set-key
+                       'global-set-key)
+                     binding
+                     cmd)
+            (if hooks
+                (mapc (lambda (hook)
+                        (add-hook hook
+                                  `(lambda ()
+                                     (local-set-key ,binding ,cmd))))
+                      hooks))))
         alist))
+
+(defun local-set-keys (alist)
+  "See global-set-keys."
+  (let ((local-set-keys t))
+    (global-set-keys)))
 
 (defun add-to-auto-mode-alist (lst)
   "Add an alist to the front of auto-mode-alist"

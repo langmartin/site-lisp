@@ -14,10 +14,9 @@
 
 (add-hook 'sgml-mode-hook
 	  (lambda ()
-            (global-set-keys
+            (local-set-keys
              '(("C-c C-p" . sgml-skip-tag-backward)
-               ("C-c C-n" . sgml-skip-tag-forward))
-             'local)))
+               ("C-c C-n" . sgml-skip-tag-forward)))))
 
 (put 'narrow-to-region 'disabled nil)
 
