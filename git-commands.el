@@ -59,12 +59,24 @@
     (dired (cons "*git-grep-dired*"
                  (lines-to-list)))))
 
+(defun git-add ()
+  "Add the current file to the index"
+  (interactive)
+  (shell-command (concat "git add \"" (buffer-file-name) "\"")))
+
+(defun git-commit ()
+  (interactive)
+  "Commit"
+  (shell-command "git commit &"))
+
 (defvar git-commands-map)
 
 (setq git-commands-map
       (easy-mmode-define-keymap
-       '(("\C-xgb" . git-branches)
-         ("\C-xgc" . git-checkout)
+       '(("\C-xga" . git-add)
+         ("\C-xgb" . git-branches)
+         ("\C-xgB" . git-checkout)
+         ("\C-xgc" . git-commit)
          ("\C-xgd" . git-diff)
          ("\C-xgf" . git-fetch)
          ("\C-xgG" . git-grep-dired)
