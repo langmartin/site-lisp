@@ -9,6 +9,8 @@
  '(erc-log-channels-directory "~/.emacs.d/log")
  )
 
+(define-key erc-mode-map "\C-c\C-x" (make-sparse-keymap))
+
 (defun irc-bitlbee ()
   (interactive)
   (erc-tls :server "testing.bitlbee.org"

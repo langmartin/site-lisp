@@ -118,8 +118,8 @@ the preceding, RET, <home>, and M-<f4>."
   (mapc (lambda (pair)
           (let ((binding (read-kbd-macro (car pair)))
                 (cmd (cdr pair)))
-            (funcall (if (and (boundp 'local-set-keys) local-set-keys)
-                         'local-set-key
+            (funcall (if (boundp 'global-set-keys-cmd)
+                         global-set-keys-cmd
                        'global-set-key)
                      binding
                      cmd)
@@ -127,14 +127,14 @@ the preceding, RET, <home>, and M-<f4>."
                 (mapc (lambda (hook)
                         (add-hook hook
                                   `(lambda ()
-                                     (local-set-key ,binding ,cmd))))
+                                     (local-set-key ,binding ',cmd))))
                       hooks))))
         alist))
 
 (defun local-set-keys (alist)
   "See global-set-keys."
-  (let ((local-set-keys t))
-    (global-set-keys)))
+  (let ((global-set-keys-cmd 'local-set-key))
+    (global-set-keys alist)))
 
 (defun add-to-auto-mode-alist (lst)
   "Add an alist to the front of auto-mode-alist"
