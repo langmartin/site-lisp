@@ -129,6 +129,7 @@
            (org-agenda-restriction-lock ((t (:inherit match))))
            (org-clock-overlay ((t (:inherit match))))
            (org-todo ((t (:inherit font-lock-string-face))))
+           (trailing-whitespace ((((class color) (background light)) (:background "ivory3"))))
            )))))
   (color-theme-initialize)
   (color-theme-langmartin))

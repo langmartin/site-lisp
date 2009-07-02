@@ -4,11 +4,6 @@
 ;;; the hook, they're not overridable (easily). So, we do a second
 ;;; customize block.
 
-(custom-set-variables
- '(js2-basic-offset 2)
- '(js2-bounce-indent-flag nil)
- )
-
 (add-to-auto-mode-alist
  '(("\\.js\\'" . js2-mode)))
 
