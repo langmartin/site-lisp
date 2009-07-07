@@ -173,7 +173,7 @@
             (split-window-horizontally (- (window-width) (- size extra 1)))
           (split-window-horizontally size)))))
 
-  (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
+  (global-set-key (kbd "C-x 3") 'split-window-horizontally)
   (setq truncate-partial-width-windows 80))
 
 (defun switch-to-last-buffer ()
@@ -187,3 +187,5 @@
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
+
+(fringe-mode 0)

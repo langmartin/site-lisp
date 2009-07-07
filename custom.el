@@ -4,13 +4,12 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(dired-listing-switches "-alh")
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#emacs" "#scheme"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#scheme"))))
  '(erc-join-buffer (quote bury))
  '(erc-server-reconnect-timeout 300)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-flag nil)
- '(org-agenda-files (quote ("z:/IDMWS_Int/dds/docs/spec.txt")))
- '(show-trailing-whitespace t))
+ '(org-agenda-files (quote ("z:/IDMWS_Int/dds/docs/spec.txt"))))
 
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
