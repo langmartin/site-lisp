@@ -57,12 +57,16 @@ Set it intead of tab-width.")
                (setq 2C-beyond-fill-column 0)
                (other-window 2)
                (setq fill-column 55)))
+
+  (defun turn-off-indent-tabs-mode ()
+    (setq indent-tabs-mode nil))
+  
   (add-hooks '(lisp-mode-hook
                emacs-lisp-mode-hook
                scheme-mode-hook
                html-mode-hook
                sql-mode)
-             '(lambda () (setq indent-tabs-mode nil)))
+             'turn-off-indent-tabs-mode)
   (add-hooks '(html-mode-hook)
              'turn-off-auto-fill)
 
