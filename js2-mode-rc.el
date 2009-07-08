@@ -7,8 +7,11 @@
 (add-to-auto-mode-alist
  '(("\\.js\\'" . js2-mode)))
 
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil)))
+(defun show-paren-style-expression ()
+  (make-local-variable 'show-paren-style)
+  (setq show-paren-style 'expression))
+
+(add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
+(add-hook 'js2-mode-hook 'show-paren-style-expression)
 
 (provide 'js2-mode-rc)
