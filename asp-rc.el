@@ -9,7 +9,7 @@
   (html-mode))
 
 (add-to-auto-mode-alist
- '(("\\.asp$" . visual-basic-mode)
+ '(("\\.asp$" . html-mode)
    ("\\.asa$" . visual-basic-mode)))
 
 (add-hook 'sgml-mode-hook
@@ -17,6 +17,11 @@
             (local-set-keys
              '(("C-c C-p" . sgml-skip-tag-backward)
                ("C-c C-n" . sgml-skip-tag-forward)))))
+
+(defun enable-truncate-long-lines ()
+  (toggle-truncate-lines 1))
+
+(add-hook 'html-mode-hook 'enable-truncate-long-lines)
 
 (put 'narrow-to-region 'disabled nil)
 
