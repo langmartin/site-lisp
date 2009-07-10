@@ -58,10 +58,14 @@
     (setq send-mail-function 'smtpmail-send-it
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
-    (add-hook 'mail-mode-hook
-              (lambda () (auto-fill-mode t)))
+    (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-setup-hook
               'smtpmail-through-matching-account)))
+
+(defun visual-line-not-auto-fill ()
+  (interactive)
+  (auto-fill-mode nil)
+  (visual-line-mode t))
 
 (rc-gnus)
 
