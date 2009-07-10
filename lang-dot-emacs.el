@@ -134,6 +134,21 @@
   (color-theme-initialize)
   (color-theme-langmartin))
 
+(defun rc-show-paren-expression ()
+  (interactive)
+  (setq show-paren-style 'expression)
+  (custom-set-faces
+   '(show-paren-match ((t (:background "grey95"))))
+   '(show-paren-mismatch ((t (:background "MediumPurple2"))))))
+
+(defun rc-show-paren-parens ()
+  (interactive)
+  (setq show-paren-style 'parenthesis)
+  (custom-set-faces
+   '(show-paren-match ((t (:background "grey80"))))
+   '(show-paren-mismatch
+     ((t (:foreground "white" :background "purple"))))))
+
 (global-set-keys
  '(("C-x C-c" . nil)
    ("C-x C-j" . execute-extended-command)
