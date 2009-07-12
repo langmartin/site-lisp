@@ -134,6 +134,21 @@
   (color-theme-initialize)
   (color-theme-langmartin))
 
+(defun rc-show-paren-expression ()
+  (interactive)
+  (setq show-paren-style 'expression)
+  (custom-set-faces
+   '(show-paren-match ((t (:background "grey95"))))
+   '(show-paren-mismatch ((t (:background "MediumPurple2"))))))
+
+(defun rc-show-paren-parens ()
+  (interactive)
+  (setq show-paren-style 'parenthesis)
+  (custom-set-faces
+   '(show-paren-match ((t (:background "grey80"))))
+   '(show-paren-mismatch
+     ((t (:foreground "white" :background "purple"))))))
+
 (global-set-keys
  '(("C-x C-c" . nil)
    ("C-x C-j" . execute-extended-command)
@@ -173,7 +188,7 @@
             (split-window-horizontally (- (window-width) (- size extra 1)))
           (split-window-horizontally size)))))
 
-  (global-set-key (kbd "C-x 3") 'split-window-horizontally-minsize)
+  (global-set-key (kbd "C-x 3") 'split-window-horizontally)
   (setq truncate-partial-width-windows 80))
 
 (defun switch-to-last-buffer ()
@@ -187,3 +202,5 @@
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
+
+(fringe-mode 0)

@@ -12,7 +12,7 @@
  '(cx-timesheet-tunnel-extra "-L3128:iago:3128 -L3129:iago:3129 -L1025:mail:25 -L1110:iago:110")
  '(cx-timesheet-username "lang")
  '(dired-listing-switches "-alh")
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#emacs" "#scheme"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#scheme"))))
  '(erc-join-buffer (quote bury))
  '(erc-server-reconnect-timeout 300)
  '(erc-user-full-name "Lang Martin")

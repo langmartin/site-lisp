@@ -7,8 +7,5 @@
 (add-to-auto-mode-alist
  '(("\\.js\\'" . js2-mode)))
 
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil)))
-
+(add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
 (provide 'js2-mode-rc)
