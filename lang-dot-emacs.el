@@ -204,3 +204,5 @@
         term-default-fg-color "black"))
 
 (fringe-mode 0)
+
+(windmove-default-keybindings)
