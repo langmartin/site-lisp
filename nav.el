@@ -447,11 +447,13 @@ Synonymous with the (nav) function."
     (other-window 1)
     (save-current-buffer
       (find-file temp-filename)
+      (make-local-variable 'require-final-newline)
+      (setq require-final-newline nil)
       (insert (nav-join "\0" file-paths))
       (save-buffer)
       (kill-buffer (current-buffer)))
     (select-window (nav-get-window nav-buffer-name))
-    (format "cat %s | xargs -0 grep -inH '%s'" temp-filename pattern)))
+    (format "cat '%s' | xargs -0 grep -inH '%s'" temp-filename pattern)))
 
 
 (defun nav-recursive-grep (pattern)
