@@ -113,7 +113,8 @@
            nil
            (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
            (erc-notice-face ((t (:foreground "grey70"))))
-           (erc-timestamp-face ((t (:bold t :foreground "green4"))))
+           (erc-timestamp-face ((t (:foreground "green4"))))
+           (erc-pal-face ((t (:foreground "green4"))))
            (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
            (isearch ,match)
            (iswitchb-single-match ((t (:inherit font-lock-function-name-face))))

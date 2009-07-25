@@ -14,6 +14,7 @@
  '(dired-listing-switches "-alh")
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#scheme"))))
  '(erc-join-buffer (quote bury))
+ '(erc-pals (quote ("jlongster" "bweaver")))
  '(erc-server-reconnect-timeout 300)
  '(erc-user-full-name "Lang Martin")
  '(eshell-ls-use-colors nil)
