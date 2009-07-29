@@ -6,9 +6,7 @@
  '(Info-additional-directory-list (quote ("/Applications/Emacs.app/Contents/Resources/info" "/usr/share/info")))
  '(LaTeX-command "pdflatex")
  '(TeX-default-mode (quote plain-tex-mode))
- '(c-basic-offset 8)
  '(column-number-mode t)
- '(css-indent-offset 8 t)
  '(cx-timesheet-tunnel-extra "-L3128:iago:3128 -L3129:iago:3129 -L1025:mail:25 -L1110:iago:110")
  '(cx-timesheet-username "lang")
  '(dired-listing-switches "-alh")
@@ -41,7 +39,6 @@
  '(rst-mode-lazy nil)
  '(scroll-bar-mode nil)
  '(server-mode t)
- '(server-raise-frame nil)
  '(sql-postgres-program "/command/psql")
  '(starttls-gnutls-program "/coptix/local/bin/gnutls-cli")
  '(temporary-file-directory "~/.emacs.d/tmp/")
@@ -59,4 +56,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(erc-notice-face ((t (:foreground "grey70")))))
