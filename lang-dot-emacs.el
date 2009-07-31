@@ -22,7 +22,7 @@
         '("rove" "abla" "drok"))
   (setq tramp-backup-directory-alist backup-directory-alist))
 
-(desktop-save-mode 1)
+;; (desktop-save-mode 1)
 
 (require 'kmacro)
 
@@ -149,6 +149,8 @@
    '(show-paren-match ((t (:background "grey80"))))
    '(show-paren-mismatch
      ((t (:foreground "white" :background "purple"))))))
+
+(rc-show-paren-expression)
 
 (global-set-keys
  '(("C-x C-c" . nil)
