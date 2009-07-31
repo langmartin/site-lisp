@@ -56,7 +56,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
- '(erc-timestamp-face ((t (:foreground "green4"))))
- '(erc-notice-face ((t (:foreground "grey70"))))
- '(erc-pal-face ((t (:foreground "green4")))))
+ '(erc-notice-face ((t (:foreground "grey70")))))
