@@ -27,6 +27,7 @@
  '(inhibit-startup-screen t)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-flag nil)
+ '(js2-mirror-mode nil)
  '(line-spacing 1)
  '(mail-mailing-lists (quote ("gambit-list@iro.umontreal.ca" "all@coptix.com" "dns@list.cr.yp.to")))
  '(newsticker-url-list nil)
