@@ -12,7 +12,6 @@
  (define-shellcmd git-pull "git pull -q")
  (define-shellcmd git-fetch "git fetch")
  (define-shellcmd git-log "git log --graph")
- (define-shellcmd git-diff "git diff ." 'diff-mode)
  (define-shellcmd git-remote "git remote -v"))
 
 (defun git-merge (branch)
@@ -69,6 +68,16 @@
   (interactive)
   "Commit"
   (shell-command "git commit &"))
+
+(defun git-diff (cachedp)
+  (interactive "P")
+  (let* ((cmd (if cachedp "git diff --cached ."
+                "git diff ."))
+         (bufname (concat "*" cmd "*")))
+    (message cmd bufname)
+    (shell-command cmd bufname)
+    (with-buffer (get-buffer bufname)
+      (diff-mode))))
 
 (defvar git-commands-map)
 
