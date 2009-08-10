@@ -49,3 +49,12 @@ is not well organized.
 
 ** Enter the page context
    : repl.enter(content)
+
+* COMMENT: Timesheet Reporting
+  org-mode rocks the reporting.
+
+#+BEGIN: clocktable :maxlevel 3 :scope agenda :block today :link t
+#+END:
+
+#+BEGIN: clocktable :maxlevel 3 :scope agenda :block yesterday :link t
+#+END:
