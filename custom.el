@@ -33,7 +33,6 @@
  '(newsticker-url-list nil)
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
- '(org-agenda-files (quote ("z:/IDMWS_Int/dds/docs/spec.txt")))
  '(paren-sexp-mode nil)
  '(partial-completion-mode t)
  '(pgg-default-user-id "Lang Martin")
