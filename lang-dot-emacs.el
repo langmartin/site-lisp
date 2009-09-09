@@ -111,10 +111,6 @@
          `(color-theme-langmartin
            ((background-color . "ivory"))
            nil
-           (erc-current-nick-face ((t (:bold t :foreground "Turquoise4"))))
-           (erc-notice-face ((t (:foreground "grey70"))))
-           (erc-timestamp-face ((t (:foreground "green4"))))
-           (erc-pal-face ((t (:foreground "green4"))))
            (eshell-prompt ((t (:bold t :foreground "DarkRed"))))
            (isearch ,match)
            (iswitchb-single-match ((t (:inherit font-lock-function-name-face))))
@@ -138,17 +134,15 @@
 (defun rc-show-paren-expression ()
   (interactive)
   (setq show-paren-style 'expression)
-  (custom-set-faces
-   '(show-paren-match ((t (:background "grey95"))))
-   '(show-paren-mismatch ((t (:background "MediumPurple2"))))))
+  (set-face-background 'show-paren-match "grey95")
+  (set-face-background 'show-paren-mismatch "MediumPurple2"))
 
 (defun rc-show-paren-parens ()
   (interactive)
   (setq show-paren-style 'parenthesis)
-  (custom-set-faces
-   '(show-paren-match ((t (:background "grey80"))))
-   '(show-paren-mismatch
-     ((t (:foreground "white" :background "purple"))))))
+  (set-face-background 'show-paren-match "grey80")
+  (set-face-background 'show-paren-mismatch "purple")
+  (set-face-foreground 'show-paren-mismatch "white"))
 
 (rc-show-paren-expression)
 

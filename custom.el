@@ -10,10 +10,15 @@
  '(cx-timesheet-tunnel-extra "-L3128:iago:3128 -L3129:iago:3129 -L1025:mail:25 -L1110:iago:110")
  '(cx-timesheet-username "lang")
  '(dired-listing-switches "-alh")
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#medium" "#scheme"))))
+ '(erc-autoaway-mode t)
+ '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
  '(erc-join-buffer (quote bury))
+ '(erc-log-channels-directory "~/.emacs.d/log")
+ '(erc-match-mode 1)
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
  '(erc-pals (quote ("jlongster" "bweaver")))
  '(erc-server-reconnect-timeout 300)
+ '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-user-full-name "Lang Martin")
  '(eshell-ls-use-colors nil)
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
@@ -57,4 +62,4 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-)
+ )

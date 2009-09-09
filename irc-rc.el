@@ -1,15 +1,12 @@
-(require 'erc)
-
-(set-variables
- '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
- '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
- '(erc-match-mode 1)
- '(erc-autoaway-mode t)
- '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
- '(erc-log-channels-directory "~/.emacs.d/log")
- )
-
 (define-key erc-mode-map "\C-c\C-x" (make-sparse-keymap))
+
+(defun erc-fix-colors ()
+  (interactive)
+  (set-face-foreground 'erc-current-nick-face "Turquoise4")
+  (set-face-foreground 'erc-notice-face "grey70")
+  (set-face-foreground 'erc-timestamp-face "green4")
+  (set-face-foreground 'erc-pal-face "green4")
+  (set-face-attribute 'erc-pal-face nil :weight 'bold))
 
 (defun irc-bitlbee ()
   (interactive)
@@ -42,7 +39,8 @@
        :nick "langmartin"
        :full-name "Lang Martin"
        :port 8001
-       :password freenode-password))
+       :password freenode-password)
+  (erc-fix-colors))
 
 ;; (define-buffer-visitor visit-medium "#medium" 'irc)
 ;; (global-set-key (kbd "H-m") 'visit-medium)
