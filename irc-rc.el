@@ -1,3 +1,4 @@
+(require 'erc)
 (define-key erc-mode-map "\C-c\C-x" (make-sparse-keymap))
 
 (defun erc-fix-colors ()
