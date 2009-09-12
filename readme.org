@@ -1,51 +1,50 @@
-This repository is my collection of elisp packages from all over the
-Internet, and also a collection of my own code, all mixed together. It
-is not well organized.
+* Documentation
+  This repository is my collection of elisp packages from all over the
+  Internet, and also a collection of my own code, all mixed together.
+  It is not well organized.
 
-* Dired Mode
- :PROPERTIES:
- :VISIBILITY: all
- :END:
+** make-tags-file.el
+*** TODO find-top-level isn't working correctly, at least on windows.
 
-** Filter Dired by Filename
-   : C-x d ~/dir/*.css
+* Notes & Cheat Sheets
+** Org Mode
+*** Timesheet reporting.
+    org-mode rocks the reporting.
 
-** Mark by Filename Regexp
-   : % m
-   
-** Multi-File Search & Replace
-   1. Open a dired buffer containing files containing a string
-      : M-x find-grep-dired RET <pattern>
-   2. Mark all js files
-      : % m .js$ RET
-   3. Run query-replace on marked files
-      : Q <pattern> RET <replacement>
-   4. Save all modified files
-      : C-x s
+#+BEGIN: clocktable :maxlevel 3 :scope agenda :block today :link t
+#+END:
 
-* Eshell
-  :PROPERTIES:
-  :VISIBILITY: all
-  :END:
+#+BEGIN: clocktable :maxlevel 3 :scope agenda :block yesterday :link t
+#+END:
 
-** Eshell redirect (not pipe) to a buffer
-   : diff > #<buffer *scratch*>
+** Dired
+*** Filter dired by filename.
+    : C-x d ~/dir/*.css
 
-* Git
-  :PROPERTIES:
-  :VISIBILITY: all
-  :END:
+*** Mark by filename regexp.
+    : % m
+    
+*** Multi-file search & replace.
+    1. Open a dired buffer containing files containing a string
+       : M-x find-grep-dired RET <pattern>
+    2. Mark all js files
+       : % m .js$ RET
+    3. Run query-replace on marked files
+       : Q <pattern> RET <replacement>
+    4. Save all modified files
+       : C-x s
 
-** Search History
-   : git log -S'pattern'
+** Eshell
+*** Eshell redirect (not pipe) to a buffer.
+    : diff > #<buffer *scratch*>
 
-* MozREPL
-  :PROPERTIES:
-  :VISIBILITY: all
-  :END:
+** Git
+*** Search history.
+    : git log -S'pattern'
 
-** Flush the cache from anywhere
-   : repl._creationContext.webdeveloper_clearCache()
+** MozREPL
+*** Flush the cache from anywhere.
+    : repl._creationContext.webdeveloper_clearCache()
 
-** Enter the page context
-   : repl.enter(content)
+*** Enter the page context.
+    : repl.enter(content)

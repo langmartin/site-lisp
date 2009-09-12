@@ -10,7 +10,8 @@
 
 (add-to-auto-mode-alist
  '(("\\.asp$" . html-mode)
-   ("\\.asa$" . visual-basic-mode)))
+   ("\\.asa$" . visual-basic-mode)
+   ("\\.vbs$" . visual-basic-mode)))
 
 (add-hook 'sgml-mode-hook
 	  (lambda ()
