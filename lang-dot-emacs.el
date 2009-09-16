@@ -201,3 +201,7 @@
         term-default-fg-color "black"))
 
 (fringe-mode 0)
+
+(progn
+  (require 'goto-last-change)
+  (global-set-key "\C-x\C-\\" 'goto-last-change))
