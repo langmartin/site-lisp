@@ -7,33 +7,10 @@
 *** TODO find-top-level isn't working correctly, at least on windows.
 
 * Notes & Cheat Sheets
-** Org Mode
-*** Timesheet reporting.
-    org-mode rocks the reporting.
-
-#+BEGIN: clocktable :maxlevel 3 :scope agenda :block today :link t
-#+END:
-
-#+BEGIN: clocktable :maxlevel 3 :scope agenda :block yesterday :link t
-#+END:
-
 ** Dired
-*** Filter dired by filename.
-    : C-x d ~/dir/*.css
-
 *** Mark by filename regexp.
     : % m
     
-*** Multi-file search & replace.
-    1. Open a dired buffer containing files containing a string
-       : M-x find-grep-dired RET <pattern>
-    2. Mark all js files
-       : % m .js$ RET
-    3. Run query-replace on marked files
-       : Q <pattern> RET <replacement>
-    4. Save all modified files
-       : C-x s
-
 ** Eshell
 *** Eshell redirect (not pipe) to a buffer.
     : diff > #<buffer *scratch*>
@@ -42,9 +19,32 @@
 *** Search history.
     : git log -S'pattern'
 
+** goto-last-change.el
+   =C-x C-\= visit the list of recent points.
+
+** IBuffer
+*** Multi occur (Windows grep work-around).
+    Tag and =O=.
+
+*** Multi query-replace-regexp.
+    Tag and =I=.
+
 ** MozREPL
 *** Flush the cache from anywhere.
     : repl._creationContext.webdeveloper_clearCache()
 
 *** Enter the page context.
     : repl.enter(content)
+
+** Windows Hacks & Workarounds
+*** Installing Windows Fonts
+    Copy =*.ttf= to Control Panel -> Fonts using explorer. In emacs,
+    they're referred to by the pretty name in the Fonts panel with an
+    appended point size.
+
+*** IE Registry
+    =\HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main=.
+    =Friendly http errors=, =Disable Script Debugger=, and
+    =DisableScriptDebuggerIE=.
+    
+
