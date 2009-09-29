@@ -35,8 +35,6 @@
    ("C-x C-b" . switch-to-buffer)
    ("C-x x b" . ibuffer)))
 
-(require 'winner)
-(winner-mode 1)
 (iswitchb-mode 1)
 
 (defvar programming-mode-hooks
@@ -76,6 +74,8 @@
 
 (progn
   (require 'winner)
+  (define-key winner-mode-map (kbd "C-c <C-right>") 'winner-undo)
+  (define-key winner-mode-map (kbd "C-c <C-left>") 'winner-undo)
   (winner-mode 1))
 
 (defmacro define-buffer-visitor (visitor-name buffer-name command)
@@ -193,6 +193,10 @@
   (switch-to-buffer nil))
 
 (global-set-keys '(("M-`" . switch-to-last-buffer)))
+
+;; (mapcar (lambda (frame)
+;;           (other-buffer nil nil frame))
+;;         (frame-list))
 
 (progn
   (require 'term-mode-rc)
