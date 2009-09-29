@@ -22,15 +22,22 @@
               make-tags-file-git-style
               '(".attic")))
 
+(defun find-root-rootp ()
+  (let ((w32-get-true-file-attributes t))
+    (= (car (nth 10 (file-attributes ".")))
+       (car (nth 10 (file-attributes ".."))))))
+
 (defun find-root-directory (&optional procedure)
   "Find a (the) root directory, using the procedure as a predicate."
-  (if (or (and procedure (funcall procedure))
-          (= (nth 10 (file-attributes "."))
-             (nth 10 (file-attributes ".."))))
-      (file-truename ".")
-    (progn
-      (cd "..")
-      (find-root-directory procedure))))
+  (let ((find-root-starting-dir default-directory))
+    (unwind-protect
+        (if (or (and procedure (funcall procedure))
+                (find-root-rootp))
+            (file-truename ".")
+          (progn
+            (cd "..")
+            (find-root-directory procedure)))
+      (cd find-root-starting-dir))))
 
 (defun match-regexp-list (str regexp-list)
   (and-let* ((match (generalized-member
