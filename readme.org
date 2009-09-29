@@ -22,6 +22,9 @@
 <proq> you will need to adjust the numbers 105 and 229 though
 #+END_SRC
 
+*** URL Encoding
+    =org-link-unescape=
+
 ** Eshell
 *** Eshell redirect (not pipe) to a buffer.
     : diff > #<buffer *scratch*>
