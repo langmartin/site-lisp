@@ -32,7 +32,6 @@
         "visual-basic-mode.el"
 
         "chop.el"
-        "srfi-2.el"
         "make-tags-file.el"
         ))
 
