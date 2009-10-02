@@ -27,10 +27,8 @@
         "session.el"
         "site-start.el"
         "smooth-scrolling.el"
-        "srfi-1.el"
         "utility.el"
         "visual-basic-mode.el"
-
         "chop.el"
         "make-tags-file.el"
         ))
