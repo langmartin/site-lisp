@@ -127,37 +127,38 @@ The key to bind is defined by html-script-key")
 
 (defun html-script-narrow ()
   (interactive)
-  (let* ((orig (point))
-         (case-fold-search t)
-         (handler-list
-          (if (re-search-backward html-script-start-regexp nil t)
-              (loop for x in html-script-regions
-                    when (looking-at (car x)) return (cdr x)
-                    finally do (error "html-script: regexp mismatch"))
-            (message "Not in a script region.")
-            nil)))
-    (if handler-list
-        (html-script-narrow-handler orig handler-list)
-      (goto-char orig))))
+  (save-excursion
+    (let ((orig (point))
+          (lp (lambda (regions)
+                (if (null regions) (message "Not in a script region.")
+                  (progn
+                    (if (re-search-backward (concat "\\(" (caar regions) "\\)")
+                                            nil
+                                            t)
+                        (progn
+                          (goto-char (match-end 1))
+                          (if (eolp) (forward-char))
+                          (html-script-narrow-handler orig (cdar regions)))
+                      (funcall lp (cdr regions))))))))
+      (funcall lp html-script-regions))))
 
 (defun html-script-narrow-handler (orig arg-list)
-  (beginning-of-line)
   (let ((ending-re (car arg-list))
         (modes (cdr arg-list))
         (beg (point))
         (case-fold-search t))
-    (if (re-search-forward ending-re nil t)
+    (if (re-search-forward (concat "\\(" ending-re "\\)") nil t)
         (if (>= (point) orig)
             (progn
+              (goto-char (match-beginning 1))
+              (if (eolp) (forward-char))
               (setq html-script-original-mode major-mode)
               (narrow-to-region beg (point))
               (loop for x in modes when (fboundp x) do (funcall x) and return nil
                     finally do (error "html-script: no relevant mode found."))
               (html-script-install-widen-key))
           (message "Not in a script region."))
-      (message "End of script region not found."))
-    (goto-char orig)))
-     
+      (message "End of script region not found."))))
 
 (defun html-script-widen ()
   (interactive)
