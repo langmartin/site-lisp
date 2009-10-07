@@ -208,7 +208,7 @@
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
 
-(fringe-mode 0)
+(fringe-mode '(1 . 1))
 
 (progn
   (require 'goto-last-change)
