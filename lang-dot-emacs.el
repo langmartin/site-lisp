@@ -159,10 +159,14 @@
    ("<f7>" . revert-buffer)
    ("<f8>" . toggle-truncate-lines)
 
-   ("<f10>" . visual-basic-mode)
-   ("<f9>" . css-mode)
-   ("<f11>" . js2-mode)
-   ("<f12>" . rc-sgml-mode-for-asp)))
+   ;;; Replaced by html-script, which binds f12
+   ;; ("<f10>" . visual-basic-mode)
+   ;; ("<f9>" . css-mode)
+   ;; ("<f11>" . js2-mode)
+   ;; ("<f12>" . rc-sgml-mode-for-asp)
+   ))
+
+(require 'html-script)
 
 (progn
   (require 'chop)
