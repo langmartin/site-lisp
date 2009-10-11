@@ -106,7 +106,26 @@
              string
              ""))
 
+(defun urldecode (string)
+  (let ((state 0) (code nil))
+    (flet ((hex (ch) (string-match (char-to-string ch) hex-values)))
+      (mapconcat (lambda (ch)
+                   (cond ((= state 0)
+                          (cond ((= ?+ ch) " ")
+                                ((= ?% ch) (setq state 1) "")
+                                (t (char-to-string ch))))
+                         ((= state 1)
+                          (setq state 2 code ch) "")
+                         ((= state 2)
+                          (setq state 0)
+                          (char-to-string
+                           (+ (* 16 (hex code))
+                              (* 1  (hex ch)))))))
+                 string
+                 ""))))
+
 (assert (equal "foo+bar+%28baz%29" (urlencode "foo bar (baz)")))
+(assert (equal "foo bar (baz)" (urldecode (urlencode "foo bar (baz)"))))
 
 (defun global-set-keys (alist &rest hooks)
   "Set an alist of '(\"kbd\" . function) pairs globally. Locally

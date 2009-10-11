@@ -35,8 +35,6 @@
    ("C-x C-b" . switch-to-buffer)
    ("C-x x b" . ibuffer)))
 
-(require 'winner)
-(winner-mode 1)
 (iswitchb-mode 1)
 
 (defvar programming-mode-hooks
@@ -76,6 +74,8 @@
 
 (progn
   (require 'winner)
+  (define-key winner-mode-map (kbd "C-c <C-right>") 'winner-undo)
+  (define-key winner-mode-map (kbd "C-c <C-left>") 'winner-undo)
   (winner-mode 1))
 
 (defmacro define-buffer-visitor (visitor-name buffer-name command)
@@ -159,10 +159,14 @@
    ("<f7>" . revert-buffer)
    ("<f8>" . toggle-truncate-lines)
 
-   ("<f10>" . visual-basic-mode)
-   ("<f9>" . css-mode)
-   ("<f11>" . js2-mode)
-   ("<f12>" . rc-sgml-mode-for-asp)))
+   ;;; Replaced by html-script, which binds f12
+   ;; ("<f10>" . visual-basic-mode)
+   ;; ("<f9>" . css-mode)
+   ;; ("<f11>" . js2-mode)
+   ;; ("<f12>" . rc-sgml-mode-for-asp)
+   ))
+
+(require 'html-script)
 
 (progn
   (require 'chop)
@@ -194,12 +198,18 @@
 
 (global-set-keys '(("M-`" . switch-to-last-buffer)))
 
+;; (mapcar (lambda (frame)
+;;           (other-buffer nil nil frame))
+;;         (frame-list))
+
 (progn
   (require 'term-mode-rc)
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
 
-(fringe-mode 0)
+(fringe-mode '(1 . 1))
 
-(windmove-default-keybindings)
+(progn
+  (require 'goto-last-change)
+  (global-set-key "\C-x\C-\\" 'goto-last-change))

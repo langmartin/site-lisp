@@ -28,7 +28,7 @@ Set it intead of tab-width.")
   (setq
    next-line-add-newlines nil
    require-final-newline t
-   ring-bell-function 'ignore
+   ;; ring-bell-function 'ignore
    indent-tabs-mode t
    ;; end sentences w/ just one space in text modes (french spacing
    sentence-end  "[.?!][]\"')]*\\($\\|\t\\| \\)[ \t\n]*"
