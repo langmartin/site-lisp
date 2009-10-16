@@ -46,7 +46,6 @@
  '(server-mode t)
  '(server-raise-frame nil)
  '(sql-postgres-program "/command/psql")
- '(starttls-gnutls-program "/coptix/local/bin/gnutls-cli")
  '(temporary-file-directory "~/.emacs.d/tmp/")
  '(tool-bar-mode nil)
  '(track-eol t)
