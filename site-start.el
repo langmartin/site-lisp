@@ -443,7 +443,7 @@ repeated unfill entire region as one paragraph."
   (rc-function-keys-mlm 'global-set-key)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
-  (setq uniquify-buffer-name-style 'reverse))
+  (setq uniquify-buffer-name-style 'forward))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"

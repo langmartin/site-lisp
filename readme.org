@@ -7,27 +7,12 @@
 *** TODO find-top-level isn't working correctly, at least on windows.
 
 * Notes & Cheat Sheets
-** Dired
-*** Mark by filename regexp.
-    : % m
-    
-** Emacs
-*** Fullscreen Frames
-    From #emacs:
-
-#+BEGIN_SRC
-<nimred> wich way can i maximize emacs windows using MS Windows ?       [13:58]
-<proq> nimred: add to your .emacs:  (add-to-list 'default-frame-alist '(height
-       . 105))    (add-to-list 'default-frame-alist '(width . 229))     [14:00]
-<proq> you will need to adjust the numbers 105 and 229 though
-#+END_SRC
-
-*** URL Encoding
-    =org-link-unescape=
-
-** Eshell
-*** Eshell redirect (not pipe) to a buffer.
-    : diff > #<buffer *scratch*>
+** IRC
+*** Change Nickname
+    - =/query NickServ=
+    - =ghost= if I'm still connected.
+    - =id= if I'm not authenticated.
+    - =/nick= to change.
 
 ** Git
 *** Search history.
@@ -35,13 +20,6 @@
 
 ** goto-last-change.el
    =C-x C-\= visit the list of recent points.
-
-** IBuffer
-*** Multi occur (Windows grep work-around).
-    Tag and =O=.
-
-*** Multi query-replace-regexp.
-    Tag and =I=.
 
 ** MozREPL
 *** Flush the cache from anywhere.
@@ -60,5 +38,13 @@
     =\HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main=.
     =Friendly http errors=, =Disable Script Debugger=, and
     =DisableScriptDebuggerIE=.
-    
 
+*** Fullscreen Emacs
+    From #emacs:
+
+#+BEGIN_SRC
+<nimred> wich way can i maximize emacs windows using MS Windows ?       [13:58]
+<proq> nimred: add to your .emacs:  (add-to-list 'default-frame-alist '(height
+       . 105))    (add-to-list 'default-frame-alist '(width . 229))     [14:00]
+<proq> you will need to adjust the numbers 105 and 229 though
+#+END_SRC
