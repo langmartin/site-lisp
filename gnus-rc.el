@@ -61,7 +61,12 @@
     (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-setup-hook
-              'smtpmail-through-matching-account)))
+              'smtpmail-through-matching-account))
+  (progn
+    ;; Speed tricks: http://www.gnu.org/software/emacs/manual/html_node/gnus/_005b9_002e2_005d.html
+    (gnus-compile)
+    (setq gc-cons-threshold 3500000)
+    (setq gnus-use-correct-string-widths nil)))
 
 (defun visual-line-not-auto-fill ()
   (interactive)
