@@ -29,6 +29,7 @@
         gnus-ignored-newsgroups "")
   (require 'nnimap)
   (setq gnus-nntp-server nil)
+  (setq gnus-always-read-dribble-file t)
   (setq gnus-select-method
         '(nnimap "gmail"
                  (nnimap-address "imap.gmail.com")
