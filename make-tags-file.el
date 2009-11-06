@@ -73,22 +73,22 @@
                   'make-tags-file-gitp))))
     (message "top directory here is %s" dir)
     (save-excursion
-      (cd dir)
-      (exec-exuberant (make-tags-file-list)))))
+      (exec-ctags (make-tags-file-list)))))
 
 (defun exec-etags (lst)
   (apply
-   'call-process
+   'start-process
    (append
     (list "etags" nil nil nil)
     lst)))
 
-(defun exec-exuberant (lst)
-  (apply
-   'call-process
-   (append
-    (list "c:/mlm/ctags/ctags" nil nil nil)
-    (append (list "-e") lst))))
+(defun exec-ctags (lst)
+  (apply 'start-process
+         "ctags"
+         nil
+         "c:/mlm/ctags/ctags"
+         "-e"
+         lst))
 
 (defun make-tags-file-filep (file dir)
   (if (file-directory-p file)
