@@ -147,7 +147,7 @@
 (rc-show-paren-expression)
 
 (global-set-keys
- '(("C-x C-c" . nil)
+ '(
    ("C-x C-j" . execute-extended-command)
    ("C-c C-j" . execute-extended-command)
 
@@ -208,7 +208,24 @@
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
 
-(fringe-mode '(1 . 1))
+(defun add-to-alist (list-sym element &optional append)
+  (add-to-list list-sym element append
+               (lambda (a b)
+                 (eq (car a) (car b)))))
+
+(defun update-alist (alist-symbol element)
+  (set alist-symbol
+       (cons element
+             (filter (lambda (x)
+                       (if (eq (car x) (car element))
+                           nil
+                         x))
+                     (symbol-value alist-symbol)))))
+
+(progn
+  (fringe-mode '(1 . 1))
+  (update-alist 'default-frame-alist '(width . 162))
+  (update-alist 'default-frame-alist '(height . 76)))
 
 (progn
   (require 'goto-last-change)
