@@ -48,10 +48,10 @@
     python-mode-hook
     js2-mode-hook))
 
-(add-hooks programming-mode-hooks
-           (lambda ()
-             ;; (highlight-parentheses-mode 1)
-             (highlight-symbol-mode 1)))
+;; (add-hooks programming-mode-hooks
+;;            (lambda ()
+;;              ;; (highlight-parentheses-mode 1)
+;;              (highlight-symbol-mode 1)))
 
 (add-hooks '(emacs-lisp-mode-hook python-mode-hook)
            (lambda () (eldoc-mode 1)))
