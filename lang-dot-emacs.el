@@ -246,3 +246,27 @@ line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-beginning-position 2)))))
+
+(set-variables
+ '(paren-sexp-mode nil)
+ '(partial-completion-mode t)
+ '(pgg-default-user-id "Lang Martin")
+ '(rst-mode-lazy nil)
+ '(scroll-bar-mode nil)
+ '(server-mode t)
+ '(server-raise-frame nil)
+ '(temporary-file-directory "~/.emacs.d/tmp/")
+ '(tool-bar-mode nil)
+ '(track-eol t)
+ '(inhibit-startup-screen t)
+ '(line-spacing 1)
+
+ '(LaTeX-command "pdflatex")
+ '(TeX-default-mode (quote plain-tex-mode))
+ '(column-number-mode t)
+ '(gud-gdb-command-name "gdb --annotate=1")
+
+ '(dired-listing-switches "-alh")
+ '(eshell-ls-use-colors nil)
+ '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
+ '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))

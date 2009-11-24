@@ -48,4 +48,16 @@
 
 (defun irc () (interactive) (irc-freenode))
 
+(set-variables
+ '(erc-autoaway-mode t)
+ '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
+ '(erc-join-buffer (quote bury))
+ '(erc-log-channels-directory "~/.emacs.d/log")
+ '(erc-match-mode 1)
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+ '(erc-pals (quote ("jlongster" "bweaver")))
+ '(erc-server-reconnect-timeout 300)
+ '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
+ '(erc-user-full-name "Lang Martin"))
+
 (provide 'irc-rc)
