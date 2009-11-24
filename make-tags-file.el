@@ -82,11 +82,13 @@
     (list "etags" nil nil nil)
     lst)))
 
+(defvar ctags-program "C:/mlm/ctags/ctags.exe")
+
 (defun exec-ctags (lst)
   (apply 'start-process
          "ctags"
          nil
-         "c:/mlm/ctags/ctags"
+         ctags-program
          "-e"
          lst))
 
