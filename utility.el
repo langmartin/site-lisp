@@ -177,8 +177,16 @@ the preceding, RET, <home>, and M-<f4>."
 (defun set-variables (&rest lst)
   "Set a list of variables using the same syntax as custom-set-variables"
   (mapc (lambda (args)
-          (set (car args)
-               (eval (cadr args))))
+          (set-default (car args) (eval (cadr args))))
         lst))
+
+(defmacro save-default-directory (directory &rest body)
+  "CD then restore the default-directory."
+  (declare (indent 1))
+  (let ((dir (gensym)))
+    `(let ((,dir default-directory))
+       (unwind-protect
+           (progn (cd ,directory) ,@body)
+         (cd ,dir)))))
 
 (provide 'utility)
