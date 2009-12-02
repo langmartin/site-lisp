@@ -1,3 +1,8 @@
+(progn
+  (fringe-mode '(1 . 1))
+  (update-alist 'default-frame-alist '(width . 162))
+  (update-alist 'default-frame-alist '(height . 76)))
+
 (set-variables
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
