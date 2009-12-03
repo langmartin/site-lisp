@@ -223,11 +223,6 @@
                      (symbol-value alist-symbol)))))
 
 (progn
-  (fringe-mode '(1 . 1))
-  (update-alist 'default-frame-alist '(width . 162))
-  (update-alist 'default-frame-alist '(height . 76)))
-
-(progn
   (require 'goto-last-change)
   (global-set-key "\C-x\C-\\" 'goto-last-change))
 
@@ -244,6 +239,7 @@
   "When called interactively with no active region, kill a single
 line instead."
   (interactive
+
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-beginning-position 2)))))
 
@@ -270,6 +266,3 @@ line instead."
  '(eshell-ls-use-colors nil)
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
-
-(require 'undo-tree)
-(global-undo-tree-mode)
