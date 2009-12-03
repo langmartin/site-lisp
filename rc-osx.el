@@ -1,3 +1,5 @@
+(add-to-list 'default-frame-alist '(font . "Monaco-15"))
+
 (set-variables
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
