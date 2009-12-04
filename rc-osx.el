@@ -1,3 +1,5 @@
+(add-to-list 'default-frame-alist '(font . "Monaco-15"))
+
 (progn
   (fringe-mode '(1 . 1))
   (update-alist 'default-frame-alist '(width . 162))
