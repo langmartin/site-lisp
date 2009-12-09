@@ -19,8 +19,7 @@
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time)))
 
-(if (not (boundp 'org-export-latex-classes))
-    (setq org-export-latex-classes nil))
+(require 'org-export-latex)
 
 (add-to-list
  'org-export-latex-classes
@@ -31,6 +30,7 @@
 \\usepackage{graphicx}
 \\usepackage{longtable}
 \\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\\usepackage{parskip}
 "
   ("\\section{%s}" . "\\section*{%s}")
   ("\\subsection{%s}" . "\\subsection*{%s}")
