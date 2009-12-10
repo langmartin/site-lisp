@@ -1,7 +1,4 @@
 ;; -*- no-byte-compile: t -*-
-
-(setq site-lisp-directory "~/site-lisp")
-
 (setq compile-site-lisp-sources
       '("buffer-time-stamp.el"
         "color-theme.el"
