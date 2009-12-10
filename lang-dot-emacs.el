@@ -266,3 +266,7 @@ line instead."
  '(eshell-ls-use-colors nil)
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
+
+(defun site-lisp-subdir (path)
+  "Return the given path as the name of a subdirectory of this repository."
+  (concat site-lisp-directory path))
