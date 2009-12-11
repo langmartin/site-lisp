@@ -163,16 +163,17 @@ the preceding, RET, <home>, and M-<f4>."
                       auto-mode-alist)))
         lst))
 
-(defun add-to-path (lst)
+(defun add-to-path (lst &optional prepend)
   "Add a list of paths to the ends of PATH and exec-path"
-  (mapc (lambda (path)
-          (add-to-list 'exec-path path 'append)
-          (setenv "PATH"
-                  (concat (getenv "PATH")
-                          (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
-                                (t ":"))
-                          (expand-file-name path))))
-        lst))
+  (let ((bound (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
+                     (t ":"))))
+    (mapc (lambda (path)
+            (add-to-list 'exec-path path (if prepend nil 'append))
+            (setenv "PATH"
+                    (if prepend
+                        (concat (expand-file-name path) bound (getenv "PATH"))
+                      (concat (getenv "PATH") bound (expand-file-name path)))))
+          lst)))
 
 (defun set-variables (&rest lst)
   "Set a list of variables using the same syntax as custom-set-variables"
