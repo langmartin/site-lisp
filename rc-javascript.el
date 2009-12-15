@@ -1,30 +1,31 @@
-(require 'js2-mode)
-
-;;; if you just set these, they're buffer local. If you stick them in
-;;; the hook, they're not overridable (easily). So, we do a second
-;;; customize block.
-
-(add-to-auto-mode-alist
- '(("\\.js\\'" . js2-mode)))
-
-(set-variables
- '(js2-basic-offset 2)
- '(js2-bounce-indent-flag nil)
- '(js2-mirror-mode nil))
-
 (defun turn-on-c-subword-mode ()
   (interactive)
   (c-subword-mode 1))
 
-(add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
-(add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
+;; (progn
+;;   (require 'js2-mode)
+;;   (set-variables
+;;    '(js2-basic-offset 2)
+;;    '(js2-bounce-indent-flag nil)
+;;    '(js2-mirror-mode nil))
+;;   (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
+;;   (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
+;;   (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
+;;   (add-to-auto-mode-alist
+;;    '(("\\.js\\'" . js2-mode))))
+
+(progn
+  (require 'espresso)
+  (set-variables
+   '(espresso-indent-level 2))
+  (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
+  (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
+  (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
 
 (require 'moz)
 
 (defun turn-on-moz-minor-mode ()
   (moz-minor-mode 1))
-
-(add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
 
 (defun moz-send-string (string)
   "Send a string to Firefox via MozRepl."
