@@ -3,7 +3,7 @@
 (load "site-start")
 (rc-lang)
 
-(require 'js2-mode-rc)
+(require 'rc-javascript)
 
 ;; things for cocoa emacs 23
 (progn
