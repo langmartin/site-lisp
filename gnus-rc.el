@@ -59,6 +59,7 @@
     (setq send-mail-function 'smtpmail-send-it
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
+    (setq gnus-treat-display-smileys nil)
     (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-setup-hook
