@@ -155,13 +155,28 @@ the preceding, RET, <home>, and M-<f4>."
   (let ((global-set-keys-cmd 'local-set-key))
     (global-set-keys alist)))
 
-(defun add-to-auto-mode-alist (lst)
-  "Add an alist to the front of auto-mode-alist"
+(defun add-to-alist (list-sym element &optional append)
+  (add-to-list list-sym element append
+               (lambda (a b)
+                 (eq (car a) (car b)))))
+
+(defun update-alist (alist-symbol element &optional compare)
+  (if (not compare) (setq compare 'eq))
+  (set alist-symbol
+       (cons element
+             (filter (lambda (x)
+                       (if (funcall compare (car x) (car element))
+                           nil
+                         x))
+                     (symbol-value alist-symbol)))))
+
+(defun add-to-auto-mode-alist (alist)
+  "Update auto-mode-alist with pairs from the provided alist"
   (mapc (lambda (new)
-          (setq auto-mode-alist
-                (cons new
-                      auto-mode-alist)))
-        lst))
+          (update-alist 'auto-mode-alist
+                        new
+                        'equal))
+        alist))
 
 (defun add-to-path (lst &optional prepend)
   "Add a list of paths to the ends of PATH and exec-path"

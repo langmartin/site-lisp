@@ -208,20 +208,6 @@
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
 
-(defun add-to-alist (list-sym element &optional append)
-  (add-to-list list-sym element append
-               (lambda (a b)
-                 (eq (car a) (car b)))))
-
-(defun update-alist (alist-symbol element)
-  (set alist-symbol
-       (cons element
-             (filter (lambda (x)
-                       (if (eq (car x) (car element))
-                           nil
-                         x))
-                     (symbol-value alist-symbol)))))
-
 (progn
   (require 'goto-last-change)
   (global-set-key "\C-x\C-\\" 'goto-last-change))
