@@ -2,17 +2,16 @@
   (interactive)
   (c-subword-mode 1))
 
-;; (progn
-;;   (require 'js2-mode)
-;;   (set-variables
-;;    '(js2-basic-offset 2)
-;;    '(js2-bounce-indent-flag nil)
-;;    '(js2-mirror-mode nil))
-;;   (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
-;;   (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
-;;   (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
-;;   (add-to-auto-mode-alist
-;;    '(("\\.js\\'" . js2-mode))))
+(progn
+  (require 'js2-mode)
+  (set-variables
+   '(js2-basic-offset 2)
+   '(js2-bounce-indent-flag nil)
+   '(js2-mirror-mode nil))
+  (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
+  (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
+  (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
+  (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
 
 (progn
   (require 'espresso)
