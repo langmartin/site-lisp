@@ -13,4 +13,6 @@
  '(jabber-chat-prompt-foreign ((t (:foreground "red4"))))
  '(jabber-chat-prompt-local ((t (:foreground "blue4")))))
 
+(add-hook 'jabber-post-connect-hook 'jabber-autoaway-start)
+
 (provide 'rc-jabber)
