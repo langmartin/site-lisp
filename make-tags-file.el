@@ -6,7 +6,8 @@
 (setq make-tags-file-patterns
       '("\\.js$"
         "\\.asp$"
-        "\\.el$"))
+        "\\.el$"
+        "\\.java$"))
 
 (defvar make-tags-file-anti-patterns)
 (setq make-tags-file-anti-patterns
