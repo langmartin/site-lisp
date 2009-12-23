@@ -13,7 +13,9 @@
   (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
 
-(progn
+(defmacro prog0 (&rest body) nil)
+
+(prog0
   (require 'espresso)
   (set-variables
    '(espresso-indent-level 2))
