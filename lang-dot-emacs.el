@@ -92,7 +92,6 @@
 (require 'git-commands)
 (require 'nav)
 (require 'hide-region)
-(require 'moz-rc)
 (column-number-mode t)
 (require 'org-mode-rc)
 (require 'google-define)
