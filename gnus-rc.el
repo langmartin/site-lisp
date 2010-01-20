@@ -82,7 +82,11 @@
  '(gnus-dribble-directory "~/.emacs.d")
  '(gnus-fetch-old-headers (quote invisible))
  '(gnus-refer-thread-limit t)
- '(mail-mailing-lists (quote ("gambit-list@iro.umontreal.ca" "all@coptix.com" "dns@list.cr.yp.to")))
- )
+ '(mail-mailing-lists
+   (quote ("gambit-list@iro.umontreal.ca"
+           "all@coptix.com"
+           "dns@list.cr.yp.to"
+           "cfpug@cfpug.com"
+           ))))
 
 (provide 'gnus-rc)
