@@ -155,10 +155,13 @@ the preceding, RET, <home>, and M-<f4>."
   (let ((global-set-keys-cmd 'local-set-key))
     (global-set-keys alist)))
 
-(defun add-to-alist (list-sym element &optional append)
+(defun add-to-alist/equal (list-sym element equal &optional append)
   (add-to-list list-sym element append
                (lambda (a b)
-                 (eq (car a) (car b)))))
+                 (funcall equal (car a) (car b)))))
+
+(defun add-to-alist (list-sym element &optional append)
+  (add-to-alist/equal list-sym element 'eq append))
 
 (defun update-alist (alist-symbol element &optional compare)
   (if (not compare) (setq compare 'eq))
