@@ -21,7 +21,14 @@
 
 (require 'org-export-latex)
 
-(add-to-list
+;; (setq org-export-latex-classes
+;;  (filter (lambda (pair)
+;;            (if (equal (car pair) "langmartin")
+;;                nil
+;;              pair))
+;;          org-export-latex-classes))
+
+(add-to-alist/equal
  'org-export-latex-classes
  '("langmartin"
   "\\documentclass[11pt]{article}
@@ -31,12 +38,14 @@
 \\usepackage{longtable}
 \\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \\usepackage{parskip}
+\\setcounter{secnumdepth}{5}
 "
   ("\\section{%s}" . "\\section*{%s}")
   ("\\subsection{%s}" . "\\subsection*{%s}")
   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+ 'equal)
 
 (provide 'org-mode-rc)
 
