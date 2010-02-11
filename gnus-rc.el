@@ -30,11 +30,13 @@
   (require 'nnimap)
   (setq gnus-nntp-server nil)
   (setq gnus-always-read-dribble-file t)
+  (require 'nnir)
   (setq gnus-select-method
         '(nnimap "gmail"
                  (nnimap-address "imap.gmail.com")
                  (nnimap-server-port 993)
-                 (nnimap-stream ssl)))
+                 (nnimap-stream ssl)
+                 (nnir-search-engine imap)))
   (setq gnus-secondary-select-methods
         ;;   (nnimap "work"
         ;;           (nnimap-address "imap.work.com")
