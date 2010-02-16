@@ -62,10 +62,11 @@
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     (setq gnus-treat-display-smileys nil)
-    (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
+    ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
-    (add-hook 'message-setup-hook
-              'smtpmail-through-matching-account))
+    ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    (set-default 'mail-user-agent 'gnus-user-agent)
+    (setq gnus-novice-user nil))
   (progn
     ;; Speed tricks: http://www.gnu.org/software/emacs/manual/html_node/gnus/_005b9_002e2_005d.html
     (gnus-compile)
@@ -74,8 +75,8 @@
 
 (defun visual-line-not-auto-fill ()
   (interactive)
-  (auto-fill-mode nil)
-  (visual-line-mode t))
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
 
 (rc-gnus)
 
