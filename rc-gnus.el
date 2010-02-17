@@ -92,4 +92,4 @@
            "cfpug@cfpug.com"
            ))))
 
-(provide 'gnus-rc)
+(provide 'rc-gnus)

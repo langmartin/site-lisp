@@ -59,7 +59,7 @@
 (require 'lang-scripts)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
-(require 'gnus-rc)
+(require 'rc-gnus)
 
 ;; (defun pykk-init ()
 ;;   (interactive)
