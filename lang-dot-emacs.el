@@ -202,7 +202,7 @@
 ;;         (frame-list))
 
 (progn
-  (require 'term-mode-rc)
+  (require 'rc-term-mode)
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
