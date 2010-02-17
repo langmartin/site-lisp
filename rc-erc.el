@@ -60,4 +60,4 @@
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-user-full-name "Lang Martin"))
 
-(provide 'irc-rc)
+(provide 'rc-erc)

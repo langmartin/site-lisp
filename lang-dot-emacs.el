@@ -88,7 +88,7 @@
 			      ,buffer-name))
 	(call-interactively ,command))))
 
-(require 'irc-rc)
+(require 'rc-erc)
 (require 'git-commands)
 (require 'nav)
 (require 'hide-region)
