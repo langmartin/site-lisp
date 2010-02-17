@@ -93,7 +93,7 @@
 (require 'nav)
 (require 'hide-region)
 (column-number-mode t)
-(require 'org-mode-rc)
+(require 'rc-org-mode)
 (require 'google-define)
 (require 'rc-asp)
 (require 'compile-site-lisp)

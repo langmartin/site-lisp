@@ -47,5 +47,5 @@
   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
  'equal)
 
-(provide 'org-mode-rc)
+(provide 'rc-org-mode)
 
