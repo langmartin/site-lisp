@@ -95,7 +95,7 @@
 (column-number-mode t)
 (require 'org-mode-rc)
 (require 'google-define)
-(require 'asp-rc)
+(require 'rc-asp)
 (require 'compile-site-lisp)
 
 (progn

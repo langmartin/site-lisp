@@ -26,4 +26,4 @@
 
 (put 'narrow-to-region 'disabled nil)
 
-(provide 'asp-rc)
+(provide 'rc-asp)
