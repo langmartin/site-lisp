@@ -49,8 +49,16 @@
                       "\n--end-remote-input\n")
   (display-buffer (process-buffer (inferior-moz-process))))
 
-(defun moz-reload-page ()
+(defun moz-reload ()
   (interactive)
-  (moz-send-string "content.location.href = content.location.href\n"))
+  (moz-send-string "content.location.reload()\n"))
+
+(defalias 'mozrepl-reload 'moz-reload)
+
+(defun moz-enter ()
+  (interactive)
+  (moz-send-string "repl.enter(content)\n"))
+
+(defalias 'mozrepl-enter 'moz-enter)
 
 (provide 'rc-javascript)
