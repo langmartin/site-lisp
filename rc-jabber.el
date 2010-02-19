@@ -4,6 +4,8 @@
   (require 'jabber-autoloads)
   (add-to-list 'Info-directory-list "~/Contrib/emacs-jabber-0.8.0/"))
 
+(add-hook 'jabber-post-connect-hooks 'jabber-autoaway-start)
+
 (set-variables
  '(jabber-alert-presence-hooks nil)
  '(jabber-vcard-avatars-retrieve nil))

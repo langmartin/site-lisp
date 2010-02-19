@@ -50,6 +50,7 @@
 
 (set-variables
  '(erc-autoaway-mode t)
+ '(erc-autoaway-idle-method (quote user))
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
  '(erc-join-buffer (quote bury))
  '(erc-log-channels-directory "~/.emacs.d/log")
