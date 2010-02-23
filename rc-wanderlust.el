@@ -10,15 +10,15 @@
         (add-to-list 'load-path x))
       (list
        ;; http://kanji.zinbun.kyoto-u.ac.jp/~tomo/lemi/dist/semi/
-       (contrib "apel-10.7/")
-       (contrib "flim-1.14.9/")
-       (contrib "semi-1.14.6/")
+       (rc-contrib "apel-10.7/")
+       (rc-contrib "flim-1.14.9/")
+       (rc-contrib "semi-1.14.6/")
        ;; :pserver:anonymous@cvs.m17n.org:/cvs/root wanderlust
-       (contrib "wanderlust/elmo/")
-       (contrib "wanderlust/wl/")
+       (rc-contrib "wanderlust/elmo/")
+       (rc-contrib "wanderlust/wl/")
        ))
 
-(add-to-list 'Info-directory-list (contrib "wanderlust/doc/"))
+(add-to-list 'Info-directory-list (rc-contrib "wanderlust/doc/"))
 
 (autoload 'wl "wl" "Wanderlust" t)
 (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)

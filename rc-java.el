@@ -9,8 +9,8 @@
 (progn
   (progn
     ;; http://sourceforge.net/projects/cedet/files/
-    (add-to-list 'load-path (contrib "cedet-1.0pre6/common/"))
-    (add-to-list 'Info-directory-list (contrib "cedet-1.0pre6/"))
+    (add-to-list 'load-path (rc-contrib "cedet-1.0pre6/common/"))
+    (add-to-list 'Info-directory-list (rc-contrib "cedet-1.0pre6/"))
     (load "cedet")
     (global-ede-mode 1)
     (semantic-load-enable-code-helpers)
@@ -18,13 +18,13 @@
 
   (progn
     ;; http://sourceforge.net/projects/ecb/files/
-    (add-to-list 'load-path (contrib "ecb-2.40/"))
-    (add-to-list 'Info-directory-list (contrib "ecb-2.40/"))
+    (add-to-list 'load-path (rc-contrib "ecb-2.40/"))
+    (add-to-list 'Info-directory-list (rc-contrib "ecb-2.40/"))
     (require 'ecb))
 
   (progn
     ;; http://sourceforge.net/projects/jdee/files/
-    (add-to-list 'load-path (contrib "jdee-2.4.0.1/lisp/"))
+    (add-to-list 'load-path (rc-contrib "jdee-2.4.0.1/lisp/"))
     (require 'jde)
     (add-to-auto-mode-alist '(("\\.java\\'" . jde-mode)))
     (add-hook 'jde-mode-hook 'c-basic-offset-2)))
