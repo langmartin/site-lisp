@@ -1,5 +1,8 @@
 ;; -*- no-byte-compile: t -*-
 
+(add-to-list 'load-path (rc-lisp "scheme/"))
+(add-to-list 'load-path (rc-code "orangesoda/public/emacs-lisp/"))
+
 (load "site-start")
 (rc-lang)
 
@@ -252,6 +255,25 @@ line instead."
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
 
-(defun site-lisp-subdir (path)
-  "Return the given path as the name of a subdirectory of this repository."
-  (concat site-lisp-directory path))
+(defun rc-package-install-elpa ()
+  "http://tromey.com/elpa/install.html"
+  (interactive)
+  (let ((buffer (url-retrieve-synchronously
+                 "http://tromey.com/elpa/package-install.el")))
+    (save-excursion
+      (set-buffer buffer)
+      (goto-char (point-min))
+      (re-search-forward "^$" nil 'move)
+      (eval-region (point) (point-max))
+      (kill-buffer (current-buffer)))))
+
+(defun rc-package-install-packages ()
+  "Install all my ELPA packages, for posterity"
+  (interactive)
+  (mapc (lambda (p)
+          (package-install p))
+        '(highlight-symbol
+          htmlize
+          guess-style
+          pick-backup
+          wtf)))
