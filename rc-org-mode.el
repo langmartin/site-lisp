@@ -21,14 +21,15 @@
 
 (require 'org-export-latex)
 
-;; (setq org-export-latex-classes
-;;  (filter (lambda (pair)
-;;            (if (equal (car pair) "langmartin")
-;;                nil
-;;              pair))
-;;          org-export-latex-classes))
+;;;; I've added the endnotes package to this header, it doesn't change
+;;;; anything by default. In order to use it, you need to add two
+;;;; literal latex includes to your org-mode file. At the top, add:
+;;;;        #+LaTeX: \let\footnote=\endnote
+;;;;
+;;;; Then, wherever you want the notes to appear, add:
+;;;;        #+LaTeX: \theendnotes
 
-(add-to-alist/equal
+(update-alist
  'org-export-latex-classes
  '("langmartin"
   "\\documentclass[11pt]{article}
@@ -39,6 +40,7 @@
 \\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \\usepackage{parskip}
 \\setcounter{secnumdepth}{5}
+\\usepackage{endnotes}
 "
   ("\\section{%s}" . "\\section*{%s}")
   ("\\subsection{%s}" . "\\subsection*{%s}")
