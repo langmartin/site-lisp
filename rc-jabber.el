@@ -12,7 +12,8 @@
 
 (custom-set-faces
  '(jabber-chat-prompt-foreign ((t (:foreground "red4"))))
- '(jabber-chat-prompt-local ((t (:foreground "blue4")))))
+ '(jabber-chat-prompt-local ((t (:foreground "blue4"))))
+ '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold)))))
 
 (add-hook 'jabber-post-connect-hook 'jabber-autoaway-start)
 
