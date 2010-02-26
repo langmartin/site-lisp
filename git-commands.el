@@ -8,24 +8,34 @@
              (funcall ,hook))))))
 
 (progn
- (define-shellcmd git-status "git status")
- (define-shellcmd git-pull "git pull -q")
- (define-shellcmd git-fetch "git fetch")
- (define-shellcmd git-log "git log --graph")
- (define-shellcmd git-remote "git remote -v"))
+  (define-shellcmd git-status "git status")
+  (define-shellcmd git-fetch "git fetch")
+  (define-shellcmd git-log "git log --graph"))
 
 (defun git-merge (branch)
-  (interactive "sBranch: ")
+  (interactive
+   (list
+    (read-from-minibuffer
+     "git merge "
+     "origin/master")))
   (shell-command (concat "git merge -q " branch)))
 
 (defun git-push (extra)
-  (interactive "sPush: ")
+  (interactive
+   (list
+    (read-from-minibuffer
+     "git push "
+     "origin")))
   (shell-command (concat "git push " extra)))
 
 (define-shellcmd git-branches "git branch -av")
 
 (defun git-checkout (branch)
-  (interactive "sBranch: ")
+  (interactive
+   (list
+    (read-from-minibuffer
+     "git checkout "
+     "master")))
   (shell-command (concat "git checkout " branch)))
 
 (defun git-grep (command)
@@ -70,6 +80,7 @@
   (shell-command "git commit &"))
 
 (defun git-diff (cachedp)
+  "Run git diff on the current file or directory. With the prefix argument, run git diff --cached."
   (interactive "P")
   (let* ((cmd (if cachedp "git diff --cached ."
                 "git diff ."))
@@ -89,13 +100,11 @@
          ("\C-xgc" . git-commit)
          ("\C-xgd" . git-diff)
          ("\C-xgf" . git-fetch)
-         ("\C-xgG" . git-grep-dired)
          ("\C-xgg" . git-grep)
+         ("\C-xgG" . git-grep-dired)
          ("\C-xgl" . git-log)
          ("\C-xgm" . git-merge)
-         ("\C-xgp" . git-pull)
          ("\C-xgP" . git-push)
-         ("\C-xgr" . git-remote)
          ("\C-xgs" . git-status))))
 
 (define-minor-mode git-commands-mode
