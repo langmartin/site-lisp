@@ -45,13 +45,15 @@
     (read-from-minibuffer
      "Run git-grep (like this): "
      "git-grep -n -H -I -e ")))
-  (grep command))
+  (grep (concat command " .")))
 
 (defun lines-to-list ()
   (let ((body (buffer-substring-no-properties (point-min) (point-max))))
     (let ((acc '()) (idx 0) (len (length body)))
       (while (< idx len)
-        (setq idx (+ (string-match "^[[:space:]]*\\(.*?\\)[[:space:]]*$" body idx)
+        (setq idx (+ (string-match "^[[:space:]]*\\(.*?\\)[[:space:]]*$"
+                                   body
+                                   idx)
                      1))
         (let ((got (match-string 1 body)))
           (if (> (length got) 0)
@@ -65,7 +67,7 @@
      "Run git-grep for dired (like this): "
      "git-grep -l -e ")))
   (with-temp-buffer
-    (shell-command command (current-buffer))
+    (shell-command (concat command " .") (current-buffer))
     (dired (cons "*git-grep-dired*"
                  (lines-to-list)))))
 
