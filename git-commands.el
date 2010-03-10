@@ -74,7 +74,10 @@
 (defun git-add ()
   "Add the current file to the index"
   (interactive)
-  (shell-command (concat "git add \"" (buffer-file-name) "\"")))
+  (shell-command
+   (concat "git add \""
+           (file-name-nondirectory (buffer-file-name))
+           "\"")))
 
 (defun git-commit ()
   (interactive)
