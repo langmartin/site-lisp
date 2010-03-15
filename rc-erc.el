@@ -61,4 +61,6 @@
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-user-full-name "Lang Martin"))
 
+(add-hook 'erc-quit-hook 'erc-log-save-all-buffers)
+
 (provide 'rc-erc)
