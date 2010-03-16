@@ -61,6 +61,8 @@
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-user-full-name "Lang Martin"))
 
-(add-hook 'erc-quit-hook 'erc-log-save-all-buffers)
+(add-hook 'erc-disconnected-hook
+          (lambda (nick ip reason)
+            (erc-log-save-all-buffers)))
 
 (provide 'rc-erc)
