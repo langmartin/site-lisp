@@ -1,42 +1,44 @@
-(defmacro define-shellcmd (name cmd &optional hook)
-  `(defun ,name ()
-     (interactive)
-     (let ((bufname (concat "*" ,cmd "*")))
-       (shell-command ,cmd bufname)
-       (if ,hook
-           (with-buffer (get-buffer bufname)
-             (funcall ,hook))))))
+(defun join (list splice)
+  "Join a sequence of strings with the string splice."
+  (apply 'concat
+         (cons (car list)
+               (fold (lambda (x acc)
+                       (if (null x) acc
+                         (cons splice
+                               (cons x acc))))
+                     nil
+                     (cdr list)))))
+
+(assert
+ (equal "foo" (join '("foo") "/"))
+ (equal "foo/bar" (join '("foo" "bar") "/")))
+
+(defmacro define-shell-command (name cmd &optional default hook)
+  `(defun ,name (&optional prefix)
+     (interactive "P")
+     (let ((command ,cmd)
+           (bufname (concat "*" ,cmd "*"))
+           (dir default-directory))
+       (if (or prefix ,default)
+           (setq command
+                 (read-from-minibuffer
+                  "Shell command: "
+                  ,(join (list cmd default) " "))))
+       (shell-command command bufname)
+       (with-buffer (get-buffer bufname)
+         (progn
+           (cd dir)
+           (if ,hook (funcall ,hook)))))))
 
 (progn
-  (define-shellcmd git-status "git status")
-  (define-shellcmd git-fetch "git fetch")
-  (define-shellcmd git-log "git log --graph"))
-
-(defun git-merge (branch)
-  (interactive
-   (list
-    (read-from-minibuffer
-     "git merge "
-     "origin/master")))
-  (shell-command (concat "git merge -q " branch)))
-
-(defun git-push (extra)
-  (interactive
-   (list
-    (read-from-minibuffer
-     "git push "
-     "origin")))
-  (shell-command (concat "git push " extra)))
-
-(define-shellcmd git-branches "git branch -av")
-
-(defun git-checkout (branch)
-  (interactive
-   (list
-    (read-from-minibuffer
-     "git checkout "
-     "master")))
-  (shell-command (concat "git checkout " branch)))
+  (define-shell-command git-status "git status")
+  (define-shell-command git-fetch "git fetch")
+  (define-shell-command git-log "git log --graph")
+  (define-shell-command git-branches "git branch -av")
+  (define-shell-command git-commit "git commit")
+  (define-shell-command git-merge "git merge -q" "origin/master")
+  (define-shell-command git-push "git push" "origin")
+  (define-shell-command git-checkout "git checkout" "master"))
 
 (defun git-grep (command)
   "Run git-grep like grep"
@@ -76,24 +78,22 @@
   (interactive)
   (shell-command
    (concat "git add \""
-           (file-name-nondirectory (buffer-file-name))
+           (file-name-nondirectory (or (buffer-file-name)
+                                       default-directory))
            "\"")))
-
-(defun git-commit ()
-  (interactive)
-  "Commit"
-  (shell-command "git commit &"))
 
 (defun git-diff (cachedp)
   "Run git diff on the current file or directory. With the prefix argument, run git diff --cached."
   (interactive "P")
   (let* ((cmd (if cachedp "git diff --cached ."
                 "git diff ."))
-         (bufname (concat "*" cmd "*")))
-    (message cmd bufname)
+         (bufname (concat "*" cmd "*"))
+         (dir default-directory))
     (shell-command cmd bufname)
     (with-buffer (get-buffer bufname)
-      (diff-mode))))
+      (progn
+        (cd dir)
+        (diff-mode)))))
 
 (defvar git-commands-map)
 
