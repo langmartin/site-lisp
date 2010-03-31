@@ -3,9 +3,6 @@
 (global-set-key (kbd "H-h") 'help)
 
 (defun rc-windmove-keybindings (&optional modifier)
-  "Set up keybindings for `windmove'.
-Keybindings are of the form MODIFIER-{left,right,up,down}.
-Default MODIFIER is 'hyper."
   (interactive)
   (unless modifier (setq modifier '(hyper)))
   (global-set-key (vector (append modifier '(left)))  'windmove-left)
@@ -16,8 +13,17 @@ Default MODIFIER is 'hyper."
 (rc-windmove-keybindings)
 
 (progn
-  (global-set-key (kbd "H-l") "λ")
-  (global-set-key (kbd "H-l") "lambda")
-  (define-key js2-mode-map (kbd "H-l") "function () { }"))
+  (defmacro lambda-insert-with-point (before after)
+    `(lambda ()
+       (interactive)
+       (insert ,before)
+       (insert ,after)
+       (backward-char (length ,after))))
+  
+  (define-key (current-global-map) (kbd "H-l")
+    (lambda-insert-with-point "(lambda () " ")"))
+
+  (define-key js2-mode-map (kbd "H-l")
+    (lambda-insert-with-point "function () { " "};")))
 
 (provide 'rc-hyper-keymap)
