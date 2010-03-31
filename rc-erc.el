@@ -59,7 +59,11 @@
  '(erc-pals (quote ("jlongster" "bweaver")))
  '(erc-server-reconnect-timeout 300)
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
- '(erc-user-full-name "Lang Martin"))
+ '(erc-user-full-name "Lang Martin")
+ ;; http://www.bestinclass.dk/index.php/2010/03/approaching-productivity/
+ '(erc-button-url-regexp
+   "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]")
+ )
 
 (add-hook 'erc-disconnected-hook
           (lambda (nick ip reason)
