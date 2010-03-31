@@ -200,9 +200,18 @@
 
 (global-set-keys '(("M-`" . switch-to-last-buffer)))
 
-;; (mapcar (lambda (frame)
-;;           (other-buffer nil nil frame))
-;;         (frame-list))
+(defun rc-windmove-keybindings (&optional modifier)
+  "Set up keybindings for `windmove'.
+Keybindings are of the form MODIFIER-{left,right,up,down}.
+Default MODIFIER is 'hyper."
+  (interactive)
+  (unless modifier (setq modifier '(hyper)))
+  (global-set-key (vector (append modifier '(left)))  'windmove-left)
+  (global-set-key (vector (append modifier '(right))) 'windmove-right)
+  (global-set-key (vector (append modifier '(up)))    'windmove-up)
+  (global-set-key (vector (append modifier '(down)))  'windmove-down))
+
+(rc-windmove-keybindings)
 
 (progn
   (require 'rc-term-mode)

@@ -182,8 +182,7 @@ the working directory"
   (global-set-key (kbd "H-h") 'help)
   (global-set-key [home] 'jump-to-register)
   (add-hook 'erc-mode-hook
-            '(lambda () (local-set-key [home] 'jump-to-register)))
-  (global-set-key (kbd "H-<tab>") 'PC-lisp-complete-symbol))
+            '(lambda () (local-set-key [home] 'jump-to-register))))
 
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"

@@ -19,3 +19,5 @@
       `((nil "\\`root\\'" "/sshx:%h:")))
 
 (global-set-keys '(("C-x C-c" . nil)))
+
+(setq w32-apps-modifier 'hyper)
