@@ -64,6 +64,8 @@
    nil
    make-tags-file-git-style))
 
+(defvar make-tags-file-function 'exec-exuberant-ctags)
+
 (defun make-tags-file ()
   "Make an etags file in the current project"
   (interactive)
@@ -74,24 +76,23 @@
                   'make-tags-file-gitp))))
     (message "top directory here is %s" dir)
     (save-excursion
-      (exec-ctags (make-tags-file-list)))))
+      (funcall make-tags-file-function (make-tags-file-list)))))
 
 (defun exec-etags (lst)
-  (apply
-   'start-process
-   (append
-    (list "etags" nil nil nil)
-    lst)))
-
-(defvar ctags-program "C:/mlm/ctags/ctags.exe")
-
-(defun exec-ctags (lst)
-  (apply 'start-process
-         "ctags"
+  (apply 'call-process
+         "etags"
          nil
-         ctags-program
-         "-e"
+         nil
+         nil
          lst))
+
+(defun exec-exuberant-ctags (lst)
+  (apply 'call-process
+         "C:/mlm/ctags/ctags.exe"
+         nil
+         nil
+         nil
+         (cons "-e" lst)))
 
 (defun make-tags-file-filep (file dir)
   (if (file-directory-p file)
