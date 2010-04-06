@@ -21,9 +21,9 @@
        (backward-char (length ,after))))
   
   (define-key (current-global-map) (kbd "H-l")
-    (lambda-insert-with-point "(lambda () " ")"))
+    (lambda-insert-with-point "(lambda ()" ")"))
 
   (define-key js2-mode-map (kbd "H-l")
-    (lambda-insert-with-point "function () { " "};")))
+    (lambda-insert-with-point "function () {" "};")))
 
 (provide 'rc-hyper-keymap)
