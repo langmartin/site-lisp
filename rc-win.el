@@ -21,3 +21,15 @@
 (global-set-keys '(("C-x C-c" . nil)))
 
 (setq w32-apps-modifier 'hyper)
+
+(defun w32-explorer ()
+  (interactive)
+  (w32-shell-execute
+   "open" "explorer"
+   (concat "/select,"
+           (convert-standard-filename
+            (or buffer-file-name default-directory)))))
+
+(global-set-keys '(("H-e" . w32-explorer)))
+
+(provide 'rc-win)
