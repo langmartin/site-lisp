@@ -78,17 +78,19 @@
     (save-excursion
       (funcall make-tags-file-function (make-tags-file-list)))))
 
+(defvar exec-etags "etags")
 (defun exec-etags (lst)
   (apply 'call-process
-         "etags"
+         exec-etags
          nil
          nil
          nil
          lst))
 
+(defvar exec-exuberant-ctags "ctags")
 (defun exec-exuberant-ctags (lst)
   (apply 'call-process
-         "C:/mlm/ctags/ctags.exe"
+         exec-exuberant-ctags
          nil
          nil
          nil
