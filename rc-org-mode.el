@@ -12,6 +12,10 @@
             (auto-fill-mode 1)
             (set-variable 'comment-start nil 'make-local)))
 
+(setq org-file-apps
+      (cons '(directory . emacs)
+            org-file-apps))
+
 (require 'org-collector)
 
 (set-variables
