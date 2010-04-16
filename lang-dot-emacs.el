@@ -275,3 +275,7 @@ line instead."
           guess-style
           pick-backup
           wtf)))
+
+(progn
+  (require 'edit-server)
+  (edit-server-start))
