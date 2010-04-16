@@ -229,8 +229,6 @@ line instead."
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-beginning-position 2)))))
 
-(require 'rc-proj)
-
 (set-variables
  '(paren-sexp-mode nil)
  '(partial-completion-mode t)
