@@ -1,8 +1,8 @@
 (add-to-list 'default-frame-alist '(font . "Consolas-11"))
 
 (progn
-  (setenv "EDITOR" "c:/mlm/Emacs/bin/emacsclientw.exe")
-  (setenv "SSH_ASKPASS" "c:/mlm/Git/libexec/git-core/git-gui--askpass")
+  (setenv "EDITOR" "c:/foo/emacs/bin/emacsclientw.exe")
+  (setenv "SSH_ASKPASS" "c:/foo/Git/libexec/git-core/git-gui--askpass")
   (setenv "PAGER" "cat")
   (setenv "DISPLAY" "1"))
 
@@ -12,7 +12,7 @@
       send-mail-function 'sendmail-send-it
       message-send-mail-function 'sendmail-send-it)
 
-(mouse-avoidance-mode 1)
+(mouse-avoidance-mode 'jump)
 (setq visible-bell t)
 
 (setq tramp-default-proxies-alist
