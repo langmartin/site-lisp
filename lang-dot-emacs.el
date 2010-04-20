@@ -1,5 +1,8 @@
 ;; -*- no-byte-compile: t -*-
 
+(add-to-list 'load-path (rc-lisp "scheme/"))
+(add-to-list 'load-path (rc-code "orangesoda/public/emacs-lisp/"))
+
 (load "site-start")
 (rc-lang)
 
@@ -59,7 +62,7 @@
 (require 'lang-scripts)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
-(require 'gnus-rc)
+(require 'rc-gnus)
 
 ;; (defun pykk-init ()
 ;;   (interactive)
@@ -88,15 +91,14 @@
 			      ,buffer-name))
 	(call-interactively ,command))))
 
-(require 'irc-rc)
+(require 'rc-erc)
 (require 'git-commands)
 (require 'nav)
 (require 'hide-region)
-(require 'moz-rc)
 (column-number-mode t)
-(require 'org-mode-rc)
+(require 'rc-org-mode)
 (require 'google-define)
-(require 'asp-rc)
+(require 'rc-asp)
 (require 'compile-site-lisp)
 
 (progn
@@ -198,29 +200,13 @@
 
 (global-set-keys '(("M-`" . switch-to-last-buffer)))
 
-;; (mapcar (lambda (frame)
-;;           (other-buffer nil nil frame))
-;;         (frame-list))
+(require 'rc-hyper-keymap)
 
 (progn
-  (require 'term-mode-rc)
+  (require 'rc-term-mode)
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
-
-(defun add-to-alist (list-sym element &optional append)
-  (add-to-list list-sym element append
-               (lambda (a b)
-                 (eq (car a) (car b)))))
-
-(defun update-alist (alist-symbol element)
-  (set alist-symbol
-       (cons element
-             (filter (lambda (x)
-                       (if (eq (car x) (car element))
-                           nil
-                         x))
-                     (symbol-value alist-symbol)))))
 
 (progn
   (require 'goto-last-change)
@@ -267,6 +253,33 @@ line instead."
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
 
-(defun site-lisp-subdir (path)
-  "Return the given path as the name of a subdirectory of this repository."
-  (concat site-lisp-directory path))
+(defun rc-package-install-elpa ()
+  "http://tromey.com/elpa/install.html"
+  (interactive)
+  (let ((buffer (url-retrieve-synchronously
+                 "http://tromey.com/elpa/package-install.el")))
+    (save-excursion
+      (set-buffer buffer)
+      (goto-char (point-min))
+      (re-search-forward "^$" nil 'move)
+      (eval-region (point) (point-max))
+      (kill-buffer (current-buffer)))))
+
+(defun rc-package-install-packages ()
+  "Install all my ELPA packages, for posterity"
+  (interactive)
+  (mapc (lambda (p)
+          (package-install p))
+        '(highlight-symbol
+          htmlize
+          guess-style
+          pick-backup
+          wtf)))
+
+(progn
+  (require 'edit-server)
+  (edit-server-start))
+
+(progn
+  (require 'uuid)
+  (defalias 'uuid 'insert-random-uuid))

@@ -30,11 +30,13 @@
   (require 'nnimap)
   (setq gnus-nntp-server nil)
   (setq gnus-always-read-dribble-file t)
+  (require 'nnir)
   (setq gnus-select-method
         '(nnimap "gmail"
                  (nnimap-address "imap.gmail.com")
                  (nnimap-server-port 993)
-                 (nnimap-stream ssl)))
+                 (nnimap-stream ssl)
+                 (nnir-search-engine imap)))
   (setq gnus-secondary-select-methods
         ;;   (nnimap "work"
         ;;           (nnimap-address "imap.work.com")
@@ -60,10 +62,11 @@
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     (setq gnus-treat-display-smileys nil)
-    (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
+    ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
-    (add-hook 'message-setup-hook
-              'smtpmail-through-matching-account))
+    ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    (set-default 'mail-user-agent 'gnus-user-agent)
+    (setq gnus-novice-user nil))
   (progn
     ;; Speed tricks: http://www.gnu.org/software/emacs/manual/html_node/gnus/_005b9_002e2_005d.html
     (gnus-compile)
@@ -72,8 +75,8 @@
 
 (defun visual-line-not-auto-fill ()
   (interactive)
-  (auto-fill-mode nil)
-  (visual-line-mode t))
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
 
 (rc-gnus)
 
@@ -82,7 +85,11 @@
  '(gnus-dribble-directory "~/.emacs.d")
  '(gnus-fetch-old-headers (quote invisible))
  '(gnus-refer-thread-limit t)
- '(mail-mailing-lists (quote ("gambit-list@iro.umontreal.ca" "all@coptix.com" "dns@list.cr.yp.to")))
- )
+ '(mail-mailing-lists
+   (quote ("gambit-list@iro.umontreal.ca"
+           "all@coptix.com"
+           "dns@list.cr.yp.to"
+           "cfpug@cfpug.com"
+           ))))
 
-(provide 'gnus-rc)
+(provide 'rc-gnus)

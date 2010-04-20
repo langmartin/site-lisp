@@ -12,6 +12,10 @@
             (auto-fill-mode 1)
             (set-variable 'comment-start nil 'make-local)))
 
+(setq org-file-apps
+      (cons '(directory . emacs)
+            org-file-apps))
+
 (require 'org-collector)
 
 (set-variables
@@ -21,7 +25,15 @@
 
 (require 'org-export-latex)
 
-(add-to-list
+;;;; I've added the endnotes package to this header, it doesn't change
+;;;; anything by default. In order to use it, you need to add two
+;;;; literal latex includes to your org-mode file. At the top, add:
+;;;;        #+LaTeX: \let\footnote=\endnote
+;;;;
+;;;; Then, wherever you want the notes to appear, add:
+;;;;        #+LaTeX: \theendnotes
+
+(update-alist
  'org-export-latex-classes
  '("langmartin"
   "\\documentclass[11pt]{article}
@@ -31,12 +43,15 @@
 \\usepackage{longtable}
 \\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \\usepackage{parskip}
+\\setcounter{secnumdepth}{5}
+\\usepackage{endnotes}
 "
   ("\\section{%s}" . "\\section*{%s}")
   ("\\subsection{%s}" . "\\subsection*{%s}")
   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+ 'equal)
 
-(provide 'org-mode-rc)
+(provide 'rc-org-mode)
 

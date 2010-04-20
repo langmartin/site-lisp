@@ -11,7 +11,9 @@
 (add-to-auto-mode-alist
  '(("\\.asp$" . html-mode)
    ("\\.asa$" . visual-basic-mode)
-   ("\\.vbs$" . visual-basic-mode)))
+   ("\\.vbs$" . visual-basic-mode)
+   ("\\.vb$" . visual-basic-mode)
+   ("\\.bas$" . visual-basic-mode)))
 
 (add-hook 'sgml-mode-hook
 	  (lambda ()
@@ -26,4 +28,4 @@
 
 (put 'narrow-to-region 'disabled nil)
 
-(provide 'asp-rc)
+(provide 'rc-asp)
