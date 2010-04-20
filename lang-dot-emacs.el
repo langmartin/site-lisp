@@ -279,3 +279,7 @@ line instead."
 (progn
   (require 'edit-server)
   (edit-server-start))
+
+(progn
+  (require 'uuid)
+  (defalias 'uuid 'insert-random-uuid))
