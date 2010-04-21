@@ -1,4 +1,8 @@
 (require 'htmlize)
+(require 'org)
+(require 'org-attach)
+(require 'org-collector)
+(require 'org-export-latex)
 
 (global-set-keys
  '(("C-c l" . org-store-link)
@@ -16,14 +20,10 @@
       (cons '(directory . emacs)
             org-file-apps))
 
-(require 'org-collector)
-
 (set-variables
  '(nav-boring-file-regexps (quote ("\\.py[co]$" "\\.o$" "~$" "\\.bak$" "^\\.[^/]" "^\\./?$" "/\\." "\\.min\\.js$" "\\.elc$")))
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time)))
-
-(require 'org-export-latex)
 
 ;;;; I've added the endnotes package to this header, it doesn't change
 ;;;; anything by default. In order to use it, you need to add two
