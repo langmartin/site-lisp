@@ -283,3 +283,12 @@ line instead."
 (progn
   (require 'uuid)
   (defalias 'uuid 'insert-random-uuid))
+
+(if (require 'emms "emms" t)
+    (progn
+      (require 'emms-player-mplayer)
+      (emms-default-players)
+      (global-set-key (kbd "C-c e <up>") 'emms-pause)
+      (global-set-key (kbd "C-c e <down>") 'emms-pause)
+      (global-set-key (kbd "C-c e <left>") 'emms-previous)
+      (global-set-key (kbd "C-c e <right>") 'emms-next)))
