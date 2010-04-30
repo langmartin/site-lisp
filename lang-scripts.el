@@ -100,4 +100,51 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
   (interactive)
   (shell-command "/Users/lang/bin/hiber"))
 
+(defun shell-concat (lst)
+  (apply 'concat
+         (intersperse
+          (mapcar (lambda (el)
+                    (concat "\"" el "\""))
+                  lst)
+          " ")))
+
+(defun create-backup-tar ()
+  (interactive)
+  (let ((backup-path
+         '(".emacs"
+           ".emacs.d"
+           ".eshell"
+           ".gitconfig"
+           ".history"
+           ".plan"
+           ".session"
+           ".ssh"
+           "Mozilla"
+           "Winsplit Revolution"
+           "bin"
+           "code"
+           "contrib"
+           "gnupg"
+           )))
+    (save-default-directory
+        "~"
+      (shell-command
+       (concat
+        (shell-concat (append '("tar" "czf" "backup.tgz") backup-path))
+        "&")))))
+
+(setq encrypt-backup-tar "c:/lmartin/tmp/backup")
+(defun encrypt-backup-tar ()
+  (interactive)
+  (if (file-exists-p encrypt-backup-tar)
+      (rename-file encrypt-backup-tar
+                   (make-backup-file-name encrypt-backup-tar)
+                   t))
+  (save-default-directory
+      "~"
+    (shell-command
+     (concat "gpg -e -r \"Lang Martin\" -o "
+             encrypt-backup-tar
+             " backup.tgz&"))))
+
 (provide 'lang-scripts)
