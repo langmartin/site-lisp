@@ -141,9 +141,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
   (defun encrypt-backup-tar ()
     (interactive)
     (if (file-exists-p encrypt-backup-tar)
-        (rename-file encrypt-backup-tar
-                     (make-backup-file-name encrypt-backup-tar)
-                     t))
+        (delete-file encrypt-backup-tar))
     (save-default-directory
         "~"
       (shell-command
