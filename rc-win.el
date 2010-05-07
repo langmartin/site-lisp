@@ -32,4 +32,10 @@
 
 (global-set-keys '(("H-e" . w32-explorer)))
 
+(defun etc-hosts ()
+  (interactive)
+  (find-file
+   (concat (getenv "windir")
+           "/system32/drivers/etc/hosts")))
+
 (provide 'rc-win)
