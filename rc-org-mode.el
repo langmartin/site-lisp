@@ -2,7 +2,8 @@
 (require 'org)
 (require 'org-attach)
 (require 'org-collector)
-(require 'org-export-latex)
+(if (not (require 'org-export-latex nil t))
+    (require 'org-latex))
 
 (global-set-keys
  '(("C-c l" . org-store-link)

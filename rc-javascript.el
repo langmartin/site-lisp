@@ -1,6 +1,8 @@
 (defun turn-on-c-subword-mode ()
   (interactive)
-  (c-subword-mode 1))
+  (if (boundp 'c-subword-mode)
+      (c-subword-mode 1)
+    (subword-mode 1)))
 
 (progn
   (require 'js2-mode)
