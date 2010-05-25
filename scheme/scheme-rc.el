@@ -22,6 +22,11 @@
   (setq scheme-program-name "scheme48")
   (scheme-extend-info "(scheme48)Binding Index"))
 
+(defun rc-mzscheme ()
+  "MzScheme scheme-mode setup"
+  (interactive)
+  (setq scheme-program-name "MzScheme"))
+
 (defun rc-paredit ()
   (require 'paredit)
   (add-hooks '(scheme-mode-hook

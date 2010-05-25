@@ -7,6 +7,7 @@
 (rc-lang)
 
 (require 'rc-javascript)
+(global-subword-mode)
 
 ;; things for cocoa emacs 23
 (progn
