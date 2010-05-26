@@ -38,4 +38,13 @@
    (concat (getenv "windir")
            "/system32/drivers/etc/hosts")))
 
+;; Use the default browser for local links and the explicit top-level
+;; domain here, (it's IE6), chrome for everything else.
+(progn
+  (setq browse-url-generic-program "c:/Documents and Settings/lmartin/Local Settings/Application Data/Google/Chrome/Application/chrome.exe")
+  (setq browse-url-browser-function
+        '(("^[^.]+$" . browse-url-default-windows-browser)
+          ("\\.cha\\.tva\\.gov" . browse-url-default-windows-browser)
+          ("." . browse-url-generic))))
+
 (provide 'rc-win)
