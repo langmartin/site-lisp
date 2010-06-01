@@ -1,8 +1,5 @@
 ;; -*- no-byte-compile: t -*-
 
-(add-to-list 'load-path (rc-lisp "scheme/"))
-(add-to-list 'load-path (rc-code "orangesoda/public/emacs-lisp/"))
-
 (load "site-start")
 (rc-lang)
 

@@ -42,7 +42,9 @@ directory. See site-lisp-directory and
 compile-site-lisp-sources."
   (interactive)
   (with-temp-buffer
-    (cd rc-lisp)
+    (cd
+     (file-name-directory
+      (find-lisp-object-file-name 'compile-site-lisp 'function)))
     (mapc (lambda (file)
             (if (> (file-mtime file)
                    (file-mtime (concat file "c")))
