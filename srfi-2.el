@@ -44,27 +44,6 @@ the binding is true. Use and-let* instead."
       `(let ((,sym ,@exp))
          (if ,sym ,body ,else)))))
 
-(defmacro and-let* (bindings &rest body)
-  "Bind variables like let*, but ensuring that each value is true
-  in sequences. As values are true, continue to bind and then
-  execute the body. See scheme srfi-2."
-  (declare (indent 1))
-  (if (null bindings)
-      `(progn ,@body)
-    `(and-let1 ,(car bindings)
-       (and-let* ,(cdr bindings)
-         ,@body))))
-
-(if (fboundp 'assert)
-    (assert
-     (and
-      (= 3 (and-let* ((foo 1) (bar 2)) (+ foo bar)))
-      (null (and-let* ((foo nil) (error "shouldn't reach this line"))))
-      (eq 'a (and-let* ((foo (memq 'a '(b c a d)))
-                        ((listp foo))
-                        (foo (car foo)))
-               foo)))))
-
 (defmacro if-let* (bindings body &optional else)
   "See and-let*, but require the body to be a single form. The
   else clause is invoked if any binding fails before reaching the
@@ -84,6 +63,23 @@ the binding is true. Use and-let* instead."
       (eq (if-let* ((foo 1) (bar 2)) (+ foo bar))      3)
       (eq (if-let* ((foo 1) (bar nil)) (+ foo bar) t)  t))
      ))
+
+(defmacro and-let* (bindings &rest body)
+  "Bind variables like let*, but ensuring that each value is true
+  in sequences. As values are true, continue to bind and then
+  execute the body. See scheme srfi-2."
+  (declare (indent 1))
+  `(if-let* ,bindings (progn ,@body)))
+
+(if (fboundp 'assert)
+    (assert
+     (and
+      (= 3 (and-let* ((foo 1) (bar 2)) (+ foo bar)))
+      (null (and-let* ((foo nil) (error "shouldn't reach this line"))))
+      (eq 'a (and-let* ((foo (memq 'a '(b c a d)))
+                        ((listp foo))
+                        (foo (car foo)))
+               foo)))))
 
 (provide 'srfi-2)
 
