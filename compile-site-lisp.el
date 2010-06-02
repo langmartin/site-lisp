@@ -3,16 +3,18 @@
   (file-name-directory
    (find-lisp-object-file-name 'compile-site-lisp 'function)))
 
-(defun compile-site-lisp-sources ()
+(defun compile-site-lisp-sources (&optional dir tail)
   (fold (lambda (x acc)
-          (if (or (equal x "compile-site-lisp.el")
-                  (string-match "-rc\\.el$" x)
-                  (string-match "^rc-" x))
-              acc
-            (cons x
-                  acc)))
-        '()
-        (directory-files (compile-site-lisp-directory) nil "\\.el$")))
+          (if (and (file-directory-p x) (member x load-path))
+              (compile-site-lisp-sources x acc)
+            (if (and (string-match "\\.el$" x)
+                     (not (or (equal x "compile-site-lisp.el")
+                              (string-match "-rc\\.el$" x)
+                              (string-match "/rc-" x))))
+                (cons x acc)
+              acc)))
+        tail
+        (directory-files (or dir (compile-site-lisp-directory)) t)))
 
 (defun file-mtime (file)
   (if (file-exists-p file)
