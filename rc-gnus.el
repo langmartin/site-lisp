@@ -92,4 +92,6 @@
            "cfpug@cfpug.com"
            ))))
 
+(require 'bbdb-autoloads)
+
 (provide 'rc-gnus)
