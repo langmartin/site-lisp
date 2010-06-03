@@ -99,9 +99,14 @@
 
 (require 'bbdb-autoloads nil t)
 
+(defun gnus-group-restart-dont-ask ()
+  (interactive)
+  (flet ((gnus-yes-or-no-p (prompt) t))
+    (gnus-group-restart)))
+
 (global-set-key (kbd "C-x m")
                 (alist-to-keymap-via-kbd
                  '(("m" . compose-mail)
-                   ("r" . gnus-group-restart))))
+                   ("r" . gnus-group-restart-dont-ask))))
 
 (provide 'rc-gnus)
