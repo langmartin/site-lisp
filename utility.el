@@ -208,4 +208,26 @@ the preceding, RET, <home>, and M-<f4>."
            (progn (cd ,directory) ,@body)
          (cd ,dir)))))
 
+(defun alist-to-keymap-via-kbd (binding-alist &optional options)
+  "The binding-alist is a list of (KBD . BINDING) where KBD is
+input for the kbd macro. The options are passed to
+easy-mmode-define-keymap.
+
+Valid keywords and arguments are:
+
+  :name      Name of the keymap; overrides NAME argument.
+  :dense     Non-nil for a dense keymap.
+  :inherit   Parent keymap.
+  :group     Ignored.
+  :suppress  Non-nil to call `suppress-keymap' on keymap,
+             'nodigits to suppress digits as prefix arguments."
+  (easy-mmode-define-keymap
+   (mapcar (lambda (binding)
+                     (cons (read-kbd-macro (car binding))
+                           (cdr binding)))
+                   binding-alist)
+   nil
+   nil
+   options))
+
 (provide 'utility)

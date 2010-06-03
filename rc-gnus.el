@@ -63,7 +63,7 @@
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
-    (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
+    ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
@@ -77,6 +77,11 @@
   (interactive)
   (auto-fill-mode -1)
   (visual-line-mode 1))
+
+(defun auto-fill-not-visual-line ()
+  (interactive)
+  (auto-fill-mode 1)
+  (visual-line-mode -1))
 
 (rc-gnus)
 
@@ -92,6 +97,11 @@
            "cfpug@cfpug.com"
            ))))
 
-(require 'bbdb-autoloads)
+(require 'bbdb-autoloads nil t)
+
+(global-set-key (kbd "C-x m")
+                (alist-to-keymap-via-kbd
+                 '(("m" . compose-mail)
+                   ("r" . gnus-group-restart))))
 
 (provide 'rc-gnus)
