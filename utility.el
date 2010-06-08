@@ -202,11 +202,9 @@ the preceding, RET, <home>, and M-<f4>."
 (defmacro save-default-directory (directory &rest body)
   "CD then restore the default-directory."
   (declare (indent 1))
-  (let ((dir (gensym)))
-    `(let ((,dir default-directory))
-       (unwind-protect
-           (progn (cd ,directory) ,@body)
-         (cd ,dir)))))
+  `(with-temp-buffer
+     (cd ,directory)
+     ,@body))
 
 (defun alist-to-keymap-via-kbd (binding-alist &optional options)
   "The binding-alist is a list of (KBD . BINDING) where KBD is

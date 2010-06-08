@@ -46,7 +46,11 @@
 ;; (define-buffer-visitor visit-medium "#medium" 'irc)
 ;; (global-set-key (kbd "H-m") 'visit-medium)
 
-(defun irc () (interactive) (irc-freenode))
+(defun irc ()
+  (interactive)
+  (save-default-directory
+      "~"
+    (irc-freenode)))
 
 (set-variables
  '(erc-autoaway-mode t)

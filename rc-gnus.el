@@ -101,8 +101,10 @@
 
 (defun gnus-group-restart-dont-ask ()
   (interactive)
-  (flet ((gnus-yes-or-no-p (prompt) t))
-    (gnus-group-restart)))
+  (save-default-directory
+      "~"
+    (flet ((gnus-yes-or-no-p (prompt) t))
+      (gnus-group-restart))))
 
 (global-set-key (kbd "C-x m")
                 (alist-to-keymap-via-kbd
