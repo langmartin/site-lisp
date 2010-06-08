@@ -109,44 +109,38 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           " ")))
 
 (progn
-  (setq create-backup-tar
-       '(".emacs"
-         ".emacs.d"
-         ".eshell"
-         ".gitconfig"
-         ".history"
-         ".plan"
-         ".session"
-         ".ssh"
-         "Mozilla"
-         "bin"
-         "code"
-         "contrib"
-         "doc"
-         "gnupg"
-         "img"
-         ))
-
-  (defun create-backup-tar ()
+  (setq backup-create-tar
+        '(".emacs"
+          ".emacs.bmk"
+          ".emacs.d"
+          ".eshell"
+          ".git"
+          ".gitconfig"
+          ".history"
+          ".plan"
+          ".session"
+          ".ssh"
+          "Mozilla"
+          "bin"
+          "code"
+          "contrib"
+          "doc"
+          "gnupg"
+          "img"
+          ))
+  (setq backup-encrypt-tar "e:/backup")
+  (defun backup-encrypted-tar ()
     (interactive)
+    (if (file-exists-p backup-encrypt-tar)
+        (delete-file backup-encrypt-tar))
     (save-default-directory
         "~"
       (shell-command
        (concat
-        (shell-concat (append '("tar" "czf" "backup.tgz") create-backup-tar))
+        "tar cz " (shell-concat backup-create-tar)
+        "|"
+        "gpg -e -r \"Lang Martin\" -o " backup-encrypt-tar
         "&"))))
-
-  (setq encrypt-backup-tar "c:/lmartin/tmp/backup")
-
-  (defun encrypt-backup-tar ()
-    (interactive)
-    (if (file-exists-p encrypt-backup-tar)
-        (delete-file encrypt-backup-tar))
-    (save-default-directory
-        "~"
-      (shell-command
-       (concat "gpg -e -r \"Lang Martin\" -o "
-               encrypt-backup-tar
-               " backup.tgz&")))))
+  )
 
 (provide 'lang-scripts)
