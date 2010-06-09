@@ -46,4 +46,4 @@ subdirs.el and leim-list.el, if they exist."
 
 (defun add-to-texinputs (&rest paths)
   "Add a list of paths to the TEXINPUTS environment variable."
-  (add-to-environment-path* "TEXINPUTS" ":" paths))
+  (add-to-environment-path* "TEXINPUTS" ";" paths))
