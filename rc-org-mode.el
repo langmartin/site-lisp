@@ -42,6 +42,8 @@
 \\usepackage[T1]{fontenc}
 \\usepackage{graphicx}
 \\usepackage{longtable}
+\\usepackage{float}
+\\usepackage{amssymb}
 \\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \\usepackage{parskip}
 \\setcounter{secnumdepth}{5}
@@ -54,5 +56,14 @@
   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
  'equal)
 
-(provide 'rc-org-mode)
+(defun org-shift-timestamps (start end n)
+  "Update all timestamps in the region n hours"
+  (interactive "r\nnAdd hours: ")
+  (save-excursion
+    (goto-char start)
+    (while (re-search-forward "[[<]" end t)
+      (when (org-at-timestamp-p t)
+        (org-timestamp-change n 'hour)
+        ))))
 
+(provide 'rc-org-mode)

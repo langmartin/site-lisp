@@ -16,4 +16,11 @@
  '(jabber-chat-prompt-local ((t (:foreground "blue4"))))
  '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold)))))
 
+(defun jabber ()
+  (interactive)
+  (save-default-directory
+      "~"
+    (set-buffer (current-buffer))
+    (call-interactively 'jabber-connect)))
+
 (provide 'rc-jabber)
