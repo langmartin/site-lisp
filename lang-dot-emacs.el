@@ -291,3 +291,5 @@ line instead."
       (global-set-key (kbd "C-c e <down>") 'emms-pause)
       (global-set-key (kbd "C-c e <left>") 'emms-previous)
       (global-set-key (kbd "C-c e <right>") 'emms-next)))
+
+(require 'rainbow-mode)

@@ -1,3 +1,6 @@
 [submodule "bbdb-vcard"]
 	path = bbdb-vcard
 	url = git://github.com/trebb/bbdb-vcard.git
+[submodule "jd-el"]
+	path = jd-el
+	url = git://git.naquadah.org/~jd/jd-el.git
