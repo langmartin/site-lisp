@@ -4,3 +4,6 @@
 [submodule "jd-el"]
 	path = jd-el
 	url = git://git.naquadah.org/~jd/jd-el.git
+[submodule "org-mode"]
+	path = org-mode
+	url = git://repo.or.cz/org-mode.git

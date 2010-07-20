@@ -1,5 +1,7 @@
 ;; -*- no-byte-compile: t -*-
-(normal-top-level-add-to-load-path '("scheme" "bbdb-vcard" "jd-el"))
+(normal-top-level-add-to-load-path
+ '("scheme" "bbdb-vcard" "jd-el" "org-mode/lisp"))
+(add-to-info-path "org-mode/doc")
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
