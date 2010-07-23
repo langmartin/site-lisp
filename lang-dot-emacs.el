@@ -274,9 +274,9 @@ line instead."
           pick-backup
           wtf)))
 
-(progn
-  (require 'edit-server)
-  (edit-server-start))
+;; (progn
+;;   (require 'edit-server)
+;;   (edit-server-start))
 
 (progn
   (require 'uuid)

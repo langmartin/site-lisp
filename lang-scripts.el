@@ -110,7 +110,8 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 
 (progn
   (setq backup-create-tar
-        '(".emacs"
+        '(".bbdb"
+          ".emacs"
           ".emacs.bmk"
           ".emacs.d"
           ".eshell"
@@ -120,12 +121,11 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           ".plan"
           ".session"
           ".ssh"
-          "Mozilla"
           "bin"
+          "appdata"
           "code"
           "contrib"
           "doc"
-          "gnupg"
           "img"
           ))
   (setq backup-encrypt-tar "e:/backup")
