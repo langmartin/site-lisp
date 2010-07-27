@@ -76,7 +76,9 @@
                   'make-tags-file-gitp))))
     (message "top directory here is %s" dir)
     (save-excursion
-      (funcall make-tags-file-function (make-tags-file-list)))))
+      (save-default-directory
+          dir
+        (funcall make-tags-file-function (make-tags-file-list))))))
 
 (defvar exec-etags "etags")
 (defun exec-etags (lst)
