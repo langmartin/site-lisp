@@ -25,6 +25,12 @@
   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
 
+(defun turn-on-rainbow-mode ()
+  (interactive)
+  (rainbow-mode t))
+
+(add-hook 'css-mode-hook 'turn-on-rainbow-mode)
+
 (require 'moz)
 
 (defun turn-on-moz-minor-mode ()
