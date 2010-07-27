@@ -278,6 +278,14 @@ line instead."
 ;;   (require 'edit-server)
 ;;   (edit-server-start))
 
+(defun change-coding-system (system)
+  (set-buffer-file-coding-system system)
+  (save-buffer))
+
+(defun 2dos ()
+  (interactive)
+  (change-coding-system 'dos))
+
 (progn
   (require 'uuid)
   (defalias 'uuid 'insert-random-uuid))
