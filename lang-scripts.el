@@ -1,3 +1,5 @@
+;; -*- no-byte-compile: t -*-
+
 (defun mysqlgrant (db user pass)
   (interactive "sDB: \nsUser: \nsPass: ")
   (insert
