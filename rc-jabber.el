@@ -23,4 +23,43 @@
     (set-buffer (current-buffer))
     (call-interactively 'jabber-connect)))
 
+(defvar jabber-activity-switched-from nil
+  "The last non-jabber buffer I switched from")
+
+(defun switch-to-active-jabber-buffer ()
+  (let ((buf (current-buffer)))
+    (jabber-activity-switch-to)
+    (if (eq buf (current-buffer))
+        nil
+      (progn
+        (when (not (eq major-mode 'jabber-chat-mode))
+          (setq jabber-activity-switched-from buf))
+        t))))
+
+(defun switch-to-active-chat-buffer ()
+  "Switch to any jabber activity, then switch to active erc buffers."
+  (interactive)
+  (or (switch-to-active-jabber-buffer)
+      (and (or erc-modified-channels-alist
+               (eq major-mode 'erc-mode))
+           (erc-track-switch-buffer 1))
+      (and (eq major-mode 'jabber-chat-mode)
+           jabber-activity-switched-from
+           (switch-to-buffer jabber-activity-switched-from))))
+
+(progn
+  (defvar switch-to-active-chat-map (make-sparse-keymap))
+
+  (define-key switch-to-active-chat-map
+    (kbd "C-c C-@") 'switch-to-active-chat-buffer)
+  (define-key switch-to-active-chat-map
+    (kbd "C-c C-SPC") 'switch-to-active-chat-buffer)
+
+  (define-minor-mode switch-to-active-chat-minor-mode
+    :init-value nil
+    :keymap switch-to-active-chat-map
+    :global t))
+
+(erc-track-minor-mode -1)
+(switch-to-active-chat-minor-mode 1)
 (provide 'rc-jabber)
