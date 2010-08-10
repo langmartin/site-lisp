@@ -17,11 +17,23 @@
  '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold)))))
 
 (defun jabber ()
+  "The acccount list logic is all built in to the interactive block of jabber-connect. This function duplicates that functionality, reading the jabber-account-default entry of jabber-account-list and passing the arguments to jabber-connect."
   (interactive)
   (save-default-directory
       "~"
     (set-buffer (current-buffer))
-    (call-interactively 'jabber-connect)))
+    (and-let* ((acct (assoc jabber-account-default jabber-account-list))
+               (jid (car acct))
+               (acct (cdr acct)))
+      (let ((username (jabber-jid-username jid))
+            (server (jabber-jid-server jid))
+            (resource (jabber-jid-resource jid))
+            (network-server (cdr (assq :network-server acct)))                              (port (cdr (assq :port acct)))
+            (connection-type (cdr (assq :connection-type acct)))
+            (password (cdr (assq :password acct))))
+        (jabber-connect username server resource
+                        nil
+                        password network-server port connection-type)))))
 
 (defvar jabber-activity-switched-from nil
   "The last non-jabber buffer I switched from")
@@ -36,6 +48,9 @@
           (setq jabber-activity-switched-from buf))
         t))))
 
+(if (not (boundp 'erc-modified-channels-alist))
+    (setq erc-modified-channels-alist nil))
+
 (defun switch-to-active-chat-buffer ()
   "Switch to any jabber activity, then switch to active erc buffers."
   (interactive)
@@ -45,6 +60,7 @@
            (erc-track-switch-buffer 1))
       (and (eq major-mode 'jabber-chat-mode)
            jabber-activity-switched-from
+           (bury-buffer (current-buffer))
            (switch-to-buffer jabber-activity-switched-from))))
 
 (progn
@@ -60,6 +76,6 @@
     :keymap switch-to-active-chat-map
     :global t))
 
-(erc-track-minor-mode -1)
+(setq erc-track-enable-keybindings nil)
 (switch-to-active-chat-minor-mode 1)
 (provide 'rc-jabber)
