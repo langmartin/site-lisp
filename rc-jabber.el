@@ -28,7 +28,8 @@
       (let ((username (jabber-jid-username jid))
             (server (jabber-jid-server jid))
             (resource (jabber-jid-resource jid))
-            (network-server (cdr (assq :network-server acct)))                              (port (cdr (assq :port acct)))
+            (network-server (cdr (assq :network-server acct)))
+            (port (cdr (assq :port acct)))
             (connection-type (cdr (assq :connection-type acct)))
             (password (cdr (assq :password acct))))
         (jabber-connect username server resource
