@@ -41,7 +41,7 @@
 ;; Use the default browser for local links and the explicit top-level
 ;; domain here, (it's IE6), chrome for everything else.
 (progn
-  (setq browse-url-generic-program "c:/Documents and Settings/lmartin/Local Settings/Application Data/Google/Chrome/Application/chrome.exe")
+  (setq browse-url-generic-program "e:/portable/Chrome.exe")
   (setq browse-url-browser-function
         '(("^[^.]+$" . browse-url-default-windows-browser)
           ("\\.tva\\.gov" . browse-url-default-windows-browser)
