@@ -130,19 +130,16 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           "doc"
           "img"
           ))
-  (setq backup-encrypt-tar "e:/backup")
+  (setq backup-encrypted-tar "e:/backup")
   (defun backup-encrypted-tar ()
     (interactive)
-    (if (file-exists-p backup-encrypt-tar)
-        (delete-file backup-encrypt-tar))
     (save-default-directory
         "~"
       (shell-command
        (concat
         "tar cz " (shell-concat backup-create-tar)
         "|"
-        "gpg -e -r \"Lang Martin\" -o " backup-encrypt-tar
-        "&"))))
-  )
+        "gpg -e -r \"Lang Martin\" -o " (make-temp-name backup-encrypted-tar)
+        "&")))))
 
 (provide 'lang-scripts)
