@@ -46,7 +46,7 @@
   (if jabber-activity-jids
       (jabber-activity-switch-to)
     (if erc-modified-channels-alist
-        (switch-to-active-erc-buffer)
+        (erc-track-switch-buffer 1)
       nil)))
 
 (defvar switch-to-active-chat-buffer-last nil)
