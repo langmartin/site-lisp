@@ -36,37 +36,40 @@
                         nil
                         password network-server port connection-type)))))
 
-(defvar jabber-activity-switched-from nil
-  "The last non-jabber buffer I switched from")
+;;;; Switch to active jabber buffers then to active erc buffers on C-c
+;;;; C-space.
+(defun currently-chattingp ()
+  (or (eq major-mode 'jabber-chat-mode)
+      (eq major-mode 'erc-mode)))
 
-(defun switch-to-active-jabber-buffer ()
-  (let ((buf (current-buffer)))
-    (jabber-activity-switch-to)
-    (if (eq buf (current-buffer))
-        nil
-      (progn
-        (when (not (eq major-mode 'jabber-chat-mode))
-          (setq jabber-activity-switched-from buf))
-        t))))
+(defun switch-to-active-chat-buffer1 ()
+  (if jabber-activity-jids
+      (jabber-activity-switch-to)
+    (if erc-modified-channels-alist
+        (switch-to-active-erc-buffer)
+      nil)))
 
-(if (not (boundp 'erc-modified-channels-alist))
-    (setq erc-modified-channels-alist nil))
+(defvar switch-to-active-chat-buffer-last nil)
 
 (defun switch-to-active-chat-buffer ()
   "Switch to any jabber activity, then switch to active erc buffers."
   (interactive)
-  (or (switch-to-active-jabber-buffer)
-      (and (or erc-modified-channels-alist
-               (eq major-mode 'erc-mode))
-           (erc-track-switch-buffer 1))
-      (and (eq major-mode 'jabber-chat-mode)
-           jabber-activity-switched-from
-           (bury-buffer (current-buffer))
-           (switch-to-buffer jabber-activity-switched-from))))
+  (if (currently-chattingp)
+      (or (switch-to-active-chat-buffer1)
+          (when switch-to-active-chat-buffer-last
+            (switch-to-buffer switch-to-active-chat-buffer-last)))
+    (progn
+      (setq switch-to-active-chat-buffer-last (current-buffer))
+      (or (switch-to-active-chat-buffer1)
+          (message "No active chat buffers.")))))
 
 (progn
-  (defvar switch-to-active-chat-map (make-sparse-keymap))
+  (unless (boundp 'erc-modified-channels-alist)
+    (setq erc-modified-channels-alist nil))
+  (unless (boundp 'jabber-activity-jids)
+    (setq jabber-activity-jids nil))
 
+  (defvar switch-to-active-chat-map (make-sparse-keymap))
   (define-key switch-to-active-chat-map
     (kbd "C-c C-@") 'switch-to-active-chat-buffer)
   (define-key switch-to-active-chat-map
@@ -75,8 +78,9 @@
   (define-minor-mode switch-to-active-chat-minor-mode
     :init-value nil
     :keymap switch-to-active-chat-map
-    :global t))
+    :global t)
 
-(setq erc-track-enable-keybindings nil)
-(switch-to-active-chat-minor-mode 1)
+  (setq erc-track-enable-keybindings nil)
+  (switch-to-active-chat-minor-mode 1))
+
 (provide 'rc-jabber)
