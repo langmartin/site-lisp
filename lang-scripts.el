@@ -113,6 +113,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 (progn
   (setq backup-create-tar
         '(".bbdb"
+          ".chrome"
           ".emacs"
           ".emacs.bmk"
           ".emacs.d"
@@ -124,11 +125,12 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           ".session"
           ".ssh"
           "bin"
-          "appdata"
           "code"
           "contrib"
           "doc"
           "img"
+          "/f/portable/Firefox/Data/profile"
+          "/f/menu"
           ))
   (setq backup-encrypted-tar "e:/backup")
   (defun backup-encrypted-tar ()
