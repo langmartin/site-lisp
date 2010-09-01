@@ -127,8 +127,8 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           "bin"
           "code"
           "contrib"
-          "doc"
-          "img"
+          "documents"
+          "images"
           "/f/portable/Firefox/Data/profile"
           "/f/menu"
           ))
