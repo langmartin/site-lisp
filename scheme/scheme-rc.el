@@ -15,7 +15,7 @@
   (setq scheme-program-name "gsi -:d-")
   (scheme-extend-info "(gambit-c)General Index"))
 
-(defun scheme48-setup ()
+(defun rc-scheme48 ()
   "Scheme48 scheme-mode extensions"
   (interactive)
   (require 'scheme48)
@@ -115,6 +115,8 @@
    (with-package 1)
    (with-tag-set 1)
    (with-item 1)
+
+   (cont 2)
    ))
 
 (defun scheme-extend-info (page)
