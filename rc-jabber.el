@@ -42,11 +42,17 @@
   (or (eq major-mode 'jabber-chat-mode)
       (eq major-mode 'erc-mode)))
 
+(defmacro progt (&rest body)
+  "Execute a sequence like progn, but return t"
+  `(progn
+     ,@body
+     t))
+
 (defun switch-to-active-chat-buffer1 ()
   (if jabber-activity-jids
-      (jabber-activity-switch-to)
+      (progt (jabber-activity-switch-to))
     (if erc-modified-channels-alist
-        (erc-track-switch-buffer 1)
+        (progt (erc-track-switch-buffer 1))
       nil)))
 
 (defvar switch-to-active-chat-buffer-last nil)
