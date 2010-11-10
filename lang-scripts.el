@@ -129,7 +129,6 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           "contrib"
           "documents"
           "images"
-          "/f/portable/Firefox/Data/profile"
           "/f/menu"
           ))
   (setq backup-encrypted-tar "e:/backup")
