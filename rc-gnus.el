@@ -65,6 +65,7 @@
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
   (progn
@@ -90,6 +91,8 @@
  '(gnus-dribble-directory "~/.emacs.d")
  '(gnus-fetch-old-headers (quote invisible))
  '(gnus-refer-thread-limit t)
+ '(gnus-message-replysign t)
+ '(gnus-message-replyencrypt t)
  '(mail-mailing-lists
    (quote ("gambit-list@iro.umontreal.ca"
            "all@coptix.com"
