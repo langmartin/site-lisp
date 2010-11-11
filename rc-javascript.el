@@ -1,16 +1,18 @@
 (defun turn-on-c-subword-mode ()
   (interactive)
-  (c-subword-mode 1))
+  (if (boundp 'c-subword-mode)
+      (c-subword-mode 1)
+    (subword-mode 1)))
 
 (progn
   (require 'js2-mode)
   (set-variables
    '(js2-basic-offset 2)
-   '(js2-bounce-indent-flag nil)
+   '(js2-bounce-indent-flag t)
    '(js2-mirror-mode nil))
-  (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
-  (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
-  (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
+  ;; (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
+  ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
+  ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
 
 (defmacro prog0 (&rest body) nil)
@@ -22,6 +24,12 @@
   (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
+
+(defun turn-on-rainbow-mode ()
+  (interactive)
+  (rainbow-mode t))
+
+(add-hook 'css-mode-hook 'turn-on-rainbow-mode)
 
 (require 'moz)
 

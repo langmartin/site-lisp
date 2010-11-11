@@ -33,27 +33,43 @@
 
 ;;; Code:
 
-(defmacro and-let1 (binding &rest body)
+(defmacro and-let1 (binding body &optional else)
   "Bind one pair, and execute the body if the value of
 the binding is true. Use and-let* instead."
   (declare (indent 1))
   (let ((sym (car binding))
         (exp (cdr binding)))
     (if (null exp)
-        `(if ,sym (progn ,@body))
+        `(if ,sym ,body ,else)
       `(let ((,sym ,@exp))
-         (if ,sym (progn ,@body))))))
+         (if ,sym ,body ,else)))))
+
+(defmacro if-let* (bindings body &optional else)
+  "See and-let*, but require the body to be a single form. The
+  else clause is invoked if any binding fails before reaching the
+  body."
+  (declare (indent 2))
+  (if (null bindings) `,body
+    `(and-let1 ,(car bindings)
+       (if-let* ,(cdr bindings) ,body ,else)
+       ,else)))
+
+(if (fboundp 'assert)
+    (assert
+     (and
+      (eq (if-let* ((foo 1)) 'true 'false)            'true)
+      (eq (if-let* ((foo nil)) nil 'false)            'false)
+      (eq (if-let* ((foo t)) nil 'false)               nil)
+      (eq (if-let* ((foo 1) (bar 2)) (+ foo bar))      3)
+      (eq (if-let* ((foo 1) (bar nil)) (+ foo bar) t)  t))
+     ))
 
 (defmacro and-let* (bindings &rest body)
   "Bind variables like let*, but ensuring that each value is true
   in sequences. As values are true, continue to bind and then
   execute the body. See scheme srfi-2."
   (declare (indent 1))
-  (if (null bindings)
-      `(progn ,@body)
-    `(and-let1 ,(car bindings)
-       (and-let* ,(cdr bindings)
-         ,@body))))
+  `(if-let* ,bindings (progn ,@body)))
 
 (if (fboundp 'assert)
     (assert

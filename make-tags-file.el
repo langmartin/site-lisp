@@ -76,7 +76,9 @@
                   'make-tags-file-gitp))))
     (message "top directory here is %s" dir)
     (save-excursion
-      (funcall make-tags-file-function (make-tags-file-list)))))
+      (save-default-directory
+          dir
+        (funcall make-tags-file-function (make-tags-file-list))))))
 
 (defvar exec-etags "etags")
 (defun exec-etags (lst)
@@ -89,12 +91,15 @@
 
 (defvar exec-exuberant-ctags "ctags")
 (defun exec-exuberant-ctags (lst)
-  (apply 'call-process
-         exec-exuberant-ctags
-         nil
-         nil
-         nil
-         (cons "-e" lst)))
+  (let* ((name "*ctags*")
+         (buffer (or (get-buffer name)
+                     (generate-new-buffer name))))
+    (apply 'call-process
+           exec-exuberant-ctags
+           nil
+           `(,buffer t)
+           nil
+           (cons "-e" lst))))
 
 (defun make-tags-file-filep (file dir)
   (if (file-directory-p file)

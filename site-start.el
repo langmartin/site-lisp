@@ -420,7 +420,6 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  (scheme48-setup)
   (rc-paredit)
   (iswitchb-mode t))
 

@@ -32,4 +32,30 @@
 
 (global-set-keys '(("H-e" . w32-explorer)))
 
+(defun etc-hosts ()
+  (interactive)
+  (find-file
+   (concat (getenv "windir")
+           "/system32/drivers/etc/hosts")))
+
+;; Use the default browser for local links and the explicit top-level
+;; domain here, (it's IE6), chrome for everything else.
+(progn
+  (setq browse-url-generic-program "e:/portable/Chrome.exe")
+  (setq browse-url-browser-function
+        '(("^[^.]+$" . browse-url-default-windows-browser)
+          ("\\.tva\\.gov" . browse-url-default-windows-browser)
+          ("." . browse-url-generic))))
+
+(defun copy-cmd-env ()
+   (interactive)
+   (kill-new
+    (concat
+     "set HOME=" (getenv "HOME") "\n"
+     "set GNUPGHOME=" (getenv "GNUPGHOME") "\n"
+     "set PATH=" (getenv "PATH") "\n"
+     "set TEMP=" (getenv "TEMP") "\n"
+     "set TMP=" (getenv "TMP") "\n"
+     "set SSH_AUTH_SOCK=" (getenv "SSH_AUTH_SOCK") "\n")))
+
 (provide 'rc-win)

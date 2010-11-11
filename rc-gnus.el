@@ -63,8 +63,9 @@
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
-    (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
+    ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
   (progn
@@ -78,6 +79,11 @@
   (auto-fill-mode -1)
   (visual-line-mode 1))
 
+(defun auto-fill-not-visual-line ()
+  (interactive)
+  (auto-fill-mode 1)
+  (visual-line-mode -1))
+
 (rc-gnus)
 
 (set-variables
@@ -85,11 +91,27 @@
  '(gnus-dribble-directory "~/.emacs.d")
  '(gnus-fetch-old-headers (quote invisible))
  '(gnus-refer-thread-limit t)
+ '(gnus-message-replysign t)
+ '(gnus-message-replyencrypt t)
  '(mail-mailing-lists
    (quote ("gambit-list@iro.umontreal.ca"
            "all@coptix.com"
            "dns@list.cr.yp.to"
            "cfpug@cfpug.com"
            ))))
+
+(require 'bbdb-autoloads nil t)
+
+(defun gnus-group-restart-dont-ask ()
+  (interactive)
+  (save-default-directory
+      "~"
+    (flet ((gnus-yes-or-no-p (prompt) t))
+      (gnus-group-restart))))
+
+(global-set-key (kbd "C-x m")
+                (alist-to-keymap-via-kbd
+                 '(("m" . compose-mail)
+                   ("r" . gnus-group-restart-dont-ask))))
 
 (provide 'rc-gnus)

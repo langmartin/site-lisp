@@ -15,12 +15,17 @@
   (setq scheme-program-name "gsi -:d-")
   (scheme-extend-info "(gambit-c)General Index"))
 
-(defun scheme48-setup ()
+(defun rc-scheme48 ()
   "Scheme48 scheme-mode extensions"
   (interactive)
   (require 'scheme48)
   (setq scheme-program-name "scheme48")
   (scheme-extend-info "(scheme48)Binding Index"))
+
+(defun rc-mzscheme ()
+  "MzScheme scheme-mode setup"
+  (interactive)
+  (setq scheme-program-name "MzScheme"))
 
 (defun rc-paredit ()
   (require 'paredit)
@@ -110,6 +115,8 @@
    (with-package 1)
    (with-tag-set 1)
    (with-item 1)
+
+   (cont 2)
    ))
 
 (defun scheme-extend-info (page)

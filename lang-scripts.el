@@ -1,3 +1,5 @@
+;; -*- no-byte-compile: t -*-
+
 (defun mysqlgrant (db user pass)
   (interactive "sDB: \nsUser: \nsPass: ")
   (insert
@@ -109,43 +111,37 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
                   lst)
           " ")))
 
-(defun create-backup-tar ()
-  (interactive)
-  (let ((backup-path
-         '(".emacs"
-           ".emacs.d"
-           ".eshell"
-           ".gitconfig"
-           ".history"
-           ".plan"
-           ".session"
-           ".ssh"
-           "Mozilla"
-           "Winsplit Revolution"
-           "bin"
-           "code"
-           "contrib"
-           "gnupg"
-           )))
+(progn
+  (setq backup-create-tar
+        '(".bbdb"
+          ".chrome"
+          ".emacs"
+          ".emacs.bmk"
+          ".emacs.d"
+          ".eshell"
+          ".git"
+          ".gitconfig"
+          ".history"
+          ".plan"
+          ".session"
+          ".ssh"
+          "bin"
+          "code"
+          "contrib"
+          "documents"
+          "images"
+          "/f/menu"
+          ))
+  (setq backup-encrypted-tar "e:/backup")
+  (defun backup-encrypted-tar ()
+    (interactive)
     (save-default-directory
         "~"
       (shell-command
        (concat
-        (shell-concat (append '("tar" "czf" "backup.tgz") backup-path))
+        "tar cz " (shell-concat backup-create-tar)
+        "|"
+        "gpg -e -r \"Lang Martin\" -o " (make-temp-name backup-encrypted-tar)
         "&")))))
-
-(setq encrypt-backup-tar "c:/lmartin/tmp/backup")
-(defun encrypt-backup-tar ()
-  (interactive)
-  (if (file-exists-p encrypt-backup-tar)
-      (rename-file encrypt-backup-tar
-                   (make-backup-file-name encrypt-backup-tar)
-                   t))
-  (save-default-directory
-      "~"
-    (shell-command
-     (concat "gpg -e -r \"Lang Martin\" -o "
-             encrypt-backup-tar
-             " backup.tgz&"))))
 
 (provide 'lang-scripts)

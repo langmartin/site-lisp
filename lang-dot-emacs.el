@@ -1,12 +1,10 @@
 ;; -*- no-byte-compile: t -*-
 
-(add-to-list 'load-path (rc-lisp "scheme/"))
-(add-to-list 'load-path (rc-code "orangesoda/public/emacs-lisp/"))
-
 (load "site-start")
 (rc-lang)
 
 (require 'rc-javascript)
+(global-subword-mode)
 
 ;; things for cocoa emacs 23
 (progn
@@ -276,9 +274,17 @@ line instead."
           pick-backup
           wtf)))
 
-(progn
-  (require 'edit-server)
-  (edit-server-start))
+;; (progn
+;;   (require 'edit-server)
+;;   (edit-server-start))
+
+(defun change-coding-system (system)
+  (set-buffer-file-coding-system system)
+  (save-buffer))
+
+(defun 2dos ()
+  (interactive)
+  (change-coding-system 'dos))
 
 (progn
   (require 'uuid)
@@ -293,3 +299,11 @@ line instead."
       (global-set-key (kbd "C-c e <down>") 'emms-pause)
       (global-set-key (kbd "C-c e <left>") 'emms-previous)
       (global-set-key (kbd "C-c e <right>") 'emms-next)))
+
+(require 'rainbow-mode)
+
+(progn
+  (autoload 'markdown-mode "markdown-mode.el"
+    "Major mode for editing Markdown files" t)
+  (setq auto-mode-alist
+        (cons '("\\.md" . markdown-mode) auto-mode-alist)))
