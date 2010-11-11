@@ -90,6 +90,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 (defun share-itunes ()
   (interactive)
   (shell-command "chmod -R g+rwX,o+rX ~friends/Music")
+  (shell-command "chmod -R g+rwX,o+rX ~friends/Movies")
   (shell-command "chmod -R g+rwX,o+rX ~friends/Pictures"))
 
 (defun flush-cache ()
