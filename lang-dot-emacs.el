@@ -3,8 +3,13 @@
 (load "site-start")
 (rc-lang)
 
+(defmacro ifdef (function &rest args)
+  `(if (fboundp ',function)
+       (,function ,@args)))
+
 (require 'rc-javascript)
-(global-subword-mode)
+
+(ifdef global-subword-mode)
 
 ;; things for cocoa emacs 23
 (progn
@@ -223,7 +228,6 @@
   "When called interactively with no active region, kill a single
 line instead."
   (interactive
-
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position) (line-beginning-position 2)))))
 
