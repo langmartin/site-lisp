@@ -244,6 +244,7 @@ line instead."
  '(track-eol t)
  '(inhibit-startup-screen t)
  '(line-spacing 1)
+ '(global-auto-revert-mode t)
 
  '(LaTeX-command "pdflatex")
  '(TeX-default-mode (quote plain-tex-mode))
