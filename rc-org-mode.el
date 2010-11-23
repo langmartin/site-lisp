@@ -12,10 +12,10 @@
    ("C-c C-x C-j" . org-clock-goto))
  'erc-mode-hook)
 
-(add-hook 'org-mode-hook
-          (lambda ()
-            (auto-fill-mode 1)
-            (set-variable 'comment-start nil 'make-local)))
+(progn
+  (add-hook 'org-mode-hook 'comment-char-org)
+  (add-hook 'org-mode-hook 'turn-off-tabs)
+  (add-hook 'org-mode-hook 'turn-on-auto-fill))
 
 (setq org-file-apps
       (cons '(directory . emacs)

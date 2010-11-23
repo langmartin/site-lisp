@@ -1,5 +1,6 @@
 ;; -*- no-byte-compile: t -*-
 
+(require 'hooks)
 (load "site-start")
 (rc-lang)
 

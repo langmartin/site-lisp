@@ -1,40 +1,26 @@
-(defun turn-on-c-subword-mode ()
-  (interactive)
-  (if (boundp 'c-subword-mode)
-      (c-subword-mode 1)
-    (subword-mode 1)))
-
 (progn
   (require 'js2-mode)
   (set-variables
    '(js2-basic-offset 2)
    '(js2-bounce-indent-flag t)
    '(js2-mirror-mode nil))
-  ;; (add-hook 'js2-mode-hook 'turn-off-indent-tabs-mode)
+  (add-hook 'js2-mode-hook 'turn-off-tabs)
   ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
 
-(defmacro prog0 (&rest body) nil)
-
-(prog0
-  (require 'espresso)
-  (set-variables
-   '(espresso-indent-level 2))
-  (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
-  (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
-  (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
-
-(defun turn-on-rainbow-mode ()
-  (interactive)
-  (rainbow-mode t))
+;; (progn
+;;   (require 'espresso)
+;;   (set-variables
+;;    '(espresso-indent-level 2))
+;;   (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
+;;   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
+;;   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
 
 (add-hook 'css-mode-hook 'turn-on-rainbow-mode)
 
 (require 'moz)
-
-(defun turn-on-moz-minor-mode ()
-  (moz-minor-mode 1))
+(defun turn-on-moz () (interactive) (moz-minor-mode 1))
 
 (defun moz-send-string (string)
   "Send a string to Firefox via MozRepl."
