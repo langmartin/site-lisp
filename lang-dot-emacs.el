@@ -253,18 +253,6 @@ line instead."
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
 
-(defun rc-package-install-elpa ()
-  "http://tromey.com/elpa/install.html"
-  (interactive)
-  (let ((buffer (url-retrieve-synchronously
-                 "http://tromey.com/elpa/package-install.el")))
-    (save-excursion
-      (set-buffer buffer)
-      (goto-char (point-min))
-      (re-search-forward "^$" nil 'move)
-      (eval-region (point) (point-max))
-      (kill-buffer (current-buffer)))))
-
 (defun rc-package-install-packages ()
   "Install all my ELPA packages, for posterity"
   (interactive)
@@ -273,7 +261,9 @@ line instead."
         '(highlight-symbol
           htmlize
           guess-style
+          magit
           pick-backup
+          w3
           wtf)))
 
 ;; (progn
@@ -309,3 +299,5 @@ line instead."
     "Major mode for editing Markdown files" t)
   (setq auto-mode-alist
         (cons '("\\.md" . markdown-mode) auto-mode-alist)))
+
+;; (require 'rc-slime)
