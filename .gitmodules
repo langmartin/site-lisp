@@ -4,3 +4,9 @@
 [submodule "org-mode"]
 	path = org-mode
 	url = git://repo.or.cz/org-mode.git
+[submodule "swank-js"]
+	path = swank-js
+	url = git://github.com/ivan4th/swank-js.git
+[submodule "slime"]
+	path = slime
+	url = git://sbcl.boinkor.net/slime.git
