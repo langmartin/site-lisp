@@ -305,3 +305,5 @@ line instead."
         (cons '("\\.md" . markdown-mode) auto-mode-alist)))
 
 ;; (require 'rc-slime)
+
+(toggle-text-mode-auto-fill)
