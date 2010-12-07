@@ -97,7 +97,6 @@
 
 (require 'rc-erc)
 (require 'git-commands)
-(require 'nav)
 (require 'hide-region)
 (column-number-mode t)
 (require 'rc-org-mode)
