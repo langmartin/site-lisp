@@ -65,7 +65,6 @@
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
-    (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
   (progn
@@ -73,6 +72,17 @@
     (gnus-compile)
     (setq gc-cons-threshold 3500000)
     (setq gnus-use-correct-string-widths nil)))
+
+(defun message-cite-pgp-sign ()
+  "Get the PGP signature block stuck at the top of the message where it will pick up correctly on send."
+  (interactive)
+  (message-cite-original-without-signature)
+  (save-excursion
+    (message-goto-body)
+    (mml-secure-message-sign-pgpmime)))
+
+(add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+(setq message-cite-function 'message-cite-pgp-sign)
 
 (defun visual-line-not-auto-fill ()
   (interactive)
