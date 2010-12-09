@@ -1,5 +1,8 @@
 ;; -*- no-byte-compile: t -*-
 
+;; http://osdir.com/ml/help-gnu-emacs-gnu/2010-06/msg00050.html
+(setq warning-suppress-types nil)
+
 (require 'hooks)
 (load "site-start")
 (rc-lang)
