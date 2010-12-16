@@ -30,6 +30,7 @@
 
 (color-theme-initialize)
 (color-theme-langmartin)
+(color-theme-langmartin)
 
 ;; (mapc (lambda (setting)
 ;;         (update-alist 'default-frame-alist setting))
