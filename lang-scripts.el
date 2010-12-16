@@ -141,7 +141,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
        (concat
         "tar cz " (shell-concat backup-create-tar)
         "|"
-        "gpg -e -r \"Lang Martin\" -o " (make-temp-name backup-encrypted-tar)
+        "gpg -e -r backup -o " (make-temp-name backup-encrypted-tar)
         "&")))))
 
 (provide 'lang-scripts)
