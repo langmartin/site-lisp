@@ -28,7 +28,7 @@
 (defun htaccess-login ()
   (interactive)
   (insert "Order Deny,Allow
-Allow from 75.148.111.133
+Allow from 127.0.0.1
 Deny from all
 AuthType Basic
 AuthName \"Webtools\"
@@ -50,14 +50,6 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 (defun rebuild-site-lisp-for-desktop ()
   (interactive)
   (shell-command "cd /usr/share/emacs/site-lisp; ./.all.sh /Applications/Emacs.app/Contents/MacOS/Emacs"))
-
-(defun coptix-local-python ()
-  (interactive)
-  (find-file "/coptix/local/lib/python2.5/distutils/distutils.cfg"))
-
-(defun coptix-local-python-path ()
-  (interactive)
-  (find-file "/coptix/local/lib/python2.5/site-packages/sitecustomize.py"))
 
 (defgroup cx-scripts nil
   "Script configuration"
@@ -112,36 +104,19 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
           " ")))
 
 (progn
-  (setq backup-create-tar
-        '(".bbdb"
-          ".chrome"
-          ".emacs"
-          ".emacs.bmk"
-          ".emacs.d"
-          ".eshell"
-          ".git"
-          ".gitconfig"
-          ".history"
-          ".plan"
-          ".session"
-          ".ssh"
-          "bin"
-          "code"
-          "contrib"
-          "documents"
-          "images"
-          "/f/menu"
-          ))
-  (setq backup-encrypted-tar "e:/backup")
+  (defvar backup-encrypted-tar-paths)
+  (defvar backup-encrypted-tar-file)
+  (defvar backup-encrypted-tar-key)
   (defun backup-encrypted-tar ()
     (interactive)
     (save-default-directory
         "~"
       (shell-command
        (concat
-        "tar cz " (shell-concat backup-create-tar)
+        "tar cz " (shell-concat backup-encrypted-tar-paths)
         "|"
-        "gpg -e -r backup -o " (make-temp-name backup-encrypted-tar)
+        "gpg -e -r " backup-encrypted-tar-key
+        " -o " (make-temp-name backup-encrypted-tar-file)
         "&")))))
 
 (provide 'script-collection)
