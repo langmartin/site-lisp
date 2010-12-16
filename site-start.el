@@ -124,7 +124,6 @@ Set it intead of tab-width.")
 
   ;; (require 'html-helper-mode "html-helper-mode" t)
   (require 'visual-basic-mode "visual-basic-mode" t)
-  (rc-maybe-session)
   (rc-emacs22-only)
   (require 'http-twiddle "http-twiddle" t)
   (require 'make-tags-file))
