@@ -1,4 +1,4 @@
-(eval-when-compile (require 'color-theme))
+(require 'color-theme)
 
 (defun color-theme-langmartin ()
   (interactive)
@@ -27,8 +27,14 @@
          (org-todo ((t (:inherit font-lock-string-face))))
          (trailing-whitespace ((((class color) (background light)) (:background "ivory3"))))
          )))))
+
 (color-theme-initialize)
 (color-theme-langmartin)
+
+;; (mapc (lambda (setting)
+;;         (update-alist 'default-frame-alist setting))
+;;       '((foreground-color . "black")
+;;         (background-color . "ivory")))
 
 (defun rc-show-paren-expression ()
   (interactive)
@@ -46,7 +52,6 @@
 (rc-show-paren-expression)
 
 (progn
-  (require 'rc-term-mode)
   ;; this seems to be a bug in nightly-build, and matches my theme
   (setq term-default-bg-color "ivory"
         term-default-fg-color "black"))
