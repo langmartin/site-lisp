@@ -144,4 +144,4 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
         "gpg -e -r backup -o " (make-temp-name backup-encrypted-tar)
         "&")))))
 
-(provide 'lang-scripts)
+(provide 'script-collection)

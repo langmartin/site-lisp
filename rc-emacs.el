@@ -64,7 +64,7 @@
 (add-hooks '(emacs-lisp-mode-hook python-mode-hook)
            (lambda () (eldoc-mode 1)))
 
-(require 'lang-scripts)
+(require 'script-collection)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
 (require 'rc-gnus)
