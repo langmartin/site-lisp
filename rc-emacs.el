@@ -283,3 +283,5 @@ something that needs a second thread."
   (require 'rc-look-and-feel)
   (server-mode 1)
   (global-set-keys '(("C-x C-c" . nil))))
+
+(provide 'rc-emacs)
