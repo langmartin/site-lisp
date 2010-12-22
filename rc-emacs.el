@@ -106,23 +106,14 @@
 (require 'compile-site-lisp)
 
 (global-set-keys
- '(
-   ("C-x C-j" . execute-extended-command)
+ '(("C-x C-j" . execute-extended-command)
    ("C-c C-j" . execute-extended-command)
-
-   ("<f1>" . vi-mode)
-
+   ("C-]" . vi-mode)
    ("M-<f4>" . delete-frame)
-   ("<f5>" . eshell)
-   ("<f6>" . imenu)
-   ("<f7>" . revert-buffer)
-   ("<f8>" . toggle-truncate-lines)
-
-   ;;; Replaced by html-script, which binds f12
-   ;; ("<f10>" . visual-basic-mode)
-   ;; ("<f9>" . css-mode)
-   ;; ("<f11>" . js2-mode)
-   ;; ("<f12>" . rc-sgml-mode-for-asp)
+   ("C-c C-s" . eshell)
+   ("C-c C-i" . imenu)
+   ("C-c C-r" . revert-buffer)
+   ("C-c C-t" . toggle-truncate-lines)
    ))
 
 (require 'html-script)
