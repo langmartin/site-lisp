@@ -149,7 +149,7 @@ unmodified text is sent back instead.
 "
   :group 'edit-server)
 (define-key edit-server-text-mode-map (kbd "C-x #") 'edit-server-done)
-(define-key edit-server-text-mode-map (kbd "C-x C-s") 'edit-server-done)
+;; (define-key edit-server-text-mode-map (kbd "C-x C-s") 'edit-server-done)
 (define-key edit-server-text-mode-map (kbd "C-c C-c") 'edit-server-done)
 (define-key edit-server-text-mode-map (kbd "C-x C-c") 'edit-server-abort)
 
