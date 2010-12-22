@@ -46,14 +46,20 @@
           ("." . browse-url-generic))))
 
 (defun copy-cmd-env ()
-   (interactive)
-   (kill-new
-    (concat
-     "set HOME=" (getenv "HOME") "\n"
-     "set GNUPGHOME=" (getenv "GNUPGHOME") "\n"
-     "set PATH=" (getenv "PATH") "\n"
-     "set TEMP=" (getenv "TEMP") "\n"
-     "set TMP=" (getenv "TMP") "\n"
-     "set SSH_AUTH_SOCK=" (getenv "SSH_AUTH_SOCK") "\n")))
+  (interactive)
+  (kill-new
+   (mapconcat (lambda (x)
+                (concat "set " x "=" (getenv x) "\n"))
+              `("HOME"
+                "GNUPGHOME"
+                "PATH"
+                "TEMP"
+                "TMP"
+                "SSH_AUTH_SOCK"
+                "CPATH"
+                "INCLUDE"
+                "LIB"
+                "LIBRARY_PATH")
+              "")))
 
 (provide 'rc-win)
