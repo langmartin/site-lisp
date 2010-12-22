@@ -10,3 +10,6 @@
 [submodule "slime"]
 	path = slime
 	url = git://sbcl.boinkor.net/slime.git
+[submodule "vimvars"]
+	path = vimvars
+	url = git://github.com/jamesyoungman/vimvars.git

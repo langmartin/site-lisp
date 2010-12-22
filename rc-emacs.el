@@ -271,7 +271,7 @@ line instead."
 
   (global-set-key (kbd "S-SPC") 'ph/delete-whitespace))
 
-(defun rc-main-emacs-session ()
+(defun rc-emacs-master ()
   "A bunch of settings that should only be applied to my primary,
 long-running emacs session. It's useful to have these optional so
 that I can avoid a bunch of warnings if I open a new emacs to run
@@ -283,5 +283,16 @@ something that needs a second thread."
   (require 'rc-look-and-feel)
   (server-mode 1)
   (global-set-keys '(("C-x C-c" . nil))))
+
+(defun rc-emacs-compile ()
+  (interactive)
+  (require 'color-theme)
+  (color-theme-initialize)
+  (color-theme-marquardt)
+  (color-theme-marquardt))
+
+(progn
+  (require 'vimvars)
+  (add-hook 'find-file-hook 'vimvars-obey-vim-modeline))
 
 (provide 'rc-emacs)
