@@ -205,10 +205,6 @@ the working directory"
 (require 'scheme-rc)
 
 ;;;; rc-* setup functions to manage some bits
-(defun rc-maybe-session ()
-  (if (require 'session "session.el" t)
-      (session-initialize)))
-
 (defvar rc-viper-ESC-key "\C-z"
   "See viper-ESC-key. This one is used by rc-viper.")
 

@@ -268,15 +268,18 @@ long-running emacs session. It's useful to have these optional so
 that I can avoid a bunch of warnings if I open a new emacs to run
 something that needs a second thread."
   (interactive)
-  (rc-maybe-session)
   (require 'edit-server)
   (edit-server-start)
-  (require 'rc-look-and-feel)
   (server-mode 1)
-  (global-set-keys '(("C-x C-c" . nil))))
+  (savehist-mode 1)
+  (desktop-save-mode 1)
+  (desktop-read)
+  (global-set-keys '(("C-x C-c" . nil)))
+  (require 'rc-look-and-feel))
 
 (defun rc-emacs-compile ()
   (interactive)
+  (savehist-mode 1)
   (require 'color-theme)
   (color-theme-initialize)
   (color-theme-marquardt)
