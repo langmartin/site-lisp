@@ -13,3 +13,7 @@
 [submodule "vimvars"]
 	path = vimvars
 	url = git://github.com/jamesyoungman/vimvars.git
+[submodule "gnus"]
+	path = gnus
+	# url = f:/home/downloads/gnus
+	url = http://git.gnus.org/gnus.git

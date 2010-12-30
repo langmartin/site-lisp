@@ -1,3 +1,8 @@
+(progn
+  ;; settings for bleeding-ier edge No Gnus v0.11
+ (setq gnus-registry-install t)
+ (setq tls-program '("openssl s_client -connect %h:%p -no_ssl2 -ign_eof")))
+
 (defvar smtpmail-account-authinfo
   `(("@gmail.com" . "~/.emacs.d/authinfo-gmail")
     ("@work.com" . "~/.emacs.d/authinfo-work")
