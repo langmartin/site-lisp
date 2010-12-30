@@ -289,4 +289,30 @@ something that needs a second thread."
   (require 'vimvars)
   (add-hook 'find-file-hook 'vimvars-obey-vim-modeline))
 
+;; http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
+(progn
+  (defun push-mark-no-activate (&optional pfix)
+    "Pushes `point' to `mark-ring' and does not activate the region
+Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
+    (interactive "P")
+    (if pfix (set-mark-command 1)
+      (push-mark (point) t nil))
+    (message "Pushed mark to ring"))
+
+  (global-set-key (kbd "C-`") 'push-mark-no-activate)
+
+  (defun exchange-point-and-mark-no-activate ()
+    "Identical to \\[exchange-point-and-mark] but will not activate the
+ region."
+    (interactive)
+    (let ((active (region-active-p)))
+      (exchange-point-and-mark)
+      (when (not active)
+        (deactivate-mark nil))))
+
+  (define-key global-map
+    [remap exchange-point-and-mark]
+    'exchange-point-and-mark-no-activate)
+  )
+
 (provide 'rc-emacs)
