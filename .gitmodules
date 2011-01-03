@@ -15,5 +15,4 @@
 	url = git://github.com/jamesyoungman/vimvars.git
 [submodule "gnus"]
 	path = gnus
-	# url = f:/home/downloads/gnus
-	url = http://git.gnus.org/gnus.git
+	url = git://github.com/emacsmirror/gnus.git
