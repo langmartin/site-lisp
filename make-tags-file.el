@@ -82,7 +82,7 @@
 
 (defvar exec-etags "etags")
 (defun exec-etags (lst)
-  (apply 'call-process
+  (apply 'process-file
          exec-etags
          nil
          nil
@@ -94,7 +94,7 @@
   (let* ((name "*ctags*")
          (buffer (or (get-buffer name)
                      (generate-new-buffer name))))
-    (apply 'call-process
+    (apply 'process-file
            exec-exuberant-ctags
            nil
            `(,buffer t)
