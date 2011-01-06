@@ -113,7 +113,7 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
         "~"
       (shell-command
        (concat
-        "tar cz " (shell-concat backup-encrypted-tar-paths)
+        "tar czP " (shell-concat backup-encrypted-tar-paths)
         "|"
         "gpg -e -r " backup-encrypted-tar-key
         " -o " (make-temp-name backup-encrypted-tar-file)
