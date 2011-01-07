@@ -1,6 +1,18 @@
-(global-set-key (kbd "H-i") 'imenu)
-(global-set-key (kbd "H-r") 'repeat)
-(global-set-key (kbd "H-h") 'help)
+(global-set-keys
+ (mapcar (lambda (b) (cons (concat "H-" (car b)) (cdr b)))
+         `(("]" . vi-mode)
+           ("h" . help)
+           ("i" . imenu)
+           ("r" . repeat)
+           ("R" . revert-buffer)
+           ("s" . eshell)
+           ("t" . toggle-truncate-lines))))
+
+(global-set-keys
+ `(("C-x C-j" . execute-extended-command)
+   ("C-c C-j" . execute-extended-command)
+   ("M-<f4>" . delete-frame)
+   ))
 
 (defun rc-windmove-keybindings (&optional modifier)
   (interactive)

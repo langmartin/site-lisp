@@ -105,17 +105,6 @@
 (require 'rc-asp)
 (require 'compile-site-lisp)
 
-(global-set-keys
- '(("C-x C-j" . execute-extended-command)
-   ("C-c C-j" . execute-extended-command)
-   ("C-]" . vi-mode)
-   ("M-<f4>" . delete-frame)
-   ("C-c C-s" . eshell)
-   ("C-c C-i" . imenu)
-   ("C-c C-r" . revert-buffer)
-   ("C-c C-t" . toggle-truncate-lines)
-   ))
-
 (require 'html-script)
 
 (progn
