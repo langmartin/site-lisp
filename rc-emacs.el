@@ -104,6 +104,7 @@
 (require 'google-define)
 (require 'rc-asp)
 (require 'compile-site-lisp)
+(require 'gist)
 
 (require 'html-script)
 
