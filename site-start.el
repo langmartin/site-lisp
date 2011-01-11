@@ -271,13 +271,13 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
 
 ;;;; Growl
 (defun growl (title message)
-  (start-process "growl" " growl"
-                 "growlnotify"
-                 title
-                 "-a" "Emacs.app")
-  (process-send-string " growl" message)
-  (process-send-string " growl" "\n")
-  (process-send-eof " growl"))
+  (let ((proc (start-process "growl"
+                             "*growl*"
+                             "growlnotify"
+                             title "-a" "Emacs.app")))
+    (process-send-string proc message)
+    (process-send-string proc "\n")
+    (process-send-eof proc)))
 
 (defun erc-growl (nick message)
   (let ((n (substring nick 0 (string-match "\\!" nick))))
