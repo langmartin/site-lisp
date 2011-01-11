@@ -2,6 +2,8 @@
 
 (fringe-mode '(1 . 1))
 
+(setenv "GIT_PAGER" "")
+
 (set-variables
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
