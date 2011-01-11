@@ -73,4 +73,13 @@
           (lambda (nick ip reason)
             (erc-log-save-all-buffers)))
 
+(defun erc-growl-hook (match-type nick message)
+  "Shows a growl notification, when user's nick was mentioned. If the buffer is currently not visible, makes it sticky."
+  (unless (posix-string-match "^\\** *Users on #" message)
+    (growl
+     (concat "ERC " (buffer-name (current-buffer)))
+     message)))
+
+;; (add-hook 'erc-text-matched-hook 'erc-growl-hook)
+
 (provide 'rc-erc)
