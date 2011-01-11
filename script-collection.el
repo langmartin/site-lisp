@@ -1,4 +1,49 @@
 ;; -*- no-byte-compile: t -*-
+(progn
+  ;;;; This could be its own package. Just runs sequences of commands
+  ;;;; without relying on the shell, with tramp-aware paths. Strings
+  ;;;; that begin with ~ get hit with expand-file-name.
+  
+ (defun simple-script-process (command-sequence)
+   (mapcar (lambda (cmd)
+             (mapcar (lambda (word)
+                       (if (and (stringp word)
+                                (eql ?~ (string-ref word 0)))
+                           (expand-file-name word)
+                         (prin1-to-string word t)))
+                     cmd))
+           command-sequence))
+
+ (defun simple-script-pp (&rest lists-or-objs)
+   (mapc (lambda (cmd)
+           (if (listp cmd)
+               (mapc (lambda (x)
+                       (princ x) (princ " "))
+                     cmd)
+             (princ cmd) (princ " ")))
+         lists-or-objs)
+   (princ "\n"))
+
+ (defun simple-script-synchronous (command-sequence)
+   (with-output-to-temp-buffer
+       "*simple-script*"
+     (save-excursion
+       (simple-script-pp "starting in " default-directory)
+       (mapc (lambda (cmd)
+               (let ((return (apply 'process-file
+                                    (car cmd)
+                                    nil
+                                    standard-output
+                                    nil
+                                    (cdr cmd))))
+                 (if (eq return 0)
+                     (simple-script-pp cmd)
+                   (simple-script-pp cmd "exit code" return))))
+             (simple-script-process
+              command-sequence))
+       (princ "\n"))))
+
+ (defalias 'simple-script 'simple-script-synchronous))
 
 (defun mysqlgrant (db user pass)
   (interactive "sDB: \nsUser: \nsPass: ")
@@ -83,9 +128,17 @@ RewriteRule ^(.*)$ $1.php [QSA,L]"))
 
 (defun share-itunes ()
   (interactive)
-  (shell-command "chmod -R g+rwX,o+rX ~friends/Music")
-  (shell-command "chmod -R g+rwX,o+rX ~friends/Movies")
-  (shell-command "chmod -R g+rwX,o+rX ~friends/Pictures"))
+  (simple-script
+   `((chmod -R "g+rwX,o+rX" "~friends/Music")
+     (chmod -R "g+rwX,o+rX" "~friends/Movies")
+     (chmod -R "g+rwX,o+rX" "~friends/Pictures"))))
+
+(defun itunes-fix-links ()
+  (interactive)
+  (simple-script
+   `((defaults write com.apple.iTunes hide-ping-dropdown 1)
+     (defaults write com.apple.iTunes show-store-link-arrows 1)
+     (defaults write com.apple.iTunes invertStoreLinks 1))))
 
 (defun flush-cache ()
   (interactive)
