@@ -262,6 +262,7 @@ something that needs a second thread."
   (edit-server-start)
   (server-mode 1)
   (savehist-mode 1)
+  (setq desktop-dirname "~/.emacs.d")
   (desktop-save-mode 1)
   (desktop-read)
   (global-set-keys '(("C-x C-c" . nil)))
