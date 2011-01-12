@@ -16,3 +16,6 @@
 [submodule "gnus"]
 	path = gnus
 	url = git://github.com/emacsmirror/gnus.git
+[submodule "anything-config"]
+	path = anything-config
+	url = git://repo.or.cz/anything-config.git
