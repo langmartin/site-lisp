@@ -306,4 +306,11 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
     'exchange-point-and-mark-no-activate)
   )
 
+(progn
+  (require 'haskell-mode)
+  (require 'inf-haskell)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-to-auto-mode-alist `(("\\.hs$" . haskell-mode))))
+
 (provide 'rc-emacs)
