@@ -24,11 +24,11 @@
          lists-or-objs)
    (princ "\n"))
 
- (defun simple-script-synchronous (command-sequence)
+ (defun simple-script-synchronous (command-sequence &optional noisy)
    (with-output-to-temp-buffer
        "*simple-script*"
      (save-excursion
-       (simple-script-pp "starting in " default-directory)
+       (when noisy (simple-script-pp "starting in " default-directory))
        (mapc (lambda (cmd)
                (let ((return (apply 'process-file
                                     (car cmd)
@@ -37,11 +37,11 @@
                                     nil
                                     (cdr cmd))))
                  (if (eq return 0)
-                     (simple-script-pp cmd)
+                     (when noisy (simple-script-pp cmd))
                    (simple-script-pp cmd "exit code" return))))
              (simple-script-process
               command-sequence))
-       (princ "\n"))))
+       (when noisy (princ "\n")))))
 
  (defalias 'simple-script 'simple-script-synchronous))
 
