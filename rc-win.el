@@ -62,4 +62,6 @@
                 "LIBRARY_PATH")
               "")))
 
+(add-to-auto-mode-alist '(("\\.ini$" . conf-windows-mode)))
+
 (provide 'rc-win)
