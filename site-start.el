@@ -138,7 +138,7 @@ the working directory"
    (setq backup-by-copying t
          delete-old-versions t
          kept-new-versions 10
-         kept-old-versions 1
+         kept-old-versions 2
          version-control t
          backup-directory-alist `(("." . ,backup))
          tramp-backup-directory-alist backup-directory-alist
