@@ -252,7 +252,9 @@ line instead."
 
   (global-set-key (kbd "S-SPC") 'ph/delete-whitespace))
 
-(defun rc-emacs-master ()
+;; (rc-C-h-delete-M-h-help)
+
+(defun rc-emacs-master-no-theme ()
   "A bunch of settings that should only be applied to my primary,
 long-running emacs session. It's useful to have these optional so
 that I can avoid a bunch of warnings if I open a new emacs to run
@@ -265,7 +267,11 @@ something that needs a second thread."
   (setq desktop-dirname "~/.emacs.d")
   (desktop-save-mode 1)
   (desktop-read)
-  (global-set-keys '(("C-x C-c" . nil)))
+  (global-set-keys '(("C-x C-c" . nil))))
+
+(defun rc-emacs-master ()
+  "See rc-emacs-master-no-theme. This one has a theme, too."
+  (interactive)
   (require 'rc-look-and-feel))
 
 (defun rc-emacs-compile ()
@@ -312,5 +318,7 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-to-auto-mode-alist `(("\\.hs$" . haskell-mode))))
+
+(add-hook 'sql-mode-hook 'turn-off-indent-tabs-mode)
 
 (provide 'rc-emacs)
