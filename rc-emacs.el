@@ -254,33 +254,7 @@ line instead."
 
 ;; (rc-C-h-delete-M-h-help)
 
-(defun rc-emacs-master-no-theme ()
-  "A bunch of settings that should only be applied to my primary,
-long-running emacs session. It's useful to have these optional so
-that I can avoid a bunch of warnings if I open a new emacs to run
-something that needs a second thread."
-  (interactive)
-  (require 'edit-server)
-  (edit-server-start)
-  (server-mode 1)
-  (savehist-mode 1)
-  (setq desktop-dirname "~/.emacs.d")
-  (desktop-save-mode 1)
-  (desktop-read)
-  (global-set-keys '(("C-x C-c" . nil))))
-
-(defun rc-emacs-master ()
-  "See rc-emacs-master-no-theme. This one has a theme, too."
-  (interactive)
-  (require 'rc-look-and-feel))
-
-(defun rc-emacs-compile ()
-  (interactive)
-  (savehist-mode 1)
-  (require 'color-theme)
-  (color-theme-initialize)
-  (color-theme-marquardt)
-  (color-theme-marquardt))
+(require 'rc-look-and-feel)
 
 (progn
   (require 'vimvars)
