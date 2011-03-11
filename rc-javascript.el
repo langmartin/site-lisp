@@ -17,7 +17,7 @@
 ;;   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
 ;;   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
 
-(add-hook 'css-mode-hook 'turn-on-rainbow-mode)
+;; (add-hook 'css-mode-hook 'turn-on-rainbow-mode)
 
 (require 'moz)
 (defun turn-on-moz () (interactive) (moz-minor-mode 1))
