@@ -53,10 +53,12 @@
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(eshell-prompt ((((class color) (background light)) (:foreground "Red4" :weight bold))))
+   '(font-lock-comment-face ((((class color) (min-colors 88) (background light)) (:foreground "grey50"))))
    '(font-lock-warning-face ((((class color) (min-colors 88) (background light)) (:foreground "Red3" :weight bold))))
    '(jabber-chat-prompt-foreign ((t (:foreground "red4"))))
    '(jabber-chat-prompt-local ((t (:foreground "blue4"))))
    '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold))))
+   '(org-mode-line-clock-overrun ((t (:inherit modeline :background "grey" :foreground "red3"))) t)
    '(org-todo ((((class color) (min-colors 16) (background light)) (:foreground "Red4" :weight bold))))
    '(whitespace-line ((t (:background "gray90"))))
    '(whitespace-space-after-tab ((t (:background "lightyellow" :foreground "firebrick")))))
@@ -93,6 +95,7 @@ something that needs a second thread."
 (defun rc-emacs-master ()
   "See rc-emacs-master-no-theme. This one has a theme, too."
   (interactive)
+  (rc-emacs-master-no-theme)
   (rc-custom-faces-langmartin))
 
 (defun rc-emacs-compile ()
