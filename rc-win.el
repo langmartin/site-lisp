@@ -15,6 +15,9 @@
 (mouse-avoidance-mode 'jump)
 (setq visible-bell t)
 
+;; try to improve slow performance on windows.
+;; (setq w32-get-true-file-attributes nil)
+
 (setq tramp-default-proxies-alist
       `((nil "\\`root\\'" "/sshx:%h:")))
 
