@@ -60,6 +60,7 @@
    '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold))))
    '(org-mode-line-clock-overrun ((t (:inherit modeline :background "grey" :foreground "red3"))) t)
    '(org-todo ((((class color) (min-colors 16) (background light)) (:foreground "Red4" :weight bold))))
+   '(secondary-selection ((((class color) (min-colors 88) (background light)) (:background "LemonChiffon"))))
    '(whitespace-line ((t (:background "gray90"))))
    '(whitespace-space-after-tab ((t (:background "lightyellow" :foreground "firebrick")))))
   (rc-show-paren-expression))
@@ -103,7 +104,6 @@ something that needs a second thread."
   (savehist-mode 1)
   (require 'color-theme)
   (color-theme-initialize)
-  (color-theme-marquardt)
-  (color-theme-marquardt))
+  (color-theme-zenburn))
 
 (provide 'rc-look-and-feel)
