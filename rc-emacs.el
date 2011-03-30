@@ -107,6 +107,7 @@
 (require 'gist)
 
 (require 'html-script)
+(require 'vc-darcs)
 
 (progn
   (require 'chop)
