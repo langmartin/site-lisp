@@ -13,7 +13,7 @@
  (equal "foo" (join '("foo") "/"))
  (equal "foo/bar" (join '("foo" "bar") "/")))
 
-(defmacro define-shell-command (name cmd &optional default hook async)
+(defmacro define-shell-command (name cmd &optional default hook sync)
   `(defun ,name (&optional prefix)
      (interactive "P")
      (let ((command ,cmd)
@@ -24,9 +24,9 @@
                  (read-from-minibuffer
                   "Shell command: "
                   ,(join (list cmd default) " "))))
-       (if ,async
-           (shell-command (concat command "&") bufname)
-         (shell-command command bufname))
+       (if ,sync
+           (shell-command command bufname)
+         (shell-command (concat command "&") bufname))
        (with-buffer (get-buffer bufname)
          (progn
            (cd dir)
@@ -37,7 +37,7 @@
   (define-shell-command git-fetch "git fetch")
   (define-shell-command git-log "git log --graph")
   (define-shell-command git-branches "git branch -av")
-  (define-shell-command git-commit "git commit" nil nil t)
+  (define-shell-command git-commit "git commit")
   (define-shell-command git-merge "git merge -q" "origin/master")
   (define-shell-command git-pull "git pull")
   (define-shell-command git-push "git push" "origin")
