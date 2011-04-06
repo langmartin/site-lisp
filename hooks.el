@@ -2,6 +2,7 @@
 
 (defun turn-off-tabs () (interactive) (setq indent-tabs-mode nil))
 (defun turn-on-auto-fill () (interactive) (auto-fill-mode 1))
+(defun turn-off-auto-fill () (interactive) (auto-fill-mode -1))
 (defun turn-on-rainbow-mode () (interactive) (rainbow-mode t))
 
 (defun comment-char-js () (set-variable 'comment-start "//" 'make-local))

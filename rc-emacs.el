@@ -295,5 +295,6 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
   (add-to-auto-mode-alist `(("\\.hs$" . haskell-mode))))
 
 (add-hook 'sql-mode-hook 'turn-off-indent-tabs-mode)
+(add-hook 'sql-mode-hook 'turn-off-auto-fill)
 
 (provide 'rc-emacs)
