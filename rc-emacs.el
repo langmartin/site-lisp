@@ -105,11 +105,21 @@
 (require 'rc-asp)
 (require 'compile-site-lisp)
 (require 'gist)
-
 (require 'html-script)
-(require 'vc-darcs)
 
 (progn
+  ;;; VC setup
+  (require 'vc-darcs)
+  (defadvice vc-git-registered (around vc-git-registered-unc (file) activate)
+    (with-temp-buffer
+      (insert file)
+      (goto-char (point-min))
+      (if (search-forward-regexp "\\bchadedmw1\\b" nil t)
+          nil
+        ad-do-it))))
+
+(progn
+  ;;; Chop provides a binary chop screen navigation thing.
   (require 'chop)
   (global-set-keys
    '(("<C-up>" . chop-move-up)
