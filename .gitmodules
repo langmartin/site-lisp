@@ -19,3 +19,6 @@
 [submodule "anything-config"]
 	path = anything-config
 	url = git://repo.or.cz/anything-config.git
+[submodule "zencoding"]
+	path = zencoding
+	url = git://github.com/rooney/zencoding.git
