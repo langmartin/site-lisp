@@ -440,7 +440,7 @@ repeated unfill entire region as one paragraph."
             try-complete-file-name
             try-complete-lisp-symbol-partially
             try-complete-lisp-symbol)))
-  (rc-function-keys-mlm 'global-set-key)
+  ;; (rc-function-keys-mlm 'global-set-key)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
   (setq uniquify-buffer-name-style 'forward))

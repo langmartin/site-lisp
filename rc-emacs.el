@@ -11,8 +11,6 @@
   `(if (fboundp ',function)
        (,function ,@args)))
 
-(require 'rc-javascript)
-
 (ifdef global-subword-mode)
 
 ;; things for cocoa emacs 23
@@ -102,10 +100,9 @@
 (column-number-mode t)
 (require 'rc-org-mode)
 (require 'google-define)
-(require 'rc-asp)
 (require 'compile-site-lisp)
 (require 'gist)
-(require 'html-script)
+(require 'rc-web-development)
 
 (progn
   ;;; VC setup

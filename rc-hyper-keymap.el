@@ -1,10 +1,10 @@
 (global-set-keys
  (mapcar (lambda (b) (cons (concat "H-" (car b)) (cdr b)))
          `(("]" . vi-mode)
-           ("h" . help)
+           ;; ("h" . help)
            ("i" . imenu)
-           ("r" . repeat)
-           ("R" . revert-buffer)
+           ("R" . repeat)
+           ("r" . revert-buffer)
            ("s" . eshell)
            ("t" . toggle-truncate-lines))))
 
