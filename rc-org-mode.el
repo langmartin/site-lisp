@@ -25,7 +25,8 @@
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time))
  '(org-clock-modeline-total (quote current))
- '(org-cycle-include-plain-lists nil))
+ '(org-cycle-include-plain-lists nil)
+ '(org-clock-into-drawer t))
 
 ;;;; I've added the endnotes package to this header, it doesn't change
 ;;;; anything by default. In order to use it, you need to add two
