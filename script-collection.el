@@ -59,8 +59,8 @@
 (defun reddit ()
   (interactive)
   (insert
-   "0.0.0.0 slashdot.org\n"
-   "0.0.0.0 reddit.com\n"))
+   "127.0.0.1	slashdot.org\n"
+   "127.0.0.1	www.reddit.com\n"))
 
 (defun ykk-setup ()
   (interactive)
