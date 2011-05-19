@@ -1,3 +1,4 @@
+
 ;; -*- no-byte-compile: t -*-
 
 ;; http://osdir.com/ml/help-gnu-emacs-gnu/2010-06/msg00050.html
@@ -107,13 +108,14 @@
 (progn
   ;;; VC setup
   (require 'vc-darcs)
-  (defadvice vc-git-registered (around vc-git-registered-unc (file) activate)
-    (with-temp-buffer
-      (insert file)
-      (goto-char (point-min))
-      (if (search-forward-regexp "\\bchadedmw1\\b" nil t)
-          nil
-        ad-do-it))))
+  ;; (defadvice vc-git-registered (around skip-unc (file) activate)
+  ;;   (with-temp-buffer
+  ;;     (insert file)
+  ;;     (goto-char (point-min))
+  ;;     (if (search-forward-regexp "\\bchadedmw1\\b" nil t)
+  ;;         nil
+  ;;       ad-do-it)))
+  )
 
 (progn
   ;;; Chop provides a binary chop screen navigation thing.
@@ -144,8 +146,10 @@
   (interactive)
   (switch-to-buffer nil))
 
-(global-set-keys '(("M-`" . switch-to-last-buffer)))
+(global-set-keys '(("M-`" . switch-to-last-buffer)
+                   ("C-<tab>" . other-window)))
 
+(require 'dired+)
 (require 'rc-hyper-keymap)
 
 (progn
