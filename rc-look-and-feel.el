@@ -47,6 +47,12 @@
 (defun rc-custom-faces-langmartin ()
   "Minor modifications of the default theme by way of custom-set-faces."
   (interactive)
+  ;; this is cheating a bit, but these are nice to set with custom and
+  ;; they affect colors.
+  (custom-set-variables
+   '(vc-annotate-background nil)
+   '(vc-annotate-color-map (quote ((20 . "#AA0000") (40 . "#AA3300") (60 . "#AA6600") (80 . "#AA9900") (100 . "#AAAA00") (120 . "#99AA00") (140 . "#66AA00") (160 . "#33AA00") (180 . "#00AA00") (200 . "#00AA33") (220 . "#00AA66") (240 . "#00AA99") (260 . "#00AAAA") (280 . "#0099AA") (300 . "#0066AA") (320 . "#0033AA") (340 . "#0000AA")))))
+
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -68,7 +74,7 @@
 (defun rc-show-paren-expression ()
   (interactive)
   (setq show-paren-style 'expression)
-  (set-face-background 'show-paren-match "grey95")
+  (set-face-background 'show-paren-match "grey90")
   (set-face-background 'show-paren-mismatch "MediumPurple2"))
 
 (defun rc-show-paren-parens ()
@@ -88,9 +94,9 @@ something that needs a second thread."
   (edit-server-start)
   (server-mode 1)
   (savehist-mode 1)
-  (setq desktop-dirname "~/.emacs.d")
-  (desktop-save-mode 1)
-  (desktop-read)
+  ;; (setq desktop-dirname "~/.emacs.d")
+  ;; (desktop-save-mode 1)
+  ;; (desktop-read)
   (global-set-keys '(("C-x C-c" . nil))))
 
 (defun rc-emacs-master ()
