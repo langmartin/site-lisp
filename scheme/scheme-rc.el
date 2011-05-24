@@ -128,4 +128,11 @@
   :doc-spec `(("(r5rs)Index" nil "^[ \t]+-+ [^:]+:[ \t]*" "\\b")
               (,page))))
 
+(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+(add-hook 'scheme-mode-hook
+  (lambda ()
+    (make-local-variable 'eldoc-documentation-function)
+    (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+    (eldoc-mode)))
+
 (provide 'scheme-rc)
