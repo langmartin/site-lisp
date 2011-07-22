@@ -32,7 +32,7 @@
 ;; which accounts for some messiness.
 
 ;; There's another implementation like this
-;; <URL:http://www.pps.jussieu.fr/~jch/software/repos/vc-darcs>, but
+; <URL:http://www.pps.jussieu.fr/~jch/software/repos/vc-darcs>, but
 ;; it doesn't have a copyright assignment for inclusion in Emacs.  See
 ;; <URL:http://chneukirchen.org/repos/darcsum> for a more PCL-CVS-like
 ;; interface more appropriate for a patch-based system.
@@ -618,12 +618,12 @@ something like
 		  (push "--only-to-files" args))
     (apply #'vc-darcs-command "changes" buffer status file args)))
 
-(defun vc-darcs-print-log (file &optional buffer) ; get buffer arg in Emacs 22
+(defun vc-darcs-print-log (files &optional buffer shortlog start-rev limit)
   "Get darcs change log for FILE into specified BUFFER.
 See also `vc-darcs-print-log-summary'."
   (if vc-darcs-print-log-summary
-      (vc-darcs-get-changes buffer 'async file "--summary")
-    (vc-darcs-get-changes buffer 'async file "--no-summary"))
+      (vc-darcs-get-changes buffer 'async files "--summary")
+    (vc-darcs-get-changes buffer 'async files "--no-summary"))
   (unless (fboundp 'vc-dir)		; Emacs 23?
     (unless (fboundp 'vc-log-view-hook)	; proposed extension
       (add-hook 'log-view-mode-hook 'vc-darcs-log-view-hook))))
