@@ -443,7 +443,9 @@ repeated unfill entire region as one paragraph."
   ;; (rc-function-keys-mlm 'global-set-key)
   (fset 'yes-or-no-p 'y-or-n-p)
   (require 'uniquify nil t)
-  (setq uniquify-buffer-name-style 'forward))
+  ;; (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-buffer-name-style 'post-forward-angle-brackets
+        uniquify-strip-common-suffix t))
 
 (defun rc-d ()
   "Andy Montgomery: rc-schemers + hanging braces"
