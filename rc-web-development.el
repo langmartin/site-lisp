@@ -33,6 +33,15 @@
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode)
 
+(defun turn-on-js-paredit-mode ()
+  (interactive)
+  (paredit-mode t)
+  (local-set-keys
+   '(("M-{" . paredit-open-curly)
+     ("M-}" . paredit-close-curly-and-newline)
+     ("M-[" . paredit-open-square)
+     ("M-]" . paredit-close-square-and-newline))))
+
 (progn
   (require 'js2-mode)
   (set-variables
@@ -40,6 +49,7 @@
    '(js2-bounce-indent-flag t)
    '(js2-mirror-mode nil))
   (add-hook 'js2-mode-hook 'turn-off-tabs)
+  ;; (add-hook 'js2-mode-hook 'turn-on-js-paredit-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
