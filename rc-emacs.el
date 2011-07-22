@@ -221,6 +221,10 @@ line instead."
   (interactive)
   (change-coding-system 'dos))
 
+(defun 2unix ()
+  (interactive)
+  (change-coding-system 'unix))
+
 (progn
   (require 'uuid)
   (defalias 'uuid 'insert-random-uuid))
