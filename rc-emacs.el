@@ -1,4 +1,3 @@
-
 ;; -*- no-byte-compile: t -*-
 
 ;; http://osdir.com/ml/help-gnu-emacs-gnu/2010-06/msg00050.html
@@ -311,5 +310,9 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
 
 (add-hook 'sql-mode-hook 'turn-off-indent-tabs-mode)
 (add-hook 'sql-mode-hook 'turn-off-auto-fill)
+
+(progn
+  (require 'ace-jump-mode)
+  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
 (provide 'rc-emacs)

@@ -22,3 +22,6 @@
 [submodule "zencoding"]
 	path = zencoding
 	url = git://github.com/rooney/zencoding.git
+[submodule "ace-jump-mode"]
+	path = ace-jump-mode
+	url = git://github.com/winterTTr/ace-jump-mode.git
