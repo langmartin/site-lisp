@@ -64,7 +64,8 @@
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
           smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
-          smtpmail-sendto-domain "gmail.com")
+          smtpmail-sendto-domain nil    ;"gmail.com"
+          )
     (setq send-mail-function 'smtpmail-send-it
           message-send-mail-function 'smtpmail-send-it)
     ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
@@ -78,7 +79,14 @@
     ;; Speed tricks: http://www.gnu.org/software/emacs/manual/html_node/gnus/_005b9_002e2_005d.html
     (gnus-compile)
     (setq gc-cons-threshold 3500000)
-    (setq gnus-use-correct-string-widths nil)))
+    (setq gnus-use-correct-string-widths nil))
+  ;; Add a demon command to check for new mail
+  (progn
+    (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)
+    (gnus-demon-init)
+    (require 'gnus-notify)
+    (gnus-mst-notify-group "INBOX"))
+  )
 
 (defun message-cite-pgp-sign ()
   "Get the PGP signature block stuck at the top of the message where it will pick up correctly on send."
