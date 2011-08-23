@@ -7,8 +7,7 @@
 
 (defvar smtpmail-account-authinfo
   `(("@gmail.com" . "~/.emacs.d/authinfo-gmail")
-    ("@work.com" . "~/.emacs.d/authinfo-work")
-    ))
+    ("@cx.com"    . "~/.emacs.d/authinfo-cx")))
 
 (defun message-extract-from-address ()
   (let ((from (save-excursion
@@ -45,11 +44,10 @@
                  (nnimap-stream ssl)
                  (nnir-search-engine imap)))
   (setq gnus-secondary-select-methods
-        ;;   (nnimap "work"
-        ;;           (nnimap-address "imap.work.com")
-        ;;           (nnimap-server-port 993)
-        ;;           (nnimap-stream ssl)))
-        nil)
+        '((nnimap "cx"
+                  (nnimap-address "gmail-imap.l.google.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl)))))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
@@ -72,7 +70,7 @@
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
-    ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
   (progn
@@ -85,7 +83,9 @@
     (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)
     (gnus-demon-init)
     (require 'gnus-notify)
-    (gnus-mst-notify-group "INBOX"))
+    ;; (gnus-mst-notify-group "INBOX")
+    ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
+    )
   )
 
 (defun message-cite-pgp-sign ()
