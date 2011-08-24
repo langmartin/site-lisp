@@ -47,7 +47,7 @@
         '((nnimap "cx"
                   (nnimap-address "gmail-imap.l.google.com")
                   (nnimap-server-port 993)
-                  (nnimap-stream ssl)))))
+                  (nnimap-stream ssl))))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
