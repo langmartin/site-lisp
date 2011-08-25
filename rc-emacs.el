@@ -315,4 +315,6 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
   (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
+(require 'rc-python)
+
 (provide 'rc-emacs)
