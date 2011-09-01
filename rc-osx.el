@@ -2,9 +2,22 @@
 
 (fringe-mode '(1 . 1))
 
+(setenv "EMACS" "/Applications/Emacs.app/Contents/MacOS/Emacs")
+(setenv "EDITOR" "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+(setenv "GIT_EDITOR" "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
 (setenv "GIT_PAGER" "")
+(setenv "PAGER" "cat")
 
-(set-variables
+(defun osx-defaults-write ()
+  (interactive)
+  (shell-command "defaults write com.apple.Dock pinning end")
+  (shell-command "killall Dock")
+  (shell-command "defaults write com.apple.iTunes hide-ping-dropdown 1")
+  (shell-command "defaults write com.apple.iTunes show-store-link-arrows 1")
+  (shell-command "sudo pmset hibernatemode 0")
+  )
+
+(custom-set-variables
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
  '(tramp-initial-commands (quote ("unset HISTFILE" "unset correct" "unset autocorrect")))
