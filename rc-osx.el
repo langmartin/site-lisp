@@ -26,4 +26,5 @@
  '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "/usr/local/share/man" "/opt/local/man" "/coptix/local/man")))
  '(woman-use-own-frame nil))
 
+(require 'mailto-compose-mail)
 (provide 'rc-osx)
