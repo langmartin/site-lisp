@@ -12,6 +12,8 @@
    ("C-c C-x C-j" . org-clock-goto))
  'erc-mode-hook)
 
+(define-key org-mode-map "\C-x\C-s" 'cleanup-untabify-save)
+
 (progn
   (add-hook 'org-mode-hook 'comment-char-org)
   (add-hook 'org-mode-hook 'turn-off-tabs)

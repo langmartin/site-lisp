@@ -94,6 +94,7 @@
                              ,buffer-name))
        (call-interactively ,command))))
 
+(require 'rc-python)                    ; cleanup-untabify-save
 (require 'rc-erc)
 (require 'git-commands)
 (require 'hide-region)
@@ -315,7 +316,6 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
   (require 'ace-jump-mode)
   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
-(require 'rc-python)
 (require 'rc-monkey-patches)
 
 (provide 'rc-emacs)

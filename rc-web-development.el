@@ -21,6 +21,8 @@
              '(("C-c C-p" . sgml-skip-tag-backward)
                ("C-c C-n" . sgml-skip-tag-forward)))))
 
+(define-key sgml-mode-map "\C-x\C-s" 'cleanup-untabify-save)
+
 (defun enable-truncate-long-lines ()
   (toggle-truncate-lines 1))
 
@@ -53,6 +55,8 @@
   ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode))))
+
+(define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save)
 
 ;; (progn
 ;;   (require 'espresso)
