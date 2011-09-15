@@ -5,9 +5,7 @@
  (setq gnus-message-archive-group nil)
  )
 
-(defvar smtpmail-account-authinfo
-  `(("@gmail.com" . "~/.emacs.d/authinfo-gmail")
-    ("@cx.com"    . "~/.emacs.d/authinfo-cx")))
+(defvar smtpmail-account-authinfo '())
 
 (defun message-extract-from-address ()
   (let ((from (save-excursion
@@ -28,6 +26,8 @@
                from
                auth)
       (setq smtpmail-auth-credentials auth))))
+
+(define-key message-mode-map (kbd "C-c C-g") 'smtpmail-through-matching-account)
 
 (defun rc-gnus ()
   (require 'gnus)
@@ -79,13 +79,13 @@
     (setq gc-cons-threshold 3500000)
     (setq gnus-use-correct-string-widths nil))
   ;; Add a demon command to check for new mail
-  (progn
-    (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)
-    (gnus-demon-init)
-    (require 'gnus-notify)
-    ;; (gnus-mst-notify-group "INBOX")
-    ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
-    )
+  ;; (progn
+  ;;   (gnus-demon-init)
+  ;;   (gnus-demon-add-handler 'gnus-group-get-new-news 10 nil)
+  ;;   (require 'gnus-notify)
+  ;;   ;; (gnus-mst-notify-group "INBOX")
+  ;;   ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
+  ;;   )
   )
 
 (defun message-cite-pgp-sign ()
@@ -126,6 +126,10 @@
            ))))
 
 (require 'bbdb-autoloads nil t)
+(require 'bbdb)
+(custom-set-variables
+ '(bbdb-complete-name-allow-cycling t)
+ '(bbdb-file "~/.emacs.d/bbdb"))
 
 (defun gnus-group-restart-dont-ask ()
   (interactive)
