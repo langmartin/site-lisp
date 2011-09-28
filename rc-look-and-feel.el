@@ -74,7 +74,7 @@
 (defun rc-show-paren-expression ()
   (interactive)
   (setq show-paren-style 'expression)
-  (set-face-background 'show-paren-match "grey90")
+  (set-face-background 'show-paren-match "grey85")
   (set-face-background 'show-paren-mismatch "MediumPurple2"))
 
 (defun rc-show-paren-parens ()
