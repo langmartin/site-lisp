@@ -26,5 +26,25 @@
  '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "/usr/local/share/man" "/opt/local/man" "/coptix/local/man")))
  '(woman-use-own-frame nil))
 
-(require 'mailto-compose-mail)
+(progn
+  (require 'advice)
+  (require 'mailto-compose-mail)
+  
+  (defvar ns-input-file-alist nil)
+
+  (defadvice ns-find-file (around ns-find-file-url activate)
+    (message "ns-find-file-url")
+    (message ns-input-file)
+    (let ((handler
+           (catch 'handler
+             (mapc (lambda (pair)
+                     (if (string-match (car pair) ns-input-file)
+                         (throw 'handler (cdr pair))))))))
+      (if handler
+          (funcall handler (pop ns-input-file))
+        ad-do-it)))
+
+  (setq ns-input-file-alist
+        '(("^mailto:" . mailto-compose-mail))))
+
 (provide 'rc-osx)
