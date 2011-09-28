@@ -104,6 +104,7 @@
 (require 'compile-site-lisp)
 (require 'gist)
 (require 'rc-web-development)
+(require 'rc-xcode)
 
 (progn
   ;;; VC setup
