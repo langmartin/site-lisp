@@ -5,13 +5,19 @@
  (setq gnus-message-archive-group nil)
  )
 
+(require 'message)
+(require 'advice)
+
 (defvar smtpmail-account-authinfo '())
 
+(defun message-extract-header (header)
+  (save-excursion
+    (save-restriction
+      (message-narrow-to-headers)
+      (message-fetch-field header))))
+
 (defun message-extract-from-address ()
-  (let ((from (save-excursion
-               (save-restriction
-                 (message-narrow-to-headers)
-                 (message-fetch-field "from")))))
+  (let ((from (message-extract-header "from")))
     (string-match "<\\(.*?\\)>" from)
     (match-string 1 from)))
 
@@ -28,6 +34,19 @@
       (setq smtpmail-auth-credentials auth))))
 
 (define-key message-mode-map (kbd "C-c C-g") 'smtpmail-through-matching-account)
+
+(defadvice message-send (around message-send-check activate)
+  (smtpmail-through-matching-account)
+  (let ((from (message-extract-from-address))
+        (domain (concat "@" email-work-domain)))
+    (save-excursion
+      (save-restriction
+        (message-narrow-to-headers)
+        (point-min)
+        (if (search-forward domain nil t)
+            (if (not (string-match domain from))
+                (error "You sent this from the wrong account.")))
+        ad-do-it))))
 
 (defun rc-gnus ()
   (require 'gnus)
@@ -128,6 +147,7 @@
 (require 'bbdb-autoloads nil t)
 (require 'bbdb)
 (custom-set-variables
+ '(bbdb-completion-type (quote name))
  '(bbdb-complete-name-allow-cycling t)
  '(bbdb-file "~/.emacs.d/bbdb"))
 
