@@ -1,4 +1,5 @@
 (require 'visual-basic-mode)
+(require 'sgml-mode)
 (setq visual-basic-mode-indent 4)
 (add-hook 'visual-basic-mode-hook
           (lambda () (setq indent-tabs-mode nil)))
