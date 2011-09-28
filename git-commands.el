@@ -44,12 +44,12 @@
   (define-shell-command git-checkout "git checkout" "master"))
 
 (defun git-grep (command)
-  "Run git-grep like grep"
+  "Run git grep like grep"
   (interactive
    (list
     (read-from-minibuffer
-     "Run git-grep (like this): "
-     "git-grep -n -H -I -e ")))
+     "Run git grep (like this): "
+     "git grep -n -H -I -e ")))
   (grep (concat command " .")))
 
 (defun lines-to-list ()
@@ -69,8 +69,8 @@
   (interactive
    (list
     (read-from-minibuffer
-     "Run git-grep for dired (like this): "
-     "git-grep -l -e ")))
+     "Run git grep for dired (like this): "
+     "git grep -l -e ")))
   (with-temp-buffer
     (shell-command (concat command " .") (current-buffer))
     (dired (cons "*git-grep-dired*"
