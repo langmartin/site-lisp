@@ -147,8 +147,8 @@
 (require 'bbdb-autoloads nil t)
 (require 'bbdb)
 (custom-set-variables
- '(bbdb-completion-type (quote name))
  '(bbdb-complete-name-allow-cycling t)
+ '(bbdb-dwim-net-address-allow-redundancy t)
  '(bbdb-file "~/.emacs.d/bbdb"))
 
 (defun gnus-group-restart-dont-ask ()
