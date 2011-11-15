@@ -18,6 +18,11 @@
            (or (and commit (concat commit "^"))
                (magit-read-rev "Interactively rebase to" (magit-guess-branch))))
         (if old-editor
-            (setenv "GIT_EDITOR" old-editor))))))
+            (setenv "GIT_EDITOR" old-editor)))))
+
+  (defun magit-push ()
+    (interactive)
+    (message "This monkey-patched version of push only pushes what you have configured in .git/config for the default push. Do the rest on the command line.")
+    (magit-run-git-async "push" "-v")))
 
 (provide 'rc-monkey-patches)
