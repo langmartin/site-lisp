@@ -50,6 +50,7 @@
   ;; this is cheating a bit, but these are nice to set with custom and
   ;; they affect colors.
   (custom-set-variables
+   '(show-paren-style (quote expression))
    '(vc-annotate-background nil)
    '(vc-annotate-color-map (quote ((20 . "#AA0000") (40 . "#AA3300") (60 . "#AA6600") (80 . "#AA9900") (100 . "#AAAA00") (120 . "#99AA00") (140 . "#66AA00") (160 . "#33AA00") (180 . "#00AA00") (200 . "#00AA33") (220 . "#00AA66") (240 . "#00AA99") (260 . "#00AAAA") (280 . "#0099AA") (300 . "#0066AA") (320 . "#0033AA") (340 . "#0000AA")))))
 
@@ -67,9 +68,11 @@
    '(org-mode-line-clock-overrun ((t (:inherit modeline :background "grey" :foreground "red3"))) t)
    '(org-todo ((((class color) (min-colors 16) (background light)) (:foreground "Red4" :weight bold))))
    '(secondary-selection ((((class color) (min-colors 88) (background light)) (:background "LemonChiffon"))))
+   '(show-paren-match ((t (:background "grey85"))))
+   '(show-paren-mismatch ((t (:background "MediumPurple2" :foreground "white"))))
    '(whitespace-line ((t (:background "gray90"))))
    '(whitespace-space-after-tab ((t (:background "lightyellow" :foreground "firebrick")))))
-  (rc-show-paren-expression))
+  )
 
 (defun rc-show-paren-expression ()
   (interactive)
