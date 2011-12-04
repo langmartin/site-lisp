@@ -16,7 +16,7 @@
   (shell-command "defaults write com.apple.iTunes hide-ping-dropdown 1")
   (shell-command "defaults write com.apple.iTunes show-store-link-arrows 1")
   (shell-command "sudo pmset hibernatemode 0")
-  (shell-command "defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false")
+  ;; (shell-command "defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false")
   )
 
 (custom-set-variables
