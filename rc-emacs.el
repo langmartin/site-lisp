@@ -197,19 +197,6 @@ line instead."
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
 
-(defun rc-package-install-packages ()
-  "Install all my ELPA packages, for posterity"
-  (interactive)
-  (mapc (lambda (p)
-          (package-install p))
-        '(highlight-symbol
-          htmlize
-          guess-style
-          magit
-          pick-backup
-          w3
-          wtf)))
-
 ;; (progn
 ;;   (require 'edit-server)
 ;;   (edit-server-start))
