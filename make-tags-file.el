@@ -7,7 +7,10 @@
       '("\\.js$"
         "\\.asp$"
         "\\.el$"
-        "\\.java$"))
+        "\\.java$"
+        "\\.scm$"
+        "\\.py$"        
+        ))
 
 (defvar make-tags-file-anti-patterns)
 (setq make-tags-file-anti-patterns
