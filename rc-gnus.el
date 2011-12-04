@@ -56,17 +56,17 @@
   (setq gnus-nntp-server nil)
   (setq gnus-always-read-dribble-file t)
   (require 'nnir)
-  (setq gnus-select-method
-        '(nnimap "gmail"
-                 (nnimap-address "imap.gmail.com")
-                 (nnimap-server-port 993)
-                 (nnimap-stream ssl)
-                 (nnir-search-engine imap)))
-  (setq gnus-secondary-select-methods
-        '((nnimap "cx"
-                  (nnimap-address "gmail-imap.l.google.com")
-                  (nnimap-server-port 993)
-                  (nnimap-stream ssl))))
+  ;; (setq gnus-select-method
+  ;;       '(nnimap "gmail"
+  ;;                (nnimap-address "imap.gmail.com")
+  ;;                (nnimap-server-port 993)
+  ;;                (nnimap-stream ssl)
+  ;;                (nnir-search-engine imap)))
+  ;; (setq gnus-secondary-select-methods
+  ;;       '((nnimap "quickcue"
+  ;;                 (nnimap-address "imap.gmail.com")
+  ;;                 (nnimap-server-port 993)
+  ;;                 (nnimap-stream ssl))))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
   (setq gnus-posting-styles
