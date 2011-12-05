@@ -19,4 +19,4 @@
           clojure-mode
           )))
 
-
+(provide 'rc-package)

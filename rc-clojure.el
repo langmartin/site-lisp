@@ -10,3 +10,5 @@
      ("M-]" . paredit-close-square-and-newline))))
 
 (add-hook 'clojure-mode-hook 'turn-on-clojure-paredit-mode)
+
+(provide 'rc-clojure)
