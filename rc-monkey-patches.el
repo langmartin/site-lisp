@@ -1,4 +1,5 @@
-(progn 
+(ignore
+ ;; These fixes were required for magit 0.8.
   (require 'magit)
   (defvar magit-editor "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
   (defun magit-interactive-rebase ()
