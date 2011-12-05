@@ -7,7 +7,12 @@
   (set-face-foreground 'erc-notice-face "grey70")
   (set-face-foreground 'erc-timestamp-face "green4")
   (set-face-foreground 'erc-pal-face "green4")
-  (set-face-attribute 'erc-pal-face nil :weight 'bold))
+  (set-face-attribute  'erc-pal-face nil :weight 'bold)
+  (set-face-foreground 'erc-prompt-face nil)
+  (set-face-background 'erc-prompt-face nil)
+  (set-face-background 'erc-my-nick-face nil)
+  (set-face-background 'erc-input-face nil)
+  )
 
 (defun irc-bitlbee ()
   (interactive)
