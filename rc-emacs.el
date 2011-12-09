@@ -96,6 +96,7 @@
 
 (require 'rc-python)                    ; cleanup-untabify-save
 (require 'rc-erc)
+(require 'rc-jabber)
 (require 'git-commands)
 (require 'hide-region)
 (column-number-mode t)

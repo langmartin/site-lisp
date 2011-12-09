@@ -16,26 +16,6 @@
  '(jabber-chat-prompt-local ((t (:foreground "blue4"))))
  '(jabber-chat-prompt-system ((t (:foreground "green4" :weight bold)))))
 
-(defun jabber ()
-  "The acccount list logic is all built in to the interactive block of jabber-connect. This function duplicates that functionality, reading the jabber-account-default entry of jabber-account-list and passing the arguments to jabber-connect."
-  (interactive)
-  (save-default-directory
-      "~"
-    (set-buffer (current-buffer))
-    (and-let* ((acct (assoc jabber-account-default jabber-account-list))
-               (jid (car acct))
-               (acct (cdr acct)))
-      (let ((username (jabber-jid-username jid))
-            (server (jabber-jid-server jid))
-            (resource (jabber-jid-resource jid))
-            (network-server (cdr (assq :network-server acct)))
-            (port (cdr (assq :port acct)))
-            (connection-type (cdr (assq :connection-type acct)))
-            (password (cdr (assq :password acct))))
-        (jabber-connect username server resource
-                        nil
-                        password network-server port connection-type)))))
-
 ;;;; Switch to active jabber buffers then to active erc buffers on C-c
 ;;;; C-space.
 (defun currently-chattingp ()
@@ -88,5 +68,18 @@
 
   (setq erc-track-enable-keybindings nil)
   (switch-to-active-chat-minor-mode 1))
+
+(defun rc-jabber-mush-in-passwords ()
+  (interactive)
+  (if (boundp 'jabber-account-passwords)
+      (setq jabber-account-list
+            (mapcar (lambda (acct)
+                      (let ((pass (member-alist (car acct) jabber-account-passwords)))
+                        (if (not (null pass))
+                            (cons (car acct)
+                                  (cons (cons :password pass)
+                                        (cdr acct)))
+                          acct)))
+                    jabber-account-list))))
 
 (provide 'rc-jabber)

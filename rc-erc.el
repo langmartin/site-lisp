@@ -10,8 +10,9 @@
   (set-face-attribute  'erc-pal-face nil :weight 'bold)
   (set-face-foreground 'erc-prompt-face nil)
   (set-face-background 'erc-prompt-face nil)
-  (set-face-background 'erc-my-nick-face nil)
-  (set-face-background 'erc-input-face nil)
+  ;; (set-face-foreground 'erc-my-nick-face nil)
+  (set-face-foreground 'erc-my-nick-face "brown")
+  (set-face-foreground 'erc-input-face nil)
   )
 
 (defun irc-bitlbee ()
