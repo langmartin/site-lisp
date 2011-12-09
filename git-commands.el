@@ -114,7 +114,9 @@
          ("\C-xgm" . git-merge)
          ("\C-xgp" . git-pull)
          ("\C-xgP" . git-push)
-         ("\C-xgs" . git-status))))
+         ("\C-xgS" . git-status)
+         ("\C-xgs" . magit-status)
+         )))
 
 (define-minor-mode git-commands-mode
   "Some git commands bound to C-x g * for operating in the current directory."
