@@ -151,7 +151,7 @@
 (global-set-keys '(("M-`" . switch-to-last-buffer)
                    ("C-<tab>" . other-window)))
 
-(require 'dired+)
+(require 'rc-dired)
 (require 'rc-hyper-keymap)
 
 (progn
@@ -193,7 +193,6 @@ line instead."
  '(column-number-mode t)
  '(gud-gdb-command-name "gdb --annotate=1")
 
- '(dired-listing-switches "-alh")
  '(eshell-ls-use-colors nil)
  '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
  '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
