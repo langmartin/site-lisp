@@ -1,13 +1,4 @@
-(defun turn-on-js-paredit-mode ()
-  (interactive)
-  (paredit-mode t)
-  (local-set-keys
-   '(("M-{" . paredit-open-curly)
-     ("M-}" . paredit-close-curly-and-newline)
-     ("M-[" . paredit-open-square)
-     ("M-]" . paredit-close-square-and-newline))))
-
-(ignore
+(defun rc-js2-mode ()
   (require 'js2-mode)
   (set-variables
    '(js2-basic-offset 2)
@@ -22,26 +13,34 @@
   (define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save)
   )
 
-;; (progn
-;;   (require 'espresso)
-;;   (set-variables
-;;    '(espresso-indent-level 2))
-;;   (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
-;;   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
-;;   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
+(defun rc-espresso-mode ()
+  (require 'espresso)
+  (set-variables
+   '(espresso-indent-level 2))
+  (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
+  (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
+  (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode))))
 
 ;; (add-hook 'css-mode-hook 'turn-on-rainbow-mode)
 
-(progn
+(defun rc-jshint-mode ()
+  (interactive)
+  (require 'js)
   (defun turn-on-flymake-mode () (interactive) (flymake-mode 1))
   (add-hook 'js-mode-hook 'turn-on-flymake-mode)
+  (add-hook 'js-mode-hook 'set-tab-width-4)
 
   (add-to-load-path "/usr/local/lib/node_modules/jshint-mode")
   (require 'flymake-jshint)
   (add-to-auto-mode-alist '(("\\.js\\'" . js-mode)))
+
+  (define-key js-mode-map (kbd "H-l")
+    (lambda-insert-with-point "function () {" "}"))
   )
 
-(ignore
+(rc-jshint-mode)
+
+(defun rc-mozilla-repl ()
   (require 'moz)
   (defun turn-on-moz () (interactive) (moz-minor-mode 1))
 
