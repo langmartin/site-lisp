@@ -155,6 +155,14 @@ the preceding, RET, <home>, and M-<f4>."
   (let ((global-set-keys-cmd 'local-set-key))
     (global-set-keys alist)))
 
+(defun member-alist (elt alist)
+  (catch 'member-alist
+    (mapc (lambda (pair)
+            (if (equal elt (car pair))
+                (throw 'member-alist (cdr pair))))
+          alist)
+    nil))
+
 (defun add-to-alist/equal (list-sym element equal &optional append)
   (add-to-list list-sym element append
                (lambda (a b)
@@ -180,18 +188,6 @@ the preceding, RET, <home>, and M-<f4>."
                         new
                         'equal))
         alist))
-
-(defun add-to-path (lst &optional prepend)
-  "Add a list of paths to the ends of PATH and exec-path"
-  (let ((bound (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
-                     (t ":"))))
-    (mapc (lambda (path)
-            (add-to-list 'exec-path path (if prepend nil 'append))
-            (setenv "PATH"
-                    (if prepend
-                        (concat (expand-file-name path) bound (getenv "PATH"))
-                      (concat (getenv "PATH") bound (expand-file-name path)))))
-          lst)))
 
 (defun set-variables (&rest lst)
   "Set a list of variables using the same syntax as custom-set-variables"

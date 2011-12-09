@@ -47,3 +47,15 @@ subdirs.el and leim-list.el, if they exist."
 (defun add-to-texinputs (&rest paths)
   "Add a list of paths to the TEXINPUTS environment variable."
   (add-to-environment-path* "TEXINPUTS" ";" paths))
+
+(defun add-to-path (lst &optional prepend)
+  "Add a list of paths to the ends of PATH and exec-path"
+  (let ((bound (cond ((equal system-configuration "i386-mingw-nt5.1.2600") ";")
+                     (t ":"))))
+    (mapc (lambda (path)
+            (add-to-list 'exec-path path (if prepend nil 'append))
+            (setenv "PATH"
+                    (if prepend
+                        (concat (expand-file-name path) bound (getenv "PATH"))
+                      (concat (getenv "PATH") bound (expand-file-name path)))))
+          lst)))
