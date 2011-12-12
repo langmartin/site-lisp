@@ -25,13 +25,6 @@
 (rc-windmove-keybindings)
 
 (progn
-  (defmacro lambda-insert-with-point (before after)
-    `(lambda ()
-       (interactive)
-       (insert ,before)
-       (insert ,after)
-       (backward-char (length ,after))))
-
   (define-key (current-global-map) (kbd "H-l")
     (lambda-insert-with-point "(lambda ()" ")"))
 

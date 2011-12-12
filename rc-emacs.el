@@ -301,9 +301,9 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
 (add-hook 'sql-mode-hook 'turn-off-indent-tabs-mode)
 (add-hook 'sql-mode-hook 'turn-off-auto-fill)
 
-(progn
-  (require 'ace-jump-mode)
-  (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
+;; (progn
+;;   (require 'ace-jump-mode)
+;;   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
 (require 'rc-monkey-patches)
 (require 'rc-clojure)

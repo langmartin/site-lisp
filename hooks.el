@@ -38,4 +38,11 @@
      ("M-[" . paredit-wrap-square)
      ("M-]" . paredit-close-square-and-newline))))
 
+(defmacro lambda-insert-with-point (before after)
+  `(lambda ()
+     (interactive)
+     (insert ,before)
+     (insert ,after)
+     (backward-char (length ,after))))
+
 (provide 'hooks)
