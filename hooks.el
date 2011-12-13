@@ -19,6 +19,16 @@
 (defun comment-char-sh () (set-variable 'comment-start "#" 'make-local))
 (defun comment-char-org () (set-variable 'comment-start "#+" 'make-local))
 
+(defun visual-line-not-auto-fill ()
+  (interactive)
+  (auto-fill-mode -1)
+  (visual-line-mode 1))
+
+(defun auto-fill-not-visual-line ()
+  (interactive)
+  (auto-fill-mode 1)
+  (visual-line-mode -1))
+
 (defun turn-on-c-subword-mode ()
   (interactive)
   (if (boundp 'c-subword-mode)

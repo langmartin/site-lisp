@@ -8,6 +8,9 @@
 (require 'message)
 (require 'advice)
 
+(defun rc-smtpmail-through-matching-accounts ()
+  "Doesn't work in emacs 24."
+
 (defvar smtpmail-account-authinfo '())
 
 (defun message-extract-header (header)
@@ -33,7 +36,7 @@
                auth)
       (setq smtpmail-auth-credentials auth))))
 
-(define-key message-mode-map (kbd "C-c C-g") 'smtpmail-through-matching-account)
+;; (define-key message-mode-map (kbd "C-c C-g") 'smtpmail-through-matching-account)
 
 (defadvice message-send (around message-send-check activate)
   (smtpmail-through-matching-account)
@@ -47,6 +50,22 @@
             (if (not (string-match domain from))
                 (error "You sent this from the wrong account.")))
         ad-do-it))))
+
+  (progn
+    (require 'starttls)
+    (require 'smtpmail)
+    (setq user-mail-address email-private)
+    (setq smtpmail-smtp-default-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-service 587
+          smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
+          smtpmail-sendto-domain nil    ;"gmail.com"
+          )
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it)
+    ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)    
+    )
+)
 
 (defun rc-gnus ()
   (require 'gnus)
@@ -74,22 +93,10 @@
           ;; ("work:" (address ,email-work))
           ))
   (progn
-    (require 'starttls)
-    (require 'smtpmail)
-    (setq user-mail-address email-private)
-    (setq smtpmail-smtp-default-server "smtp.gmail.com"
-          smtpmail-smtp-server "smtp.gmail.com"
-          smtpmail-smtp-service 587
-          smtpmail-starttls-credentials '(("smtp.gmail.com" 587 "" ""))
-          smtpmail-sendto-domain nil    ;"gmail.com"
-          )
-    (setq send-mail-function 'smtpmail-send-it
-          message-send-mail-function 'smtpmail-send-it)
-    ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
     ;; (add-hook 'message-mode-hook 'visual-line-not-auto-fill)
-    (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
+    ;; (add-hook 'message-setup-hook 'smtpmail-through-matching-account)
     (set-default 'mail-user-agent 'gnus-user-agent)
     (setq gnus-novice-user nil))
   (progn
@@ -117,16 +124,6 @@
 
 (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 (setq message-cite-function 'message-cite-pgp-sign)
-
-(defun visual-line-not-auto-fill ()
-  (interactive)
-  (auto-fill-mode -1)
-  (visual-line-mode 1))
-
-(defun auto-fill-not-visual-line ()
-  (interactive)
-  (auto-fill-mode 1)
-  (visual-line-mode -1))
 
 (rc-gnus)
 
@@ -162,5 +159,15 @@
                 (alist-to-keymap-via-kbd
                  '(("m" . compose-mail)
                    ("r" . gnus-group-restart-dont-ask))))
+
+(defun rc-smtp-through-msmtp ()
+  (interactive)
+  (custom-set-variables
+   '(message-send-mail-function 'message-send-mail-with-sendmail)
+   '(sendmail-program (executable-find "msmtp"))
+   '(message-sendmail-f-is-evil t)
+   '(message-sendmail-extra-arguments '("--read-envelope-from"))))
+
+(rc-smtp-through-msmtp)
 
 (provide 'rc-gnus)
