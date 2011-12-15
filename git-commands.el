@@ -27,7 +27,7 @@
        (if ,sync
            (shell-command command bufname)
          (shell-command (concat command "&") bufname))
-       (with-buffer (get-buffer bufname)
+       (with-current-buffer (get-buffer bufname)
          (progn
            (cd dir)
            (if ,hook (funcall ,hook)))))))
@@ -93,7 +93,7 @@
          (bufname (concat "*" cmd "*"))
          (dir default-directory))
     (shell-command cmd bufname)
-    (with-buffer (get-buffer bufname)
+    (with-current-buffer (get-buffer bufname)
       (progn
         (cd dir)
         (diff-mode)))))
