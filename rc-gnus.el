@@ -54,7 +54,6 @@
   (progn
     (require 'starttls)
     (require 'smtpmail)
-    (setq user-mail-address email-private)
     (setq smtpmail-smtp-default-server "smtp.gmail.com"
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
@@ -63,7 +62,7 @@
           )
     (setq send-mail-function 'smtpmail-send-it
           message-send-mail-function 'smtpmail-send-it)
-    ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)    
+    ;; (setq smtpmail-debug-info nil smtpmail-debug-verb nil)
     )
 )
 
@@ -75,23 +74,18 @@
   (setq gnus-nntp-server nil)
   (setq gnus-always-read-dribble-file t)
   (require 'nnir)
-  ;; (setq gnus-select-method
-  ;;       '(nnimap "gmail"
-  ;;                (nnimap-address "imap.gmail.com")
-  ;;                (nnimap-server-port 993)
-  ;;                (nnimap-stream ssl)
-  ;;                (nnir-search-engine imap)))
-  ;; (setq gnus-secondary-select-methods
-  ;;       '((nnimap "quickcue"
-  ;;                 (nnimap-address "imap.gmail.com")
-  ;;                 (nnimap-server-port 993)
-  ;;                 (nnimap-stream ssl))))
+  (setq gnus-select-method
+        '(nnimap "gmail"
+                 (nnimap-address "imap.gmail.com")
+                 (nnimap-server-port 993)
+                 (nnimap-stream ssl)
+                 (nnir-search-engine imap)))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
-  (setq gnus-posting-styles
-        `(("." (address ,email-private))
-          ;; ("work:" (address ,email-work))
-          ))
+  ;; (setq gnus-posting-styles
+  ;;       `(("." (address ,user-mail-address))
+  ;;         ;; ("work:" (address ,email-work))
+  ;;         ))
   (progn
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
@@ -104,14 +98,6 @@
     (gnus-compile)
     (setq gc-cons-threshold 3500000)
     (setq gnus-use-correct-string-widths nil))
-  ;; Add a demon command to check for new mail
-  ;; (progn
-  ;;   (gnus-demon-init)
-  ;;   (gnus-demon-add-handler 'gnus-group-get-new-news 10 nil)
-  ;;   (require 'gnus-notify)
-  ;;   ;; (gnus-mst-notify-group "INBOX")
-  ;;   ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
-  ;;   )
   )
 
 (defun message-cite-pgp-sign ()
@@ -148,12 +134,18 @@
  '(bbdb-dwim-net-address-allow-redundancy t)
  '(bbdb-file "~/.emacs.d/bbdb"))
 
+(require 'gnus-notify)
+;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
+
 (defun gnus-group-restart-dont-ask ()
   (interactive)
   (save-default-directory
       "~"
     (flet ((gnus-yes-or-no-p (prompt) t))
-      (gnus-group-restart))))
+      (gnus-group-restart)
+      ;; Add a demon command to check for new mail
+      ;; (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)
+      )))
 
 (global-set-key (kbd "C-x m")
                 (alist-to-keymap-via-kbd
