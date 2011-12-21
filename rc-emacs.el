@@ -45,9 +45,6 @@
 
 (defvar programming-mode-hooks
   '(c-mode-common-hook
-    lisp-mode-hook
-    emacs-lisp-mode-hook
-    scheme-mode-hook
     perl-mode-hook
     html-mode-hook
     css-mode-hook
@@ -58,9 +55,6 @@
 ;;            (lambda ()
 ;;              ;; (highlight-parentheses-mode 1)
 ;;              (highlight-symbol-mode 1)))
-
-(add-hooks '(emacs-lisp-mode-hook python-mode-hook)
-           (lambda () (eldoc-mode 1)))
 
 (require 'script-collection)
 (require 'smooth-scrolling)
@@ -107,6 +101,7 @@
 (require 'rc-web-development)
 (require 'rc-javascript)
 (require 'rc-xcode)
+(require 'rc-lisp)
 
 (progn
   ;;; VC setup
@@ -306,6 +301,5 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
 ;;   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
 (require 'rc-monkey-patches)
-(require 'rc-clojure)
 
 (provide 'rc-emacs)

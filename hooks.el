@@ -13,7 +13,11 @@
 (defun turn-on-rainbow-mode () (interactive) (rainbow-mode 1))
 (defun turn-off-rainbow-mode () (interactive) (rainbow-mode -1))
 
-(defun turn-down-font-lock () (interactive) (set-variable 'font-lock-maximum-decoration nil 'local))
+(defun turn-down-font-lock ()
+  (interactive)
+  (set-variable 'font-lock-maximum-decoration nil 'local))
+
+(defun turn-on-eldoc-mode () (interactive) (eldoc-mode 1))
 
 (defun comment-char-js () (set-variable 'comment-start "//" 'make-local))
 (defun comment-char-sh () (set-variable 'comment-start "#" 'make-local))
@@ -35,18 +39,8 @@
       (c-subword-mode 1)
     (subword-mode 1)))
 
-(defun turn-on-paredit-mode ()
-  (interactive)
-  (paredit-mode 1))
-
-(defun turn-on-paredit-mode-with-extra-braces ()
-  (interactive)
-  (turn-on-paredit-mode)
-  (local-set-keys
-   '(("M-{" . paredit-wrap-curly)
-     ("M-}" . paredit-close-curly-and-newline)
-     ("M-[" . paredit-wrap-square)
-     ("M-]" . paredit-close-square-and-newline))))
+(defun rc-bind-cleanup-untabify-save (keymap)
+  (define-key keymap (kbd "C-x C-s") 'cleanup-untabify-save))
 
 (defmacro lambda-insert-with-point (before after)
   `(lambda ()

@@ -67,7 +67,7 @@ Set it intead of tab-width.")
 
   (defun turn-off-indent-tabs-mode ()
     (setq indent-tabs-mode nil))
-  
+
   (add-hooks '(lisp-mode-hook
                emacs-lisp-mode-hook
                scheme-mode-hook
@@ -84,7 +84,7 @@ Set it intead of tab-width.")
     (global-set-key "\M-h" 'help)       ; was mark-paragraph
     (global-set-key [f1] 'help)
     (global-set-key "OP" 'help))
-  
+
   (global-unset-key [insert])
 
   (defun rc-home/end/etc-terminal-bindings ()
@@ -196,14 +196,14 @@ the working directory"
 
 (defun cx-dumb-tab ()
   "Set tab to just insert itself"
-  (local-set-key "	" 'self-insert-command))
+  (local-set-key "      " 'self-insert-command))
 
 (defun rc-electric-keys ()
   "Electrify return and buffer lists"
   (global-set-key "\C-x\C-b" 'electric-buffer-list)
   (global-set-key "\C-m" 'newline-and-indent)
   (add-hooks '(perl-mode-hook python-mode-hook)
-	     '(lambda () (local-set-key "\C-m" 'newline))))
+             '(lambda () (local-set-key "\C-m" 'newline))))
 
 (require 'scheme-rc)
 
@@ -249,26 +249,26 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))
-	     (next-win-buffer (window-buffer (next-window)))
-	     (this-win-edges (window-edges (selected-window)))
-	     (next-win-edges (window-edges (next-window)))
-	     (this-win-2nd (not (and (<= (car this-win-edges)
-					 (car next-win-edges))
-				     (<= (cadr this-win-edges)
-					 (cadr next-win-edges)))))
-	     (splitter
-	      (if (= (car this-win-edges)
-		     (car (window-edges (next-window))))
-		  'split-window-horizontally
-		'split-window-vertically)))
-	(delete-other-windows)
-	(let ((first-win (selected-window)))
-	  (funcall splitter)
-	  (if this-win-2nd (other-window 1))
-	  (set-window-buffer (selected-window) this-win-buffer)
-	  (set-window-buffer (next-window) next-win-buffer)
-	  (select-window first-win)
-	  (if this-win-2nd (other-window 1))))))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
 
 (define-key ctl-x-4-map "v" 'toggle-vertical-horizontal-window-split)
 
@@ -418,7 +418,7 @@ repeated unfill entire region as one paragraph."
   "Collect a few of the semi-standard initialization options"
   (rc-coptix)
   (rc-electric-keys)
-  (rc-paredit)
+  ;; (rc-paredit)
   (iswitchb-mode t))
 
 (defun rc-james ()
