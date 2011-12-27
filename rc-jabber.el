@@ -82,4 +82,6 @@
                           acct)))
                     jabber-account-list))))
 
+(rc-jabber-mush-in-passwords)
+
 (provide 'rc-jabber)
