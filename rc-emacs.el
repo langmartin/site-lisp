@@ -147,7 +147,8 @@
   (switch-to-buffer nil))
 
 (global-set-keys '(("M-`" . switch-to-last-buffer)
-                   ("C-<tab>" . other-window)))
+                   ;; ("C-<tab>" . other-window)
+                   ))
 
 (require 'rc-dired)
 (require 'rc-hyper-keymap)
