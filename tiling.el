@@ -55,6 +55,7 @@
                            blessed)))
 
 (defun tiling-recapture (&optional blessed)
+  (interactive)
   (pop-list-named 'tiling-configuration-list)
   (tiling-capture blessed))
 
@@ -106,6 +107,7 @@
   :keymap tiling-mode-map)
 
 (defalias 'capture-tiling 'tiling-capture)
+(defalias 'recapture-tiling 'tiling-recapture)
 (defalias 'clear-tiling 'tiling-clear)
 (defalias 'bless-current-window 'tiling-bless-current-window)
 
