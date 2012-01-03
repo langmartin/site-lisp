@@ -56,7 +56,8 @@
 
 (defun tiling-recapture (&optional blessed)
   (interactive)
-  (pop-list-named 'tiling-configuration-list)
+  (if (not (null tiling-configuration-list))
+      (pop-list-named 'tiling-configuration-list))
   (tiling-capture blessed))
 
 (defun tiling-restore-current-cfg ()
@@ -94,10 +95,26 @@
                (other-window 1)))
       (other-window 1))))
 
+(defun tiling-cycle-or-recapture (prefix)
+  (interactive "P")
+  (if prefix
+      (progn
+        (tiling-recapture)
+        (message "Recaptured."))
+    (tiling-cycle-cfg)))
+
+(defun tiling-switch-or-bless (prefix)
+  (interactive "P")
+  (if prefix
+      (progn
+        (tiling-bless-current-window)
+        (message "Blessed."))
+    (tiling-switch-window)))
+
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
-   (list (cons (kbd "C-<tab>") 'tiling-switch-window)
-         (cons (kbd "S-<tab>") 'tiling-cycle-cfg))))
+   (list (cons (kbd "C-<tab>") 'tiling-switch-or-bless)
+         (cons (kbd "S-<tab>") 'tiling-cycle-or-recapture))))
 
 (define-minor-mode
   tiling-mode
