@@ -1,3 +1,13 @@
+;; Bugs:
+
+;;   Switching windows immediately after blessing the second window will
+;;   use other-window until it returns to the active window as stored in
+;;   the window configuration. It's necessary to recapture on bless as
+;;   well.
+
+;;   It would be reasonable if intentionally switching a buffer updated
+;;   the tiling. Popups should stay ignored.
+
 ;;;; Utilities
 (defun rotate-list (list-name)
   (append (cdr lst)
@@ -44,6 +54,10 @@
                            (point-marker)
                            blessed)))
 
+(defun tiling-recapture (&optional blessed)
+  (pop-list-named 'tiling-configuration-list)
+  (tiling-capture blessed))
+
 (defun tiling-restore-current-cfg ()
   (interactive)
   (set-window-configuration (tiling-cur-win))
@@ -68,21 +82,21 @@
 (defun tiling-switch-window ()
   (interactive)
   (let ((lst (tiling-cur-blessed)))
-    (if (not (and (> (length lst) 1)
-                  (tiling-current-is-activep)))
-        (progn
-          ;; (message "other window")
-          (other-window 1))
-      (progn
-        ;; (message "blessed")
-        (select-window (car lst))
-        (pop-list-named 'tiling-configuration-list)
-        (tiling-capture (rotate-list lst))))))
+    (if (tiling-current-is-activep)
+        (cond ((> (length lst) 1)
+               (select-window (car lst))
+               (tiling-recapture (rotate-list lst)))
+              ((<= (length (window-list)) 2)
+               (other-window 1)
+               (tiling-recapture))
+              (t
+               (other-window 1)))
+      (other-window 1))))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
-   (list (cons (kbd "M-`") 'tiling-switch-window)
-         (cons (kbd "C-<tab>") 'tiling-cycle-cfg))))
+   (list (cons (kbd "C-<tab>") 'tiling-switch-window)
+         (cons (kbd "S-<tab>") 'tiling-cycle-cfg))))
 
 (define-minor-mode
   tiling-mode
