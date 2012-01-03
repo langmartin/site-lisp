@@ -140,6 +140,8 @@
   (global-set-key (kbd "C-x 3") 'split-window-horizontally)
   (setq truncate-partial-width-windows 80))
 
+(require 'tiling)
+
 (defun switch-to-last-buffer ()
   (interactive)
   (switch-to-buffer nil))

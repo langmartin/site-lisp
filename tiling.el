@@ -5,7 +5,7 @@
 
 (defun pop-list-named (list-name)
   (set list-name
-       (symbol-value (cdr list-name))))
+       (cdr (symbol-value list-name))))
 
 ;;;; Data types
 (defun tiling-cfg (win point blessed) (list win point blessed))
@@ -22,8 +22,15 @@
 
 ;;;; Internal
 (defun tiling-current-is-activep ()
-  (equal (current-window-configuration)
-         (tiling-cur-win)))
+  (compare-window-configurations (current-window-configuration)
+                                 (tiling-cur-win)))
+
+(defun tiling-set-cur-blessed (blessed)
+  (setq tiling-configuration-list
+        (cons (tiling-cfg (tiling-cur-win)
+                          (point-marker)
+                          blessed)
+              (cdr tiling-configuration-list))))
 
 ;;;; Interface
 (defun tiling-clear ()
@@ -54,17 +61,20 @@
 
 (defun tiling-bless-current-window ()
   (interactive)
-  (pop-list-named 'tiling-configuration-list)
-  (tiling-capture (cons (car (window-list))
-                        (tiling-cur-blessed))))
+  (tiling-set-cur-blessed
+   (cons (car (window-list))
+         (tiling-cur-blessed))))
 
 (defun tiling-switch-window ()
   (interactive)
   (let ((lst (tiling-cur-blessed)))
     (if (not (and (> (length lst) 1)
                   (tiling-current-is-activep)))
-        (other-window 1)
+        (progn
+          ;; (message "other window")
+          (other-window 1))
       (progn
+        ;; (message "blessed")
         (select-window (car lst))
         (pop-list-named 'tiling-configuration-list)
         (tiling-capture (rotate-list lst))))))
@@ -80,5 +90,9 @@
   :init-value t
   :lighter nil
   :keymap tiling-mode-map)
+
+(defalias 'capture-tiling 'tiling-capture)
+(defalias 'clear-tiling 'tiling-clear)
+(defalias 'bless-current-window 'tiling-bless-current-window)
 
 (provide 'tiling)
