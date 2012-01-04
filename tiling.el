@@ -9,6 +9,7 @@
 ;;   the tiling. Popups should stay ignored.
 
 ;;;; Utilities
+
 (defun rotate-list (list-name)
   (append (cdr lst)
           (list (car lst))))
@@ -16,8 +17,16 @@
 (defun pop-list-named (list-name)
   (set list-name
        (cdr (symbol-value list-name))))
+
+(defun pairp (obj)
+  (and (listp obj) (not (null obj))))
+
+(defun double-prefixp (prefix)
+  (and (pairp prefix) (= 16 (car prefix))))
+
 
 ;;;; Data types
+
 (defun tiling-cfg (win point blessed) (list win point blessed))
 (defun tiling-cfg-win (cfg) (car cfg))
 (defun tiling-cfg-point (cfg) (cadr cfg))
@@ -97,19 +106,23 @@
 
 (defun tiling-cycle-or-recapture (prefix)
   (interactive "P")
-  (if prefix
-      (progn
-        (tiling-recapture)
-        (message "Recaptured."))
-    (tiling-cycle-cfg)))
+  (cond ((double-prefixp prefix)
+         (tiling-recapture)
+         (message "Recaptured."))
+        (prefix
+         (tiling-capture)
+         (message "Captured."))
+        (t
+         (tiling-cycle-cfg))))
 
 (defun tiling-switch-or-bless (prefix)
   (interactive "P")
-  (if prefix
-      (progn
-        (tiling-bless-current-window)
-        (message "Blessed."))
-    (tiling-switch-window)))
+  (cond (prefix
+         (tiling-bless-current-window)
+         (message "Blessed.")
+         (tiling-switch-window))
+        (t
+         (tiling-switch-window))))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
