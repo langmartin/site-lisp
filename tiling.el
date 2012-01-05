@@ -137,21 +137,28 @@
     eshell-mode
     jabber-roster-mode
     jabber-chat-mode
-    org-mode))
+    org-mode
+    Info-mode
+    help-mode))
 
 (defvar tiling-skip-invert nil)
 
-(defun tiling-skip-other-window (toggle &optional starting-window)
+(defun tiling-skip-invert (skip)
+  (if tiling-skip-invert (not skip) skip))
+
+(defun tiling-skip-other-window (toggle &optional stop)
   (interactive "P")
   (if toggle (setq tiling-skip-invert (not tiling-skip-invert)))
-  (if (not (equal (car (window-list)) starting-window))
-      (progn
-        (other-window 1)
-        (let ((skip (member major-mode tiling-skip-mode-list)))
-          (if tiling-skip-invert (setq skip (not skip)))
-          (if skip
-              (tiling-skip-other-window nil (or starting-window (car (window-list))))
-            (if (tiling-current-is-activep) (tiling-recapture-with-blessed)))))))
+  (other-window 1)
+  (if (equal stop (car (window-list)))
+      'stop
+    (progn
+      (let* ((skip (member major-mode tiling-skip-mode-list))
+             (skip (tiling-skip-invert skip)))
+        (if skip
+            (tiling-skip-other-window nil (or stop (car (window-list))))
+          (if (tiling-current-is-activep)
+              (tiling-recapture-with-blessed)))))))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
