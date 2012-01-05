@@ -24,6 +24,9 @@
 (defun double-prefixp (prefix)
   (and (pairp prefix) (= 16 (car prefix))))
 
+(defun current-window ()
+  (car (window-list)))
+
 
 ;;;; Data types
 
@@ -131,6 +134,9 @@
         (t
          (tiling-switch-window))))
 
+
+;;;; Skip some modes automatically
+
 (defvar tiling-skip-mode-list
   `(erc-mode
     slime-repl-mode
@@ -143,28 +149,44 @@
 
 (defvar tiling-skip-invert nil)
 
-(defun tiling-skip-invert (skip)
-  (if tiling-skip-invert (not skip) skip))
+(defun tiling-skip-p (mode)
+  (let ((skip (member mode tiling-skip-mode-list)))
+    (if tiling-skip-invert
+        (not skip)
+      skip)))
 
-(defun tiling-skip-other-window (toggle &optional stop)
+(defun tiling-find-other-window (origin)
+  (other-window 1)
+  (if (equal origin (current-window))
+      (other-window 1)                  ; fallback to other-window
+    (if (tiling-skip-p major-mode)
+        (tiling-find-other-window origin)
+      (if (tiling-current-is-activep)
+          (tiling-recapture-with-blessed)))))
+
+(defun tiling-find-main-window ()
+  (interactive)
+  (setq tiling-skip-invert nil)
+  (tiling-find-other-window (current-window)))
+
+(defun tiling-find-skipped-window ()
+  (interactive)
+  (setq tiling-skip-invert t)
+  (tiling-find-other-window (current-window)))
+
+;;; the old interface
+(defun tiling-skip-other-window (toggle)
   (interactive "P")
   (if toggle (setq tiling-skip-invert (not tiling-skip-invert)))
-  (other-window 1)
-  (if (equal stop (car (window-list)))
-      'stop
-    (progn
-      (let* ((skip (member major-mode tiling-skip-mode-list))
-             (skip (tiling-skip-invert skip)))
-        (if skip
-            (tiling-skip-other-window nil (or stop (car (window-list))))
-          (if (tiling-current-is-activep)
-              (tiling-recapture-with-blessed)))))))
+  (tiling-find-other-window (current-window)))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
    (list (cons (kbd "C-<tab>") 'tiling-switch-or-bless)
          (cons (kbd "C-M-<tab>") 'tiling-cycle-or-recapture)
-         (cons (kbd "C-x o") 'tiling-skip-other-window))))
+         ;; (cons (kbd "C-x o") 'tiling-skip-other-window)
+         (cons (kbd "C-x o") 'tiling-find-main-window)
+         (cons (kbd "C-c o") 'tiling-find-skipped-window))))
 
 (define-minor-mode
   tiling-mode
