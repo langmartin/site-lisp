@@ -128,10 +128,29 @@
         (t
          (tiling-switch-window))))
 
+(defvar tiling-skip-mode-list
+  `(erc-mode
+    slime-repl-mode
+    eshell-mode
+    jabber-roster-mode
+    jabber-chat-mode
+    org-mode))
+
+(defvar tiling-skip-invert nil)
+
+(defun tiling-skip-other-window (toggle)
+  (interactive "P")
+  (if toggle (setq tiling-skip-invert (not tiling-skip-invert)))
+  (other-window 1)
+  (let ((skip (member major-mode tiling-skip-mode-list)))
+    (if tiling-skip-invert (setq skip (not skip)))
+    (if skip (tiling-skip-other-window nil))))
+
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
    (list (cons (kbd "C-<tab>") 'tiling-switch-or-bless)
-         (cons (kbd "C-M-<tab>") 'tiling-cycle-or-recapture))))
+         (cons (kbd "C-M-<tab>") 'tiling-cycle-or-recapture)
+         (cons (kbd "C-x o") 'tiling-skip-other-window))))
 
 (define-minor-mode
   tiling-mode
