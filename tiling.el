@@ -41,8 +41,10 @@
 
 ;;;; Internal
 (defun tiling-current-is-activep ()
-  (compare-window-configurations (current-window-configuration)
-                                 (tiling-cur-win)))
+  (if tiling-configuration-list
+      (compare-window-configurations
+       (current-window-configuration)
+       (tiling-cur-win))))
 
 (defun tiling-set-cur-blessed (blessed)
   (setq tiling-configuration-list
