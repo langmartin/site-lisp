@@ -71,6 +71,9 @@
       (pop-list-named 'tiling-configuration-list))
   (tiling-capture blessed))
 
+(defun tiling-recapture-with-blessed ()
+  (tiling-recapture (tiling-cur-blessed)))
+
 (defun tiling-restore-current-cfg ()
   (interactive)
   (set-window-configuration (tiling-cur-win))
@@ -103,7 +106,7 @@
                (tiling-recapture (rotate-list lst)))
               ((<= (length (window-list)) 2)
                (other-window 1)
-               (tiling-recapture))
+               (tiling-recapture-with-blessed))
               (t
                (other-window 1)))
       (other-window 1))))
@@ -138,13 +141,17 @@
 
 (defvar tiling-skip-invert nil)
 
-(defun tiling-skip-other-window (toggle)
+(defun tiling-skip-other-window (toggle &optional starting-window)
   (interactive "P")
   (if toggle (setq tiling-skip-invert (not tiling-skip-invert)))
-  (other-window 1)
-  (let ((skip (member major-mode tiling-skip-mode-list)))
-    (if tiling-skip-invert (setq skip (not skip)))
-    (if skip (tiling-skip-other-window nil))))
+  (if (not (equal (car (window-list)) starting-window))
+      (progn
+        (other-window 1)
+        (let ((skip (member major-mode tiling-skip-mode-list)))
+          (if tiling-skip-invert (setq skip (not skip)))
+          (if skip
+              (tiling-skip-other-window nil (or starting-window (car (window-list))))
+            (if (tiling-current-is-activep) (tiling-recapture-with-blessed)))))))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
