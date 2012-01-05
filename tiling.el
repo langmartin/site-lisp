@@ -79,9 +79,11 @@
   (if (and (> (length tiling-configuration-list) 1)
            (tiling-current-is-activep))
       (setq tiling-configuration-list
-            (cons (cadr tiling-configuration-list)
-                  (cons (car tiling-configuration-list)
-                        (cddr tiling-configuration-list)))))
+            (rotate-list tiling-configuration-list)
+            ;; (cons (cadr tiling-configuration-list)
+            ;;       (cons (car tiling-configuration-list)
+            ;;             (cddr tiling-configuration-list)))
+            ))
   (tiling-restore-current-cfg))
 
 (defun tiling-bless-current-window ()
@@ -107,11 +109,11 @@
 (defun tiling-cycle-or-recapture (prefix)
   (interactive "P")
   (cond ((double-prefixp prefix)
-         (tiling-recapture)
-         (message "Recaptured."))
-        (prefix
          (tiling-capture)
          (message "Captured."))
+        (prefix
+         (tiling-recapture)
+         (message "Recaptured."))
         (t
          (tiling-cycle-cfg))))
 
@@ -127,11 +129,12 @@
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
    (list (cons (kbd "C-<tab>") 'tiling-switch-or-bless)
-         (cons (kbd "S-<tab>") 'tiling-cycle-or-recapture))))
+         (cons (kbd "C-M-<tab>") 'tiling-cycle-or-recapture))))
 
 (define-minor-mode
   tiling-mode
   "Tiling window manager for emacs."
+  :global t
   :init-value t
   :lighter nil
   :keymap tiling-mode-map)
