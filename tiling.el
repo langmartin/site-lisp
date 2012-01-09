@@ -116,7 +116,7 @@
 
 (defun tiling-cycle-or-recapture (prefix)
   (interactive "p")
-  (cond ((= prefix 64)
+  (cond ((>= prefix 64)
          (tiling-clear)
          (message "Cleared all"))
         ((or (= prefix 16) (null tiling-configuration-list))
@@ -125,7 +125,7 @@
         ((= prefix 4)
          (tiling-recapture)
          (message "Recaptured"))
-        ((= prefix 0)
+        ((= prefix 1)
          (tiling-cycle-cfg))))
 
 (defun tiling-switch-or-bless (prefix)
