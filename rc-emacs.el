@@ -98,10 +98,11 @@
 (require 'google-define)
 (require 'compile-site-lisp)
 (require 'gist)
-(require 'rc-web-development)
-(require 'rc-javascript)
 (require 'rc-xcode)
 (require 'rc-lisp)
+
+(require 'rc-javascript)
+(require 'rc-web-development)
 
 (progn
   ;;; VC setup
