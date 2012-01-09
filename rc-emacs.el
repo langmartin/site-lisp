@@ -192,10 +192,7 @@ line instead."
  '(TeX-default-mode (quote plain-tex-mode))
  '(column-number-mode t)
  '(gud-gdb-command-name "gdb --annotate=1")
-
- '(eshell-ls-use-colors nil)
- '(eshell-prompt-function (lambda nil (concat (number-to-string eshell-last-command-status) " " (eshell/pwd) (if (= (user-uid) 0) " # " " $ "))))
- '(eshell-visual-commands (quote ("ssh" "vi" "screen" "top" "less" "more" "lynx" "ncftp" "pine" "tin" "trn" "elm"))))
+ )
 
 ;; (progn
 ;;   (require 'edit-server)

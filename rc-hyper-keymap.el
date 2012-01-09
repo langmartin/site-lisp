@@ -5,7 +5,6 @@
            ("i" . imenu)
            ("R" . repeat)
            ("r" . revert-buffer)
-           ("s" . eshell)
            ("t" . toggle-truncate-lines))))
 
 (global-set-keys
