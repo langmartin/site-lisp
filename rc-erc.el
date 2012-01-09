@@ -58,7 +58,7 @@
       "~"
     (irc-freenode)))
 
-(set-variables
+(custom-set-variables
  '(erc-autoaway-mode t)
  '(erc-autoaway-idle-method (quote user))
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
