@@ -10,7 +10,8 @@
         (t
          (let ((dir default-directory))
            (switch-to-buffer "*eshell*")
-           (eshell/cd dir)))))
+           (insert "cd " dir)
+           (eshell-send-input)))))
 
 (global-set-key (kbd "H-s") 'eshell-focus-or-create)
 

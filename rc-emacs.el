@@ -194,6 +194,8 @@ line instead."
  '(gud-gdb-command-name "gdb --annotate=1")
  )
 
+(require 'rc-eshell)
+
 ;; (progn
 ;;   (require 'edit-server)
 ;;   (edit-server-start))
