@@ -10,7 +10,7 @@
 
 ;;;; Utilities
 
-(defun rotate-list (list-name)
+(defun rotate-list (lst)
   (append (cdr lst)
           (list (car lst))))
 
@@ -115,21 +115,24 @@
       (other-window 1))))
 
 (defun tiling-cycle-or-recapture (prefix)
-  (interactive "P")
-  (cond ((double-prefixp prefix)
+  (interactive "p")
+  (cond ((= prefix 64)
+         (tiling-clear)
+         (message "Cleared all"))
+        ((or (= prefix 16) (null tiling-configuration-list))
          (tiling-capture)
-         (message "Captured."))
-        (prefix
+         (message "Captured"))
+        ((= prefix 4)
          (tiling-recapture)
-         (message "Recaptured."))
-        (t
+         (message "Recaptured"))
+        ((= prefix 0)
          (tiling-cycle-cfg))))
 
 (defun tiling-switch-or-bless (prefix)
   (interactive "P")
   (cond (prefix
          (tiling-bless-current-window)
-         (message "Blessed.")
+         (message "Blessed")
          (tiling-switch-window))
         (t
          (tiling-switch-window))))
@@ -200,5 +203,33 @@
 (defalias 'recapture-tiling 'tiling-recapture)
 (defalias 'clear-tiling 'tiling-clear)
 (defalias 'bless-current-window 'tiling-bless-current-window)
+
+(defun tiling-two-by-two ()
+  (interactive)
+  (delete-other-windows)
+  (split-window-horizontally 80)
+  (other-window 1)
+  (split-window-horizontally 80)
+  (other-window 1)
+  (split-window-vertically))
+
+(defun tiling-three-by-three ()
+  (interactive)
+  (delete-other-windows)
+  (split-window-horizontally 80)
+  (other-window 1)
+  (split-window-horizontally 80)
+  (other-window 1)
+  (split-window-horizontally 80)
+  (other-window 1)
+  (split-window-vertically)
+  (other-window 1)
+  (split-window-vertically))
+
+(defun tiling-two-up-one-down ()
+  (interactive)
+  (delete-other-windows)
+  (split-window-vertically -8)
+  (split-window-horizontally))
 
 (provide 'tiling)
