@@ -23,12 +23,13 @@
       (cons '(directory . emacs)
             org-file-apps))
 
-(set-variables
+(custom-set-variables
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time))
  '(org-clock-modeline-total (quote current))
  '(org-cycle-include-plain-lists nil)
- '(org-clock-into-drawer 2))
+ '(org-clock-into-drawer 4)
+ '(org-adapt-indentation nil))
 
 ;;;; I've added the endnotes package to this header, it doesn't change
 ;;;; anything by default. In order to use it, you need to add two
