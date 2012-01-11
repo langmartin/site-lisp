@@ -21,11 +21,13 @@
 (defun pairp (obj)
   (and (listp obj) (not (null obj))))
 
-(defun double-prefixp (prefix)
-  (and (pairp prefix) (= 16 (car prefix))))
-
 (defun current-window ()
   (car (window-list)))
+
+(defun empty-prefixp (p) (= p 1))
+(defun single-prefixp (p) (> p 1))
+(defun double-prefixp (p) (>= p 16))
+(defun triple-prefixp (p) (>= p 64))
 
 
 ;;;; Data types
@@ -100,6 +102,9 @@
    (cons (car (window-list))
          (tiling-cur-blessed))))
 
+(defun tiling-bless-clear-current ()
+  (tiling-set-cur-blessed nil))
+
 (defun tiling-switch-window ()
   (interactive)
   (let ((lst (tiling-cur-blessed)))
@@ -114,23 +119,28 @@
                (other-window 1)))
       (other-window 1))))
 
-(defun tiling-cycle-or-recapture (prefix)
+(defun tiling-cycle-or-recapture (p)
   (interactive "p")
-  (cond ((>= prefix 64)
+  (cond ((triple-prefixp p)
          (tiling-clear)
          (message "Cleared all"))
-        ((or (= prefix 16) (null tiling-configuration-list))
+        ((or (double-prefixp p) (null tiling-configuration-list))
          (tiling-capture)
          (message "Captured"))
-        ((= prefix 4)
+        ((single-prefixp p)
          (tiling-recapture)
          (message "Recaptured"))
-        ((= prefix 1)
+        (t
          (tiling-cycle-cfg))))
 
-(defun tiling-switch-or-bless (prefix)
-  (interactive "P")
-  (cond (prefix
+(defun tiling-switch-or-bless (p)
+  (interactive "p")
+  (cond ((double-prefixp p)
+         (tiling-bless-clear-current)
+         (tiling-bless-current-window)
+         (message "Reblessed")
+         (tiling-switch-window))
+        ((single-prefixp p)
          (tiling-bless-current-window)
          (message "Blessed")
          (tiling-switch-window))
@@ -152,36 +162,34 @@
 
 (defvar tiling-skip-invert nil)
 
-(defun tiling-skip-p (mode)
+(defun tiling-skip-p (mode maybe-invert)
   (let ((skip (member mode tiling-skip-mode-list)))
-    (if tiling-skip-invert
+    (if maybe-invert
         (not skip)
       skip)))
 
-(defun tiling-find-other-window (origin)
+(defun tiling-find-other-window (origin maybe-invert)
   (other-window 1)
   (if (equal origin (current-window))
       (other-window 1)                  ; fallback to other-window
-    (if (tiling-skip-p major-mode)
-        (tiling-find-other-window origin)
-      (if (tiling-current-is-activep)
+    (if (tiling-skip-p major-mode maybe-invert)
+        (tiling-find-other-window origin maybe-invert)
+     (if (tiling-current-is-activep)
           (tiling-recapture-with-blessed)))))
 
 (defun tiling-find-main-window ()
   (interactive)
-  (setq tiling-skip-invert nil)
-  (tiling-find-other-window (current-window)))
+  (tiling-find-other-window (current-window) nil))
 
 (defun tiling-find-skipped-window ()
   (interactive)
-  (setq tiling-skip-invert t)
-  (tiling-find-other-window (current-window)))
+  (tiling-find-other-window (current-window) t))
 
 ;;; the old interface
 (defun tiling-skip-other-window (toggle)
   (interactive "P")
   (if toggle (setq tiling-skip-invert (not tiling-skip-invert)))
-  (tiling-find-other-window (current-window)))
+  (tiling-find-other-window (current-window) tiling-skip-invert))
 
 (defvar tiling-mode-map
   (easy-mmode-define-keymap
