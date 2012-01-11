@@ -975,12 +975,17 @@ If in a string, just insert a literal newline."
 If the point is in a string or a comment, fill the paragraph instead,
   and with a prefix argument, justify as well."
   (interactive "P")
-  (if (or (paredit-in-string-p)
-          (paredit-in-comment-p))
-      (fill-paragraph argument)
-    (save-excursion
-      (beginning-of-defun)
-      (indent-sexp))))
+  (save-excursion
+   (cond ((paredit-in-string-p)
+          (let ((pair (paredit-string-start+end-points)))
+            (set-mark (cdr pair))
+            (goto-char (car pair))
+            (fill-paragraph argument t)))
+         ((paredit-in-comment-p)
+          (fill-paragraph argument))
+         (t
+          (beginning-of-defun)
+          (indent-sexp)))))
 
 ;;;; Comment Insertion
 
