@@ -13,7 +13,7 @@
 
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode)))
   (define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save)
-  (defalias 'rc-javascript-mode js2-mode))
+  (defalias 'rc-javascript-mode 'js2-mode))
 
 (defun rc-espresso-mode ()
   (require 'espresso)
@@ -22,7 +22,7 @@
   (add-hook 'espresso-mode-hook 'turn-off-indent-tabs-mode)
   (add-hook 'espresso-mode-hook 'turn-on-c-subword-mode)
   (add-to-auto-mode-alist '(("\\.js\\'" . espresso-mode)))
-  (defalias 'rc-javascript-mode espresso-mode))
+  (defalias 'rc-javascript-mode 'espresso-mode))
 
 ;; (add-hook 'css-mode-hook 'turn-on-rainbow-mode)
 
@@ -39,7 +39,7 @@
 
   (define-key js-mode-map (kbd "H-l")
     (lambda-insert-with-point "function () {" "}"))
-  (defalias 'rc-javascript-mode js-mode))
+  (defalias 'rc-javascript-mode 'js-mode))
 
 (rc-jshint-mode)
 
