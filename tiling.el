@@ -108,13 +108,10 @@
 (defun tiling-switch-window ()
   (interactive)
   (let ((lst (tiling-cur-blessed)))
-    (if (tiling-current-is-activep)
+    (if t ;; (tiling-current-is-activep)
         (cond ((> (length lst) 1)
                (select-window (car lst))
-               (tiling-recapture (rotate-list lst)))
-              ((<= (length (window-list)) 2)
-               (other-window 1)
-               (tiling-recapture-with-blessed))
+               (tiling-set-cur-blessed (rotate-list lst)))
               (t
                (other-window 1)))
       (other-window 1))))
@@ -128,7 +125,7 @@
          (tiling-capture)
          (message "Captured"))
         ((single-prefixp p)
-         (tiling-recapture)
+         (tiling-recapture-with-blessed)
          (message "Recaptured"))
         (t
          (tiling-cycle-cfg))))
@@ -152,6 +149,7 @@
 
 (defvar tiling-skip-mode-list
   `(erc-mode
+    rcirc-mode
     slime-repl-mode
     eshell-mode
     jabber-roster-mode
