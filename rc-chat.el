@@ -1,12 +1,5 @@
+(require 'rc-rcirc)
 (require 'rc-erc)
-(require 'rcirc)
-
-(defun irc ()
-  (interactive)
-  (save-default-directory
-      "~"
-    (rcirc nil)))
-
 (require 'rc-jabber)
 
 ;;;; Switch to active jabber buffers then to active erc buffers on C-c
@@ -22,27 +15,27 @@
      ,@body
      t))
 
-(defun switch-to-active-chat-buffer1 ()
+(defun switch-to-active-chat-buffer1 (prefix)
   (if jabber-activity-jids
       (progt (jabber-activity-switch-to))
     (if erc-modified-channels-alist
         (progt (erc-track-switch-buffer 1))
       (if (rcirc-split-activity rcirc-activity)
-          (progt (rcirc-next-active-buffer nil))
+          (progt (rcirc-next-active-buffer prefix))
        nil))))
 
 (defvar switch-to-active-chat-buffer-last nil)
 
-(defun switch-to-active-chat-buffer ()
+(defun switch-to-active-chat-buffer (prefix)
   "Switch to any jabber activity, then switch to active erc buffers."
-  (interactive)
+  (interactive "P")
   (if (currently-chattingp)
-      (or (switch-to-active-chat-buffer1)
+      (or (switch-to-active-chat-buffer1 prefix)
           (when switch-to-active-chat-buffer-last
             (switch-to-buffer switch-to-active-chat-buffer-last)))
     (progn
       (setq switch-to-active-chat-buffer-last (current-buffer))
-      (or (switch-to-active-chat-buffer1)
+      (or (switch-to-active-chat-buffer1 prefix)
           (message "No active chat buffers.")))))
 
 (unless (boundp 'erc-modified-channels-alist)
