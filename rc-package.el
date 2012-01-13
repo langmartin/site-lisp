@@ -3,10 +3,8 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-;;; These require forms don't get called by package-initialize the way
-;;; you'd expect.
-(require 'maxframe)
-(require 'org-compat)
+(require 'maxframe nil t)
+(require 'org-compat nil t)
 
 (defun rc-package-install-packages ()
   "Install initial packages"
@@ -16,12 +14,17 @@
               (package-install p)))
         '(
           ;; Utilities
+          highlight-symbol
           htmlize
           guess-offset
+          jabber
           magit
+          maxframe
+          rcirc
           ;; Programming modes
           ;; js2-mode
           clojure-mode
+          org-compat
           )))
 
 (provide 'rc-package)
