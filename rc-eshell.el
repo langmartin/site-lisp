@@ -7,11 +7,14 @@
   (interactive "P")
   (cond (prefix
          (eshell prefix))
-        (t
+        ((bufferp (get-buffer "*eshell*"))
          (let ((dir default-directory))
            (switch-to-buffer "*eshell*")
-           (insert "cd " dir)
-           (eshell-send-input)))))
+           (unless (equal dir default-directory)
+             (cd dir)
+             (eshell-send-input))))
+        (t
+         (eshell nil))))
 
 (global-set-key (kbd "H-s") 'eshell-focus-or-create)
 
