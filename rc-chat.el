@@ -15,14 +15,19 @@
      ,@body
      t))
 
+;; (defun switch-to-active-chat-buffer1 (prefix)
+;;   (if jabber-activity-jids
+;;       (progt (jabber-activity-switch-to))
+;;     (if (rcirc-split-activity rcirc-activity)
+;;         (progt (rcirc-next-active-buffer prefix))
+;;       nil)))
+
 (defun switch-to-active-chat-buffer1 (prefix)
   (if jabber-activity-jids
       (progt (jabber-activity-switch-to))
     (if erc-modified-channels-alist
         (progt (erc-track-switch-buffer 1))
-      (if (rcirc-split-activity rcirc-activity)
-          (progt (rcirc-next-active-buffer prefix))
-       nil))))
+      nil)))
 
 (defvar switch-to-active-chat-buffer-last nil)
 
