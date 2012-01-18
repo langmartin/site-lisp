@@ -113,7 +113,8 @@
 
 (rc-gnus)
 
-(set-variables
+(custom-set-variables
+ '(gnus-agent nil)
  '(gnus-build-sparse-threads (quote some))
  '(gnus-dribble-directory "~/.emacs.d")
  '(gnus-fetch-old-headers (quote invisible))
