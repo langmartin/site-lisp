@@ -6,6 +6,9 @@
 (require 'maxframe nil t)
 (require 'org-compat nil t)
 
+(if (package-installed-p 'project-mode)
+    (project-load-all))
+
 (defun rc-package-install-packages ()
   "Install initial packages"
   (interactive)
