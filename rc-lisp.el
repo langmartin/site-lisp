@@ -20,6 +20,7 @@
         clojure-mode-hook))
 
 (add-hooks lisp-mode-hooks 'turn-on-paredit-mode)
+(add-hook 'slime-repl-mode-hook 'turn-on-paredit-mode)
 
 (rc-bind-cleanup-untabify-save lisp-mode-map)
 (rc-bind-cleanup-untabify-save emacs-lisp-mode-map)
