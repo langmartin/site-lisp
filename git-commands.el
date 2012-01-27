@@ -37,7 +37,7 @@
   (define-shell-command git-fetch "git fetch")
   (define-shell-command git-log "git log --graph")
   (define-shell-command git-branches "git branch -av")
-  (define-shell-command git-commit "git commit")
+  (define-shell-command git-commit "git commit" "--amend")
   (define-shell-command git-merge "git merge -q" "origin/master")
   (define-shell-command git-pull "git pull")
   (define-shell-command git-push "git push" "origin")
