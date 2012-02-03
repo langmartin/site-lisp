@@ -6,8 +6,12 @@
 (require 'maxframe nil t)
 (require 'org-compat nil t)
 
-(if (package-installed-p 'project-mode)
-    (project-load-all))
+(when (package-installed-p 'project-mode)
+  (require 'project-mode)
+  (project-load-all))
+
+(when (package-installed-p 'session)
+  (session-initialize))
 
 (defun rc-package-install-packages ()
   "Install initial packages"
@@ -23,7 +27,9 @@
           jabber
           magit
           maxframe
+          project-mode
           rcirc
+          session
           ;; Programming modes
           ;; js2-mode
           clojure-mode
