@@ -12,22 +12,16 @@
   (set-face-background 'erc-prompt-face nil)
   ;; (set-face-foreground 'erc-my-nick-face nil)
   (set-face-foreground 'erc-my-nick-face "brown")
-  (set-face-foreground 'erc-input-face nil)
-  )
+  (set-face-foreground 'erc-input-face nil))
 
 (defun irc-bitlbee ()
   (interactive)
-  (erc-tls :server "testing.bitlbee.org"
-           :port 6668
-           :nick "langmartin"
-           :full-name "Lang Martin"))
-
-(defun bitlbee-identify ()
-  (when (and (string= "testing.bitlbee.org" erc-session-server)
-               (string= "&bitlbee" (buffer-name)))
-    (erc-message "PRIVMSG" (format "%s identify %s"
-                                     (erc-default-target)
-                                     bitlbee-password))))
+  (erc :server "localhost"
+       :port 6667
+       :nick "langmartin"
+       :full-name "Lang Martin"
+       :password bitlbee-password)
+  (erc-fix-colors))
 
 (set-variables
  '(erc-join-hook (quote (bitlbee-identify))))
