@@ -23,9 +23,6 @@
        :password bitlbee-password)
   (erc-fix-colors))
 
-(set-variables
- '(erc-join-hook (quote (bitlbee-identify))))
-
 (defun erc-hide-notices () "hide all notices in a very busy channel"
   (interactive)
   (make-local-variable 'erc-echo-notice-always-hook)
@@ -60,14 +57,20 @@
  '(erc-log-channels-directory "~/.emacs.d/log")
  '(erc-match-mode 1)
  '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
- '(erc-pals (quote ("jlongster" "bweaver" "timmywil")))
+ '(erc-scrolltobottom-mode t)
+
+ '(erc-server-auto-reconnect t)
  '(erc-server-reconnect-timeout 300)
+
+ ;; '(erc-track-exclude (quote ("#clojure" "#emacs" "#org-mode" "#scheme")))
+ '(erc-track-exclude-server-buffer t)
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
- '(erc-user-full-name "Lang Martin")
+ '(erc-track-faces-priority-list (quote ((erc-nick-default-face erc-current-nick-face) erc-current-nick-face (erc-nick-default-face erc-pal-face) erc-pal-face erc-nick-msg-face erc-direct-msg-face)))
+ '(erc-track-priority-faces-only (quote all))
+
  ;; http://www.bestinclass.dk/index.php/2010/03/approaching-productivity/
  '(erc-button-url-regexp
-   "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]")
- )
+   "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]"))
 
 (add-hook 'erc-disconnected-hook
           (lambda (nick ip reason)
