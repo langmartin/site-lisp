@@ -154,10 +154,18 @@
       ;; (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)
       )))
 
+(defun gnus-group-or-start ()
+  (interactive)
+  (if-let* ((buffer (get-buffer "*Group*")))
+      (progn (switch-to-buffer buffer)
+             (gnus-group-get-new-news))
+    (gnus)))
+
 (global-set-key (kbd "C-x m")
                 (alist-to-keymap-via-kbd
                  '(("m" . compose-mail)
-                   ("r" . gnus-group-restart-dont-ask))))
+                   ;; ("r" . gnus-group-restart-dont-ask)
+                   ("r" . gnus-group-or-start))))
 
 (defun rc-smtp-through-msmtp ()
   (interactive)
