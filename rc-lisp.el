@@ -13,14 +13,19 @@
 
 (defun turn-on-paredit-mode () (interactive) (paredit-mode 1))
 
-(setq lisp-mode-hooks
-      '(lisp-mode-hook
-        emacs-lisp-mode-hook
-        scheme-mode-hook
-        clojure-mode-hook))
+(add-hooks
+ '(lisp-mode-hook
+   emacs-lisp-mode-hook
+   scheme-mode-hook
+   clojure-mode-hook
+   slime-repl-mode-hook)
+ 'turn-on-paredit-mode)
 
-(add-hooks lisp-mode-hooks 'turn-on-paredit-mode)
-(add-hook 'slime-repl-mode-hook 'turn-on-paredit-mode)
+(defun rc-slime-mode-unclobber-bindings ()
+ (define-key slime-mode-map (kbd "M-.") 'find-tag)
+ (define-key slime-mode-map (kbd "H-.") 'slime-edit-definition))
+
+(add-hook 'slime-mode-hook 'rc-slime-mode-unclobber-bindings)
 
 (rc-bind-cleanup-untabify-save lisp-mode-map)
 (rc-bind-cleanup-untabify-save emacs-lisp-mode-map)
