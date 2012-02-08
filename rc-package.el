@@ -13,6 +13,9 @@
 (when (package-installed-p 'session)
   (session-initialize))
 
+(add-to-info-path "~/.emacs.d/elpa/magit-1.1.1/")
+(add-to-info-path "~/.emacs.d/elpa/org-20120207/")
+
 (defun rc-package-install-packages ()
   "Install initial packages"
   (interactive)
