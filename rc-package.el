@@ -37,6 +37,7 @@
           ;; js2-mode
           clojure-mode
           org-compat
+          zencoding
           )))
 
 (provide 'rc-package)
