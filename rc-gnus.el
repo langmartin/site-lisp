@@ -128,9 +128,9 @@
            "cfpug@cfpug.com"
            ))))
 
-(defun rc-bbdb ()
+(with-feature bbdb
   (require 'bbdb-autoloads nil t)
-  (require 'bbdb)
+  ;; (require 'bbdb)
   (bbdb-initialize 'gnus 'message)
   (bbdb-insinuate-message)
   (bbdb-insinuate-gnus)
@@ -138,8 +138,6 @@
    '(bbdb-complete-name-allow-cycling t)
    '(bbdb-dwim-net-address-allow-redundancy t)
    '(bbdb-file "~/.emacs.d/bbdb")))
-
-(rc-bbdb)
 
 (require 'gnus-notify)
 ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
