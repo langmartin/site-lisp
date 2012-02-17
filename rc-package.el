@@ -3,18 +3,28 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-(require 'maxframe nil t)
-(require 'org-compat nil t)
+(defmacro with-feature (feature &rest body)
+  "If a feature can be required, run the initialization code.
+Otherwise warn."
+  (declare (indent 1))
+  `(if (require ',feature nil t)
+       (progn ,@body)
+     (warn "feature %s is not installed" ',feature)))
 
-(when (package-installed-p 'project-mode)
-  (require 'project-mode)
+(with-feature maxframe)
+(with-feature org-compat)
+
+(with-feature project-mode
   (project-load-all))
 
-(when (package-installed-p 'session)
+(with-feature session
   (session-initialize))
 
-(add-to-info-path "~/.emacs.d/elpa/magit-1.1.1/")
-(add-to-info-path "~/.emacs.d/elpa/org-20120207/")
+(with-feature magit
+  (add-to-info-path "~/.emacs.d/elpa/magit-1.1.1/"))
+
+(with-feature org
+  (add-to-info-path "~/.emacs.d/elpa/org-20120207/"))
 
 (defun rc-package-install-packages ()
   "Install initial packages"

@@ -100,7 +100,6 @@
 (require 'rc-xcode)
 (require 'rc-lisp)
 
-(require 'rc-javascript)
 (require 'rc-web-development)
 
 (progn

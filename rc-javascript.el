@@ -33,8 +33,8 @@
   (add-hook 'js-mode-hook 'turn-on-flymake-mode)
   (add-hook 'js-mode-hook 'set-tab-width-4)
 
-  (add-to-load-path "/usr/local/lib/node_modules/jshint-mode")
-  (require 'flymake-jshint)
+  ;; (add-to-load-path "/usr/local/lib/node_modules/jshint-mode")
+  ;; (require 'flymake-jshint)
   (add-to-auto-mode-alist '(("\\.js\\'" . js-mode)))
 
   (define-key js-mode-map (kbd "H-l")

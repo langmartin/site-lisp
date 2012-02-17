@@ -1,3 +1,7 @@
+(add-to-load-path "/usr/local/lib/node_modules/jshint-mode")
+(with-feature flymake-jshint
+  (require 'rc-javascript))
+
 (require 'visual-basic-mode)
 (require 'sgml-mode)
 (setq visual-basic-mode-indent 4)
@@ -17,7 +21,7 @@
    ("\\.bas$" . visual-basic-mode)))
 
 (add-hook 'sgml-mode-hook
-	  (lambda ()
+          (lambda ()
             (local-set-keys
              '(("C-c C-p" . sgml-skip-tag-backward)
                ("C-c C-n" . sgml-skip-tag-forward)))))
