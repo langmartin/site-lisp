@@ -22,10 +22,13 @@
  'turn-on-paredit-mode)
 
 (defun rc-slime-mode-unclobber-bindings ()
- (define-key slime-mode-map (kbd "M-.") 'find-tag)
- (define-key slime-mode-map (kbd "H-.") 'slime-edit-definition))
+ (define-key slime-mode-map (kbd "H-.") 'find-tag)
+ ;; (define-key slime-mode-map (kbd "H-.") 'slime-edit-definition)
+ )
 
-(add-hook 'slime-mode-hook 'rc-slime-mode-unclobber-bindings)
+;; (add-hook 'slime-mode-hook 'rc-slime-mode-unclobber-bindings)
+
+(global-set-key (kbd "H-.") 'find-tag)
 
 (rc-bind-cleanup-untabify-save lisp-mode-map)
 (rc-bind-cleanup-untabify-save emacs-lisp-mode-map)
