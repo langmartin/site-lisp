@@ -82,7 +82,8 @@
 (defun tiling-restore-current-cfg ()
   (interactive)
   (set-window-configuration (tiling-cur-win))
-  (goto-char (tiling-cur-point)))
+  ;; (goto-char (tiling-cur-point))
+  )
 
 (defun tiling-cycle-cfg ()
   (interactive)
