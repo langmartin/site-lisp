@@ -27,10 +27,12 @@
  '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "/usr/local/share/man")))
  '(woman-use-own-frame nil))
 
+(global-set-key (kbd "H-SPC") 'just-one-space)
+
 (progn
   (require 'advice)
   (require 'mailto-compose-mail)
-  
+
   (defvar ns-input-file-alist nil)
 
   (defadvice ns-find-file (around ns-find-file-url activate)
