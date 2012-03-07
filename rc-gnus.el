@@ -135,6 +135,10 @@
   (bbdb-insinuate-message)
   (bbdb-insinuate-gnus)
   (custom-set-variables
+   '(message-setup-hook
+     (quote (bbdb-insinuate-message
+             bbdb-define-all-aliases
+             mml-secure-message-sign-pgpmime)))
    '(bbdb-complete-name-allow-cycling t)
    '(bbdb-dwim-net-address-allow-redundancy t)
    '(bbdb-file "~/.emacs.d/bbdb")))
