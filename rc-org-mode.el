@@ -71,4 +71,28 @@
         (org-timestamp-change n 'hour)
         ))))
 
+(defun org-clock-get-clock-string ()
+  "MONKEY PATCHED, the original is in org-clock.el. This one doesn't support special faces in the modeline, which makes active/inactive work as expected. The original doc string: Form a clock-string, that will be shown in the mode line. If an effort estimate was defined for the current item, use 01:30/01:50 format (clocked/estimated). If not, show simply the clocked time like 01:50."
+  (let* ((clocked-time (org-clock-get-clocked-time))
+         (h (floor clocked-time 60))
+         (m (- clocked-time (* 60 h))))
+    (if org-clock-effort
+        (let* ((effort-in-minutes
+                (org-duration-string-to-minutes org-clock-effort))
+               (effort-h (floor effort-in-minutes 60))
+               (effort-m (- effort-in-minutes (* effort-h 60)))
+               (work-done-str
+                (org-propertize
+                 (format org-time-clocksum-format h m)))
+               (effort-str (format org-time-clocksum-format effort-h effort-m))
+               (clockstr (org-propertize
+                          (concat  "[%s/" effort-str
+                                   "] ("
+                                   (replace-regexp-in-string "%" "%%" org-clock-heading)
+                                   ")"))))
+          (format clockstr work-done-str))
+      (org-propertize (format
+                       (concat "[" org-time-clocksum-format " (%s)]")
+                       h m org-clock-heading)))))
+
 (provide 'rc-org-mode)
