@@ -302,6 +302,10 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
 ;;   (define-key global-map (kbd "C-c SPC") 'ace-jump-mode))
 
 (require 'rc-monkey-patches)
-(require 'powerline)
+
+(progn
+  (require 'powerline)
+  (rc-org-mode-line-less-decoration)
+  (rc-erc-mode-line-less-decoration))
 
 (provide 'rc-emacs)

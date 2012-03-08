@@ -67,6 +67,7 @@
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-track-faces-priority-list (quote ((erc-nick-default-face erc-current-nick-face) erc-current-nick-face (erc-nick-default-face erc-pal-face) erc-pal-face erc-nick-msg-face erc-direct-msg-face)))
  '(erc-track-priority-faces-only (quote all))
+ '(erc-track-position-in-mode-line t)
 
  ;; http://www.bestinclass.dk/index.php/2010/03/approaching-productivity/
  '(erc-button-url-regexp
@@ -84,5 +85,25 @@
      message)))
 
 ;; (add-hook 'erc-text-matched-hook 'erc-growl-hook)
+
+(defun rc-erc-mode-line-less-decoration ()
+  (defun erc-modified-channels-object (strings)
+    "MONKEY PATCHED, the original is in erc-track. Generate a new `erc-modified-channels-object' based on STRINGS. If STRINGS is nil, we initialize `erc-modified-channels-object' to
+an appropriate initial value for this flavor of Emacs."
+    (if strings
+        (if (featurep 'xemacs)
+            (let ((e-m-c-s '("[")))
+              (push (cons (extent-at 0 (car strings)) (car strings))
+                    e-m-c-s)
+              (dolist (string (cdr strings))
+                (push "," e-m-c-s)
+                (push (cons (extent-at 0 string) string)
+                      e-m-c-s))
+              (push "] " e-m-c-s)
+              (reverse e-m-c-s))
+          (concat " "
+                  (mapconcat 'identity (nreverse strings) " ")
+                  " "))
+      (if (featurep 'xemacs) '() ""))))
 
 (provide 'rc-erc)
