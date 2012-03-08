@@ -1,3 +1,4 @@
+(require 'utility)
 (require 'htmlize)
 (require 'org)
 (require 'org-attach)
