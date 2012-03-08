@@ -49,7 +49,8 @@
 \\usepackage{longtable}
 \\usepackage{float}
 \\usepackage{amssymb}
-\\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\\usepackage[usenames,dvipsnames]{xcolor}
+\\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=Blue,citecolor=Blue,urlcolor=Blue,filecolor=Blue]{hyperref}
 \\usepackage{parskip}
 \\setcounter{secnumdepth}{5}
 \\usepackage{endnotes}
@@ -61,6 +62,9 @@
   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
  'equal)
 
+(custom-set-variables
+ '(org-export-latex-default-class "langmartin"))
+
 (defun org-shift-timestamps (start end n)
   "Update all timestamps in the region n hours"
   (interactive "r\nnAdd hours: ")
@@ -70,6 +74,8 @@
       (when (org-at-timestamp-p t)
         (org-timestamp-change n 'hour)
         ))))
+
+(require 'org-clock)
 
 (defun org-clock-get-clock-string ()
   "MONKEY PATCHED, the original is in org-clock.el. This one doesn't support special faces in the modeline, which makes active/inactive work as expected. The original doc string: Form a clock-string, that will be shown in the mode line. If an effort estimate was defined for the current item, use 01:30/01:50 format (clocked/estimated). If not, show simply the clocked time like 01:50."
