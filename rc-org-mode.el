@@ -13,7 +13,17 @@
    ("C-c C-x C-j" . org-clock-goto))
  'erc-mode-hook)
 
-(define-key org-mode-map "\C-x\C-s" 'cleanup-untabify-save)
+(defun org-kill-link-as-commit-message ()
+  "Capture a stored link. Add it to the kill ring in a format suitable for use as a version control commit message."
+  (interactive)
+  (call-interactively 'org-store-link)
+  (let ((link (car org-stored-links)))
+    ;; A link is a (list URL DESCRIPTION)
+    (kill-new (concat (cadr link) "\n" (car link) "\n"))
+    (setq org-stored-links (cdr org-stored-links))))
+
+(define-key org-mode-map (kbd "C-x C-s") 'cleanup-untabify-save)
+(define-key org-mode-map (kbd "C-c M-l") 'org-kill-link-as-commit-message)
 
 (progn
   (add-hook 'org-mode-hook 'comment-char-org)

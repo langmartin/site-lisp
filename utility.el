@@ -224,4 +224,10 @@ Valid keywords and arguments are:
    nil
    options))
 
+(defun cleanup-untabify-save ()
+  (interactive)
+  (cleanup-buffer)
+  (untabify-buffer)
+  (save-buffer))
+
 (provide 'utility)
