@@ -45,4 +45,9 @@
          (test-segments (append (list (car before)) (list "test") (cdr before) after)))
     (mapconcat 'identity test-segments "/")))
 
+(defun rc-clojure-indentation ()
+  (interactive)
+  (put-clojure-indent 'and-let 1)
+  (put-clojure-indent 'valid-let 1))
+
 (provide 'rc-lisp)
