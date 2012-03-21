@@ -1,6 +1,7 @@
 (defvar rc-javascript-mode)
 
-(defun rc-js2-mode ()
+(defun rc-js2-mode-setup ()
+  (interactive)
   (require 'js2-mode)
   (custom-set-variables
    '(js2-basic-offset 2)
@@ -10,9 +11,11 @@
   ;; (add-hook 'js2-mode-hook 'turn-on-js-paredit-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
+  (define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save))
 
+(defun rc-js2-mode ()
+  (rc-js2-mode-setup)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode)))
-  (define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save)
   (defalias 'rc-javascript-mode 'js2-mode))
 
 (defun rc-espresso-mode ()
