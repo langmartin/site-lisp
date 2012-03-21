@@ -111,8 +111,12 @@
   (let ((lst (tiling-cur-blessed)))
     (if t ;; (tiling-current-is-activep)
         (cond ((> (length lst) 1)
-               (select-window (car lst))
-               (tiling-set-cur-blessed (rotate-list lst)))
+               (condition-case nil
+                   (progn
+                     (select-window (car lst))
+                     (tiling-set-cur-blessed (rotate-list lst)))
+                 (error
+                  (other-window 1))))
               (t
                (other-window 1)))
       (other-window 1))))

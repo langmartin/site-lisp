@@ -140,6 +140,16 @@
   (setq truncate-partial-width-windows 80))
 
 (require 'tiling)
+(define-key tiling-mode-map (kbd "C-x o") 'tiling-switch-or-bless)
+(define-key tiling-mode-map (kbd "C-c o") 'other-window)
+
+(setq tiling-mode-map
+  (easy-mmode-define-keymap
+   (list (cons (kbd "C-<tab>") 'tiling-switch-or-bless)
+         (cons (kbd "C-M-<tab>") 'tiling-cycle-or-recapture)
+         ;; (cons (kbd "C-x o") 'tiling-skip-other-window)
+         (cons (kbd "C-x o") 'tiling-find-main-window)
+         (cons (kbd "C-c o") 'tiling-find-skipped-window))))
 
 (defun switch-to-last-buffer ()
   (interactive)
