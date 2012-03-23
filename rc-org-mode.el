@@ -40,7 +40,9 @@
  '(org-clock-modeline-total (quote current))
  '(org-cycle-include-plain-lists nil)
  '(org-clock-into-drawer 4)
- '(org-adapt-indentation nil))
+ '(org-adapt-indentation nil)
+ '(org-hierarchical-checkbox-statistics nil)
+ '(org-hierarchical-todo-statistics nil))
 
 ;;;; I've added the endnotes package to this header, it doesn't change
 ;;;; anything by default. In order to use it, you need to add two
