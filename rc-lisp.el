@@ -49,5 +49,6 @@
   (interactive)
   (put-clojure-indent 'and-let 1)
   (put-clojure-indent 'valid-let 1))
+(rc-clojure-indentation)
 
 (provide 'rc-lisp)
