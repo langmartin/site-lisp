@@ -50,7 +50,7 @@
     (irc-freenode)))
 
 (custom-set-variables
- '(erc-autoaway-mode t)
+ '(erc-autoaway-mode nil)
  '(erc-autoaway-idle-method (quote user))
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-short))
  '(erc-join-buffer (quote bury))
@@ -105,5 +105,17 @@ an appropriate initial value for this flavor of Emacs."
                   (mapconcat 'identity (nreverse strings) " ")
                   " "))
       (if (featurep 'xemacs) '() ""))))
+
+(defface erc-header-line-disconnected
+  '((t (:background "red4" :foreground "white")))
+  "Face to use when ERC has been disconnected.")
+
+(defun erc-update-header-line-show-disconnected ()
+  "Use a different face in the header-line when disconnected."
+  (erc-with-server-buffer
+    (cond ((erc-server-process-alive) 'erc-header-line)
+          (t 'erc-header-line-disconnected))))
+
+(setq erc-header-line-face-method 'erc-update-header-line-show-disconnected)
 
 (provide 'rc-erc)
