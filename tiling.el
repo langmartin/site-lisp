@@ -61,6 +61,12 @@
 ;;;; Interface
 (defun tiling-clear ()
   (interactive)
+  (setq tiling-configuration-list
+        (cdr tiling-configuration-list))
+  (tiling-restore-current-cfg))
+
+(defun tiling-clear-all ()
+  (interactive)
   (setq tiling-configuration-list nil))
 
 (defun tiling-capture (&optional blessed)
