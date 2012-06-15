@@ -44,7 +44,7 @@
     (lambda-insert-with-point "function () {" "}"))
   (defalias 'rc-javascript-mode 'js-mode))
 
-(rc-jshint-mode)
+(rc-js2-mode)
 
 (defun rc-mozilla-repl ()
   (require 'moz)
