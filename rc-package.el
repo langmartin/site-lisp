@@ -26,6 +26,9 @@ Otherwise warn."
 (with-feature org
   (add-to-info-path "~/.emacs.d/elpa/org-20120207/"))
 
+(with-feature sws-mode
+  (with-feature jade-mode))
+
 (defun rc-package-install-packages ()
   "Install initial packages"
   (interactive)
