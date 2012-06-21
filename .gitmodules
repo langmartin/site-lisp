@@ -25,3 +25,6 @@
 [submodule "ace-jump-mode"]
 	path = ace-jump-mode
 	url = git://github.com/winterTTr/ace-jump-mode.git
+[submodule "js2-mode"]
+	path = js2-mode
+	url = https://github.com/mooz/js2-mode.git

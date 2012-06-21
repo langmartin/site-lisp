@@ -26,10 +26,6 @@
 (progn
   (define-key (current-global-map) (kbd "H-l")
     (lambda-insert-with-point "(lambda ()" ")"))
-
-  (if (boundp 'js2-mode-map)
-      (define-key js2-mode-map (kbd "H-l")
-        (lambda-insert-with-point "function () {" "}")))
   )
 
 (provide 'rc-hyper-keymap)

@@ -1,20 +1,46 @@
 (defvar rc-javascript-mode)
 
+(defun js-insert-lambda ()
+  (interactive)
+  (let ((before "function() {")
+        (after  "}"))
+    (insert before)
+    (insert after)
+    (backward-char (length after))))
+
 (defun rc-js2-mode-setup ()
   (interactive)
   (require 'js2-mode)
   (custom-set-variables
-   '(js2-basic-offset 2)
-   '(js2-bounce-indent-flag t)
-   '(js2-mirror-mode nil))
-  (add-hook 'js2-mode-hook 'turn-off-tabs)
-  ;; (add-hook 'js2-mode-hook 'turn-on-js-paredit-mode)
-  ;; (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
-  ;; (add-hook 'js2-mode-hook 'turn-on-moz-minor-mode)
-  (define-key js2-mode-map "\C-x\C-s" 'cleanup-untabify-save))
+   '(js2-bounce-indent-p t)
+   '(js2-mirror-mode nil)
+   '(js2-cleanup-whitespace t)
+   '(js2-global-externs (quote (require exports))))
+  (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
+  (define-key js2-mode-map (kbd "H-l") 'js-insert-lambda)
+  (eval-after-load 'js2-mode
+    '(progn
+       (require 'js2-imenu-extras)
+       (js2-imenu-extras-setup))))
+
+(defun rc-js2-mode-spaces ()
+  "Configure js2 mode without tabs and with js2-basic-offset: 2"
+  (interactive)
+  (require 'js2-mode)
+  (set-default 'js2-basic-offset 2)
+  (add-hook 'js2-mode-hook 'turn-off-tabs))
+
+(defun rc-js2-mode-tabs ()
+  "Configure js2 mode with tabs and with js2-basic-offset: 4"
+  (interactive)
+  (require 'js2-mode)
+  (set-default 'js2-basic-offset 4)
+  (add-hook 'js2-mode-hook 'turn-on-tabs)
+  (add-hook 'js2-mode-hook 'set-tab-width-4))
 
 (defun rc-js2-mode ()
   (rc-js2-mode-setup)
+  (rc-js2-mode-tabs)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode)))
   (defalias 'rc-javascript-mode 'js2-mode))
 
@@ -40,8 +66,7 @@
   ;; (require 'flymake-jshint)
   (add-to-auto-mode-alist '(("\\.js\\'" . js-mode)))
 
-  (define-key js-mode-map (kbd "H-l")
-    (lambda-insert-with-point "function () {" "}"))
+  (define-key js-mode-map (kbd "H-l") 'js-insert-lambda)
   (defalias 'rc-javascript-mode 'js-mode))
 
 (rc-js2-mode)
