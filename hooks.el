@@ -1,7 +1,7 @@
 (defmacro prog0 (&rest body) nil)
 
-(defun turn-on-tabs () (interactive) (setq indent-tabs-mode 1))
-(defun turn-off-tabs () (interactive) (setq indent-tabs-mode -1))
+(defun turn-on-tabs () (interactive) (setq indent-tabs-mode t))
+(defun turn-off-tabs () (interactive) (setq indent-tabs-mode nil))
 
 (defun set-tab-width-2 () (interactive) (setq tab-width 2) (setq c-basic-offset 2))
 (defun set-tab-width-4 () (interactive) (setq tab-width 4) (setq c-basic-offset 4))
