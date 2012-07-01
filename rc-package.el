@@ -26,8 +26,9 @@ Otherwise warn."
 (with-feature org
   (add-to-info-path "~/.emacs.d/elpa/org-20120207/"))
 
-(with-feature sws-mode
-  (with-feature jade-mode))
+;; (with-feature sws-mode
+;;   (with-feature jade-mode
+;;     (add-hook 'jade-mode-hook 'turn-off-tabs)))
 
 (defun rc-package-install-packages ()
   "Install initial packages"
