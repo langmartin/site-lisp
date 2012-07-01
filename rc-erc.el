@@ -33,11 +33,12 @@
 
 (defun irc-freenode ()
   (interactive)
-  (erc :server "irc.freenode.net"
-       :nick "langmartin"
-       :full-name "Lang Martin"
-       :port 8001
-       :password freenode-password)
+  (erc-tls :server "irc.freenode.net"
+           :nick "langmartin"
+           :full-name "Lang Martin"
+           ;; :port 8001
+           :port 6697
+           :password freenode-password)
   (erc-fix-colors))
 
 ;; (define-buffer-visitor visit-medium "#medium" 'irc)
