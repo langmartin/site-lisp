@@ -80,12 +80,13 @@
 
 (defun erc-growl-hook (match-type nick message)
   "Shows a growl notification, when user's nick was mentioned. If the buffer is currently not visible, makes it sticky."
-  (unless (posix-string-match "^\\** *Users on #" message)
-    (growl
-     (concat "ERC " (buffer-name (current-buffer)))
-     message)))
+  (when (eq match-type 'current-nick)
+    (unless (posix-string-match "^\\** *Users on #" message)
+      (growl
+       (concat "ERC " (buffer-name (current-buffer)))
+       message))))
 
-;; (add-hook 'erc-text-matched-hook 'erc-growl-hook)
+(add-hook 'erc-text-matched-hook 'erc-growl-hook)
 
 (defun rc-erc-mode-line-less-decoration ()
   (defun erc-modified-channels-object (strings)
