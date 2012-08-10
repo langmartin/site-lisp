@@ -158,6 +158,10 @@
 
 (defun gnus-group-or-start ()
   (interactive)
+  (mapc (lambda (b)
+          (if (string-match "^\\*Summary " (buffer-name b))
+              (kill-buffer b)))
+        (buffer-list))
   (if-let* ((buffer (get-buffer "*Group*")))
       (progn (switch-to-buffer buffer)
              (gnus-group-get-new-news))
