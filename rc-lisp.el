@@ -6,8 +6,8 @@
 (defun rc-bind-paredit-extra-braces ()
   (define-key paredit-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key paredit-mode-map (kbd "M-]") 'paredit-close-square-and-newline)
-  (define-key paredit-mode-map (kbd "C-M-{") 'paredit-wrap-curly)
-  (define-key paredit-mode-map (kbd "C-M-}") 'paredit-close-curly-and-newline))
+  (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
+  (define-key paredit-mode-map (kbd "M-}") 'paredit-close-curly-and-newline))
 
 (rc-bind-paredit-extra-braces)
 
