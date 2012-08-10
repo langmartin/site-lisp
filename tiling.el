@@ -131,7 +131,7 @@
   (interactive "p")
   (cond ((triple-prefixp p)
          (tiling-clear)
-         (message "Cleared all"))
+         (message "Cleared"))
         ((or (double-prefixp p) (null tiling-configuration-list))
          (tiling-capture)
          (message "Captured"))
