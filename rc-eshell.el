@@ -18,4 +18,6 @@
 
 (global-set-key (kbd "H-s") 'eshell-focus-or-create)
 
+(global-set-key (kbd "H-s") 'shell)
+
 (provide 'rc-eshell)
