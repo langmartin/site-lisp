@@ -242,6 +242,9 @@ line instead."
   (setq auto-mode-alist
         (cons '("\\.md" . markdown-mode) auto-mode-alist)))
 
+(add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-unix-mode))
+(add-to-list 'auto-mode-alist '("\\.git/config$" . conf-unix-mode))
+
 ;; (require 'rc-slime)
 
 (toggle-text-mode-auto-fill)
