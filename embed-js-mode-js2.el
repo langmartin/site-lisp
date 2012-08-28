@@ -66,7 +66,7 @@
   (define-key js2-mode-map [(return)] 'newline-and-indent)
   (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
   (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
-  (define-key js2-mode-map [(meta q)] 'generic-indent-sexp)
+  (define-key js2-mode-map [(control meta q)] 'generic-indent-sexp)
 
   (if (featurep 'js2-highlight-vars)
       (js2-highlight-vars-mode)))
