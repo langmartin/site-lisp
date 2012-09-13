@@ -321,4 +321,11 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
   (rc-org-mode-line-less-decoration)
   (rc-erc-mode-line-less-decoration))
 
+(progn
+  ;; autosave buffer on window switch
+  (defadvice switch-to-buffer (before save-buffer-now activate)
+    (when buffer-file-name (save-buffer)))
+  (defadvice other-window (before other-window-now activate)
+    (when buffer-file-name (save-buffer))))
+
 (provide 'rc-emacs)
