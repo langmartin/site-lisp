@@ -16,8 +16,21 @@
         (t
          (eshell nil))))
 
-(global-set-key (kbd "H-s") 'eshell-focus-or-create)
+;; (global-set-key (kbd "H-s") 'eshell-focus-or-create)
 
-(global-set-key (kbd "H-s") 'shell)
+(defun shell-focus-or-create (prefix)
+  (interactive "P")
+  (cond (prefix
+         (eshell prefix))
+        ((bufferp (get-buffer "*shell*"))
+         (let ((dir default-directory))
+           (switch-to-buffer "*shell*")
+           (unless (equal dir default-directory)
+             (insert "cd " dir)
+             (comint-send-input))))
+        (t
+         (eshell nil))))
+
+(global-set-key (kbd "H-s") 'shell-focus-or-create)
 
 (provide 'rc-eshell)
