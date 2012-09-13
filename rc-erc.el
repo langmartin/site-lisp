@@ -78,11 +78,19 @@
           (lambda (nick ip reason)
             (erc-log-save-all-buffers)))
 
+(defun notification-center (title message)
+  (start-process "terminal-notifier"
+                 "*terminal-notifier*"
+                 "/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier"
+                 "-title" title
+                 "-message" message
+                 "-activate" "org.gnu.Emacs"))
+
 (defun erc-growl-hook (match-type nick message)
   "Shows a growl notification, when user's nick was mentioned. If the buffer is currently not visible, makes it sticky."
   (when (eq match-type 'current-nick)
     (unless (posix-string-match "^\\** *Users on #" message)
-      (growl
+      (notification-center
        (concat "ERC " (buffer-name (current-buffer)))
        message))))
 
