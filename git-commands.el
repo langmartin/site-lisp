@@ -124,4 +124,18 @@
   nil
   git-commands-map)
 
+(defun git-get-current-branch ()
+  (with-temp-buffer
+    (shell-command "git symbolic-ref HEAD" (current-buffer))
+    (let ((str (chomp (buffer-string))))
+      (string-match "^refs/.*?/\\(.*\\)$" str)
+      (match-string 1 str))))
+
+(defun git-set-rebase ()
+  (interactive)
+  (shell-command
+   (concat "git config \"branch."
+           (git-get-current-branch)
+           ".rebase\" true")))
+
 (provide 'git-commands)
