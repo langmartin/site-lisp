@@ -21,7 +21,7 @@
 (defun shell-focus-or-create (prefix)
   (interactive "P")
   (cond (prefix
-         (eshell prefix))
+         (call-interactively #'shell))
         ((bufferp (get-buffer "*shell*"))
          (let ((dir default-directory))
            (switch-to-buffer "*shell*")
@@ -29,7 +29,17 @@
              (insert "cd " dir)
              (comint-send-input))))
         (t
-         (eshell nil))))
+         (shell nil))))
+
+(defun send-c-c-interrupt-subjob (prefix)
+  (interactive "P")
+  (cond (prefix
+         (comint-interrupt-subjob))
+        (t
+         (insert "")
+         (comint-send-input))))
+
+(define-key shell-mode-map (kbd "C-c C-c") 'send-c-c-interrupt-subjob)
 
 (global-set-key (kbd "H-s") 'shell-focus-or-create)
 
