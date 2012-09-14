@@ -11,7 +11,7 @@ Otherwise warn."
        (progn ,@body)
      (warn "feature %s is not installed" ',feature)))
 
-(with-feature maxframe)
+;; (with-feature maxframe)
 (with-feature org-compat)
 
 (with-feature project-mode
