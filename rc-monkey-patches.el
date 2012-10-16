@@ -20,6 +20,8 @@
 ;;       (if old-editor
 ;;           (setenv "GIT_EDITOR" old-editor)))))
 
+(defalias 'magit-push-original 'magit-push)
+
 (defun magit-push (&optional prefix)
   (interactive "P")
   (message "This monkey-patched version of push only pushes what you have configured in .git/config for the default push. Do the rest on the command line.")
