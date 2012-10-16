@@ -1,30 +1,3 @@
 [submodule "bbdb-vcard"]
 	path = bbdb-vcard
 	url = git://github.com/trebb/bbdb-vcard.git
-[submodule "org-mode"]
-	path = org-mode
-	url = git://repo.or.cz/org-mode.git
-[submodule "swank-js"]
-	path = swank-js
-	url = git://github.com/ivan4th/swank-js.git
-[submodule "slime"]
-	path = slime
-	url = git://sbcl.boinkor.net/slime.git
-[submodule "vimvars"]
-	path = vimvars
-	url = git://github.com/jamesyoungman/vimvars.git
-[submodule "gnus"]
-	path = gnus
-	url = git://github.com/emacsmirror/gnus.git
-[submodule "anything-config"]
-	path = anything-config
-	url = git://repo.or.cz/anything-config.git
-[submodule "zencoding"]
-	path = zencoding
-	url = git://github.com/rooney/zencoding.git
-[submodule "ace-jump-mode"]
-	path = ace-jump-mode
-	url = git://github.com/winterTTr/ace-jump-mode.git
-[submodule "js2-mode"]
-	path = js2-mode
-	url = https://github.com/mooz/js2-mode.git
