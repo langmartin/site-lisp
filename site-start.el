@@ -299,6 +299,10 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
+(defun cx-date-pretty ()
+  (interactive)
+  (insert (format-time-string "%a, %b %d %Y")))
+
 (defun cx-time () "Insert a time stamp in coptix format"
   (interactive)
   (insert (format-time-string "%H:%M:%S")))
