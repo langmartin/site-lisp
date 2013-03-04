@@ -24,9 +24,8 @@
 
 (defun magit-push (&optional prefix)
   (interactive "P")
-  (message "This monkey-patched version of push only pushes what you have configured in .git/config for the default push. Do the rest on the command line.")
   (if (not prefix)
-      (magit-run-git-async "push" "-v")
+      (magit-run-git-async "push" "-v" "backup")
     (magit-run-git-with-input
      (read-from-minibuffer
       "Run: git origin "))))
