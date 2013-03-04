@@ -1,7 +1,3 @@
-(add-to-load-path "/usr/local/lib/node_modules/jshint-mode")
-(with-feature flymake-jshint
-  (require 'rc-javascript))
-
 (require 'visual-basic-mode)
 (require 'sgml-mode)
 (setq visual-basic-mode-indent 4)
