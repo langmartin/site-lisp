@@ -1,7 +1,7 @@
 (require 'paredit)
 (require 'clojure-mode)
 (require 'scheme-rc)
-(rc-scheme48)
+(rc-guile)
 
 (defun rc-bind-paredit-extra-braces ()
   (define-key paredit-mode-map (kbd "M-[") 'paredit-wrap-square)

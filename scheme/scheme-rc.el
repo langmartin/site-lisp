@@ -1,3 +1,5 @@
+(require 'scheme)
+
 (defun gambit-setup ()
   "Gambit-C scheme-mode extensions"
   (interactive)
@@ -21,6 +23,11 @@
   (require 'scheme48)
   (setq scheme-program-name "scheme48")
   (scheme-extend-info "(scheme48)Binding Index"))
+
+(defun rc-guile ()
+  "Scheme48 scheme-mode extensions"
+  (interactive)
+  (setq scheme-program-name "guile"))
 
 (defun rc-mzscheme ()
   "MzScheme scheme-mode setup"
