@@ -46,14 +46,13 @@ Otherwise warn."
           jabber
           magit
           maxframe
-          project-mode
-          rcirc
           session
           ;; Programming modes
-          ;; js2-mode
+          js2-mode
           clojure-mode
-          org-compat
-          zencoding
+          clojure-project-mode
+          nrepl
+          zencoding-mode
           )))
 
 (provide 'rc-package)
