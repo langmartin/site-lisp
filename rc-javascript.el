@@ -15,7 +15,7 @@
    '(js2-bounce-indent-p t)
    '(js2-mirror-mode nil)
    '(js2-cleanup-whitespace t)
-   '(js2-global-externs (quote (require exports))))
+   '(js2-global-externs (quote ("require" "exports" "process" "console"))))
   (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   (define-key js2-mode-map (kbd "H-l") 'js-insert-lambda)
   ;; (eval-after-load 'js2-mode
