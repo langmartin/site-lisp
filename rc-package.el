@@ -47,6 +47,7 @@ Otherwise warn."
           magit
           maxframe
           session
+          websocket
           ;; Programming modes
           js2-mode
           clojure-mode

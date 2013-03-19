@@ -72,7 +72,7 @@
   (defalias 'rc-javascript-mode 'js-mode))
 
 (require 'embed-js-mode-js2)
-
 (rc-js2-mode)
+(require 'jss)
 
 (provide 'rc-javascript)
