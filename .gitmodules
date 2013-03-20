@@ -1,6 +1,3 @@
-[submodule "bbdb-vcard"]
-	path = bbdb-vcard
-	url = git://github.com/trebb/bbdb-vcard.git
 [submodule "jss"]
 	path = jss
 	url = https://github.com/segv/jss.git
