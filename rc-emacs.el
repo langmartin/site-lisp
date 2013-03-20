@@ -271,10 +271,6 @@ line instead."
 
 (require 'rc-look-and-feel)
 
-(progn
-  (require 'vimvars)
-  (add-hook 'find-file-hook 'vimvars-obey-vim-modeline))
-
 ;; http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
 (progn
   (defun push-mark-no-activate (&optional pfix)

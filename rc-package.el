@@ -3,6 +3,7 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
+
 (package-initialize)
 
 (defmacro with-feature (feature &rest body)
@@ -40,6 +41,8 @@ Otherwise warn."
               (package-install p)))
         '(
           ;; Utilities
+	  bbdb
+	  ;; bbdb-vcard
           highlight-symbol
           htmlize
           guess-offset
