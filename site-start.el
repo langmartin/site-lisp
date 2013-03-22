@@ -59,7 +59,7 @@ Set it intead of tab-width.")
                 auto-mode-alist))
 
   (add-hook '2C-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (setq 2C-window-width 24)
                (setq 2C-beyond-fill-column 0)
                (other-window 2)
@@ -184,7 +184,7 @@ the working directory"
   (global-set-key (kbd "H-h") 'help)
   (global-set-key [home] 'jump-to-register)
   (add-hook 'erc-mode-hook
-            '(lambda () (local-set-key [home] 'jump-to-register))))
+            #'(lambda () (local-set-key [home] 'jump-to-register))))
 
 (defun cx-set-plain-tab-keys ()
   "Bind <tab> to always insert just a real tab"
@@ -203,7 +203,7 @@ the working directory"
   (global-set-key "\C-x\C-b" 'electric-buffer-list)
   (global-set-key "\C-m" 'newline-and-indent)
   (add-hooks '(perl-mode-hook python-mode-hook)
-             '(lambda () (local-set-key "\C-m" 'newline))))
+             #'(lambda () (local-set-key "\C-m" 'newline))))
 
 (require 'scheme-rc)
 
@@ -459,5 +459,5 @@ repeated unfill entire region as one paragraph."
   (interactive)
   (rc-schemers)
   (add-hook 'c-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (c-set-style "bsd"))))
