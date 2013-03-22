@@ -20,4 +20,9 @@
   (untabify-buffer)
   (save-buffer))
 
+(defun cleanup-save ()
+  (interactive)
+  (cleanup-buffer)
+  (save-buffer))
+
 (provide 'rc-python)
