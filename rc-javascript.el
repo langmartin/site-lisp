@@ -11,6 +11,7 @@
 (defun rc-js2-mode-setup ()
   (interactive)
   (require 'js2-mode)
+  (require 'rc-python)                  ; cleanup
   (custom-set-variables
    '(js2-bounce-indent-p t)
    '(js2-mirror-mode nil)
@@ -18,6 +19,7 @@
    '(js2-global-externs (quote ("require" "exports" "process" "console"))))
   (add-hook 'js2-mode-hook 'turn-on-c-subword-mode)
   (define-key js2-mode-map (kbd "H-l") 'js-insert-lambda)
+  (define-key js2-mode-map (kbd "C-x C-s") 'cleanup-save)
   ;; (eval-after-load 'js2-mode
   ;;   '(progn
   ;;      (require 'js2-imenu-extras)
