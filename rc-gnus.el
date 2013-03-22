@@ -137,7 +137,7 @@
   (custom-set-variables
    '(message-setup-hook
      (quote (bbdb-insinuate-message
-             bbdb-define-all-aliases
+             ;; bbdb-define-all-aliases
              mml-secure-message-sign-pgpmime)))
    '(bbdb-complete-name-allow-cycling t)
    '(bbdb-complete-mail-allow-cycling t)
