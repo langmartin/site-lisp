@@ -108,8 +108,8 @@
     (message-goto-body)
     (mml-secure-message-sign-pgpmime)))
 
-(add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-(setq message-cite-function 'message-cite-pgp-sign)
+;; (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+;; (setq message-cite-function 'message-cite-pgp-sign)
 
 (rc-gnus)
 
@@ -127,6 +127,18 @@
            "dns@list.cr.yp.to"
            "cfpug@cfpug.com"
            ))))
+
+;; http://www.emacswiki.org/emacs/GnusSMIME
+
+(custom-set-variables
+ '(password-cache-expiry 86400)
+ '(smime-CA-directory "~/.emacs.d/ssl")
+ '(smime-certificate-directory "~/.emacs.d/smime/")
+ '(smime-keys (quote (("lang.martin@gmail.com" "~/.emacs.d/smime/smime-lang.martin@gmail.com.pem" ("~/.emacs.d/smime/startcom-intermediate.pem")) ("lang@quickcue.com" "~/.emacs.d/smime/smime-lang@quickcue.com.pem" ("~/.emacs.d/smime/startcom-intermediate.pem")))))
+ '(mm-decrypt-option (quote always))
+ '(mm-verify-option (quote always)))
+
+(add-hook 'message-send-hook 'mml-secure-message-sign-smime)
 
 (with-feature bbdb
   (require 'bbdb-autoloads nil t)
