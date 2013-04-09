@@ -151,7 +151,7 @@
   (interactive)
   (save-default-directory
       "~"
-    (flet ((gnus-yes-or-no-p (prompt) t))
+    (cl-flet ((gnus-yes-or-no-p (prompt) t))
       (gnus-group-restart)
       ;; Add a demon command to check for new mail
       ;; (gnus-demon-add-handler 'gnus-group-get-new-news 5 1)

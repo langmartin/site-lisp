@@ -108,7 +108,7 @@
 
 (defun urldecode (string)
   (let ((state 0) (code nil))
-    (flet ((hex (ch) (string-match (char-to-string ch) hex-values)))
+    (cl-flet ((hex (ch) (string-match (char-to-string ch) hex-values)))
       (mapconcat (lambda (ch)
                    (cond ((= state 0)
                           (cond ((= ?+ ch) " ")
