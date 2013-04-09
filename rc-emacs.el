@@ -41,7 +41,14 @@
    ("C-x C-b" . switch-to-buffer)
    ("C-x x b" . ibuffer)))
 
-(iswitchb-mode 1)
+;; (iswitchb-mode 1)
+(progn
+  (require 'ido)
+  (custom-set-variables
+   '(ido-enable-flex-matching t)
+   '(ido-everywhere t)
+   '(ido-mode 'both))
+  (global-set-key (kbd "C-x f") 'find-file-in-repository))
 
 (defvar programming-mode-hooks
   '(c-mode-common-hook
