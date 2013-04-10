@@ -8,11 +8,6 @@
 (require 'message)
 (require 'advice)
 
-(defun rc-smtpmail-through-matching-accounts ()
-  "Doesn't work in emacs 24."
-
-(defvar smtpmail-account-authinfo '())
-
 (defun message-extract-header (header)
   (save-excursion
     (save-restriction
@@ -23,6 +18,14 @@
   (let ((from (message-extract-header "from")))
     (string-match "<\\(.*?\\)>" from)
     (match-string 1 from)))
+
+(defun message-to-google-voice-p ()
+  (string-match-p "@txt\\.voice\\.google\\.com" (message-extract-header "to")))
+
+(defun rc-smtpmail-through-matching-accounts ()
+  "Doesn't work in emacs 24."
+
+(defvar smtpmail-account-authinfo '())
 
 (defun smtpmail-through-matching-account ()
   "Change the SMTP server according to the current from line."
@@ -142,7 +145,11 @@
  '(mml-smime-use (quote openssl))
  '(mml2015-sign-with-sender t))
 
-(add-hook 'message-send-hook 'mml-secure-message-sign-smime)
+(defun mml-secure-message-sign-smime-maybe ()
+  (unless (message-to-google-voice-p)
+    (mml-secure-message-sign-smime)))
+
+(add-hook 'message-send-hook 'mml-secure-message-sign-smime-maybe)
 
 (with-feature bbdb
   (require 'bbdb-autoloads nil t)
@@ -151,11 +158,12 @@
   (bbdb-insinuate-message)
   (bbdb-insinuate-gnus)
   (custom-set-variables
-   '(message-setup-hook (quote (bbdb-insinuate-message)))
    '(bbdb-complete-name-allow-cycling t)
    '(bbdb-complete-mail-allow-cycling t)
    '(bbdb-dwim-net-address-allow-redundancy t)
    '(bbdb-file "~/.emacs.d/bbdb")))
+
+(add-hook 'message-setup-hook 'bbdb-insinuate-message)
 
 (require 'gnus-notify)
 ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
