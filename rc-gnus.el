@@ -82,10 +82,13 @@
                  (nnir-search-engine imap)))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
-  ;; (setq gnus-posting-styles
-  ;;       `(("." (address ,user-mail-address))
-  ;;         ;; ("work:" (address ,email-work))
-  ;;         ))
+  (setq gnus-posting-styles
+        `(("."
+           (address ,user-mail-address))
+          ((header "to" ,work-mail-address)
+           (address ,work-mail-address))
+          ((header "cc" ,work-mail-address)
+           (address ,work-mail-address))))
   (progn
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
@@ -132,11 +135,12 @@
 
 (custom-set-variables
  '(password-cache-expiry 86400)
- '(smime-CA-directory "~/.emacs.d/ssl")
+ '(smime-CA-directory "~/.emacs.d/smime/")
  '(smime-certificate-directory "~/.emacs.d/smime/")
- '(smime-keys (quote (("lang.martin@gmail.com" "~/.emacs.d/smime/smime-lang.martin@gmail.com.pem" ("~/.emacs.d/smime/startcom-intermediate.pem")) ("lang@quickcue.com" "~/.emacs.d/smime/smime-lang@quickcue.com.pem" ("~/.emacs.d/smime/startcom-intermediate.pem")))))
  '(mm-decrypt-option (quote always))
- '(mm-verify-option (quote always)))
+ '(mm-verify-option (quote always))
+ '(mml-smime-use (quote openssl))
+ '(mml2015-sign-with-sender t))
 
 (add-hook 'message-send-hook 'mml-secure-message-sign-smime)
 
@@ -147,10 +151,7 @@
   (bbdb-insinuate-message)
   (bbdb-insinuate-gnus)
   (custom-set-variables
-   '(message-setup-hook
-     (quote (bbdb-insinuate-message
-             ;; bbdb-define-all-aliases
-             mml-secure-message-sign-pgpmime)))
+   '(message-setup-hook (quote (bbdb-insinuate-message)))
    '(bbdb-complete-name-allow-cycling t)
    '(bbdb-complete-mail-allow-cycling t)
    '(bbdb-dwim-net-address-allow-redundancy t)
