@@ -135,6 +135,8 @@
            ))))
 
 ;; http://www.emacswiki.org/emacs/GnusSMIME
+;; export the private key bit and the intermediate together then pipe through
+;;   openssl pkcs12 -clcerts
 
 (custom-set-variables
  '(password-cache-expiry 86400)
