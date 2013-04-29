@@ -1,3 +1,6 @@
 [submodule "jss"]
 	path = jss
 	url = https://github.com/segv/jss.git
+[submodule "skeleton-complete"]
+	path = skeleton-complete
+	url = https://github.com/baohaojun/skeleton-complete.git

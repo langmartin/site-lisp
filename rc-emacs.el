@@ -41,6 +41,8 @@
    ("C-x C-b" . switch-to-buffer)
    ("C-x x b" . ibuffer)))
 
+(require 'skeleton-complete)
+
 ;; (iswitchb-mode 1)
 (progn
   (require 'ido)
