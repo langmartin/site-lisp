@@ -34,6 +34,19 @@
   (interactive)
   (setq scheme-program-name "MzScheme"))
 
+(defun rc-racket ()
+  "PLT racket scheme-mode setup"
+  (interactive)
+  (require 'quack)
+  (require 'geiser)
+  (require 'scheme-complete)
+  (setq geiser-racket-binary "/Applications/Racket v5.3.3/bin/racket"))
+
+(defun rc-chicken ()
+  "chicken scheme-mode extensions"
+  (interactive)
+  (setq scheme-program-name "csi"))
+
 (defun rc-paredit ()
   (require 'paredit)
   (add-hooks '(scheme-mode-hook
