@@ -1,4 +1,11 @@
 (require 'scheme)
+;; (require 'quack)
+(require 'geiser-mode)
+(require 'geiser-repl)
+(define-key geiser-repl-mode-map (kbd "M-`") nil)
+(define-key geiser-mode-map (kbd "M-`") nil)
+(require 'scheme-complete)
+(setq geiser-racket-binary "/Applications/Racket v5.3.4/bin/racket")
 
 (defun gambit-setup ()
   "Gambit-C scheme-mode extensions"
@@ -36,11 +43,7 @@
 
 (defun rc-racket ()
   "PLT racket scheme-mode setup"
-  (interactive)
-  (require 'quack)
-  (require 'geiser)
-  (require 'scheme-complete)
-  (setq geiser-racket-binary "/Applications/Racket v5.3.3/bin/racket"))
+  (interactive))
 
 (defun rc-chicken ()
   "chicken scheme-mode extensions"
@@ -82,6 +85,7 @@
 
 (scheme-add-indentations
  '((and-let* 1)
+   (if-let* 1)
    (let-optionals 2)
    (let-optionals* 2)
    (let-port-rest 2)
