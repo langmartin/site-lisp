@@ -50,6 +50,10 @@
    '(ido-enable-flex-matching t)
    '(ido-everywhere t)
    '(ido-mode 'both))
+  (custom-set-faces
+   '(ido-incomplete-regexp ((t (:foreground "grey40"))))
+   '(ido-indicator ((t (:foreground "yellow4"))))
+   '(ido-subdir ((t (:foreground "blue3")))))
   (global-set-key (kbd "C-x f") 'find-file-in-repository))
 
 (defvar programming-mode-hooks
