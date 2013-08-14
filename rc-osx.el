@@ -42,7 +42,8 @@
            (catch 'handler
              (mapc (lambda (pair)
                      (if (string-match (car pair) ns-input-file)
-                         (throw 'handler (cdr pair))))))))
+                         (throw 'handler (cdr pair))))
+                   ns-input-file))))
       (if handler
           (funcall handler (pop ns-input-file))
         ad-do-it)))
