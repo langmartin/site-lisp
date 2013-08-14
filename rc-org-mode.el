@@ -67,6 +67,16 @@
 \\usepackage{parskip}
 \\setcounter{secnumdepth}{5}
 \\usepackage{endnotes}
+
+\\usepackage{titling}
+\\pretitle{\\begin{center}\\LARGE}
+\\posttitle{\\par\\end{center}\\vskip -2em}
+\\preauthor{\\begin{center}
+\\large \\lineskip 0em%
+\\begin{tabular}[t]{c}}
+\\postauthor{\\end{tabular}\\par\\end{center}}
+\\predate{\\begin{center}\\large}
+\\postdate{\\par\\end{center}}
 "
   ("\\section{%s}" . "\\section*{%s}")
   ("\\subsection{%s}" . "\\subsection*{%s}")
