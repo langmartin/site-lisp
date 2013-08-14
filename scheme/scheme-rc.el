@@ -1,11 +1,14 @@
 (require 'scheme)
-;; (require 'quack)
-(require 'geiser-mode)
-(require 'geiser-repl)
-(define-key geiser-repl-mode-map (kbd "M-`") nil)
-(define-key geiser-mode-map (kbd "M-`") nil)
 (require 'scheme-complete)
-(setq geiser-racket-binary "/Applications/Racket v5.3.4/bin/racket")
+;; (require 'quack)
+
+(progn
+  (require 'geiser-mode)
+  (require 'geiser-repl)
+  (define-key geiser-repl-mode-map (kbd "M-`") nil)
+  (define-key geiser-mode-map (kbd "M-`") nil)
+  (when (boundp 'session-globals-exclude)
+    (add-to-list 'session-globals-exclude 'geiser-doc--history)))
 
 (defun gambit-setup ()
   "Gambit-C scheme-mode extensions"
@@ -43,6 +46,7 @@
 
 (defun rc-racket ()
   "PLT racket scheme-mode setup"
+  (setq scheme-program-name "racket")
   (interactive))
 
 (defun rc-chicken ()
