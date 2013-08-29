@@ -1,0 +1,147 @@
+/*
+ * Additional keybindings for emacs emulation
+ *
+ * mkdir -p ~/Library/Keybindings; cp DefaultKeyBinding.dict ~/Library/Keybindings
+ *
+ * Originally compiled by Jacob Rus.  Modified/embellished/customized by Aaron Cohen.
+ *
+ * Sources:
+ *
+ *   http://www.hcs.harvard.edu/%7Ejrus/Site/cocoa-text.html
+ *   http://www.hcs.harvard.edu/%7Ejrus/Site/selectors.html
+ *
+ *   https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/ApplicationKit/Classes/NSResponder_Class/Reference/Reference.html
+ *
+ * WARNING:
+ *
+ * This file uses the Option key as a meta key.  This overrides the Mac OS keybindings for the option key, which produce common symbols and non-English letters.
+ * To access the original binding of an Option combination, simply type Control-Q and the binding, and the original character will be output.
+ * If that doesn't work on your platform, run this and you should be g2g:
+ *
+ * defaults write -g NSQuotedKeystrokeBinding -string "^q"
+ *
+ * NOTES:
+ *
+ * We use cut:, copy:, paste: for C-w, M-w, C-y rather than deleteToMark:, selectToMark:, yank: for 2 reasons:
+ *
+ * 1. It permits copy/paste or cut/paste across applications
+ *
+ * 2. It permits an implementation of M-w that actually works consistently and correctly
+ *
+ * To see in xml syntax which keybindings Mac OSX has already defined for you, run the following at a terminal prompt and then open ~/mac_key_bindings.dict -
+ *
+ * plutil -convert xml1 /System/Library/Frameworks/AppKit.framework/Versions/C/Resources/StandardKeyBinding.dict -o ~/mac_key_bindings.dict
+ *
+ * We deliberately do *not* repeat herein any keybindings already defined by the OS *unless* we override them.
+ *
+ * To set up C-u to be the repeat count keybinding, run the following at a terminal prompt.
+ * Be aware that if you do this *any* use of C-u (even within a sequence of keys) will eval to the repeat count method.
+ *
+ * defaults write -g NSRepeatCountBinding -string "^u"
+ *
+ * Finally, I would *love* to find a way around Macs not allowing the rebinding M-n, M-u, and M-e - I can't help but hope that there's some way of hacking whatever it is that prevents their rebinding.
+ * If anybody has any clues, please let me know ...
+ *
+ */
+{
+    /* Ctrl shortcuts */
+
+    "^/" = "undo:";                                    /* C-/      Undo - this is a rebinding */
+
+    "^ " = "setMark:";                                 /* C-Space  Set mark */
+    "^w" = ( "selectToMark:", "cut:" );                /* C-w      Highlight and cut to mark onto general pasteboard - this is a rebinding */
+    "^y" = "paste:";                                   /* C-y      Paste from general pasteboard - this is a rebinding  */
+
+    "^g" = "cancelOperation:";                         /* C-g      Bail out; could also use "_cancelKey:" */
+
+    "^j" = "insertNewline:";                           /* C-j      Carriage return */
+
+    "^a" = "moveToLeftEndOfLine:";                     /* C-a      Move to beginning of *line* - this is a rebinding */
+    "^A" = "moveToLeftEndOfLineAndModifySelection:";   /* C-A      Select from point to beginning of *line* - this is a rebinding */
+
+    "^e" = "moveToRightEndOfLine:";                    /* C-e      Move to end of *line* - this is a rebinding */
+    "^E" = "moveToRightEndOfLineAndModifySelection:";  /* C-E      Select from point to end of *line* - this is a rebinding */
+
+
+    /* Meta shortcuts */
+
+    "~w"      = ( "selectToMark:", "copy:" );                         /* M-w          Highlight and copy to mark onto general pasteboard */
+
+    "~m"      = ( "moveToBeginningOfLine:",
+                  "moveWordForward:",
+                  "moveWordBackward:" );                              /* M-m          Move to first non-whitespace, non-symbol char of line */
+
+    "~f"      = "moveWordForward:";                                   /* M-f          Move to end of word */
+    "~F"      = "moveWordForwardAndModifySelection:";                 /* M-F          Select from point to end of word */
+
+    "~b"      = "moveWordBackward:";                                  /* M-b          Move to beginning of word */
+    "~B"      = "moveWordBackwardAndModifySelection:";                /* M-b          Select from point to beginning of word */
+
+    "~d"      = "deleteWordForward:";                                 /* M-d          Delete from point to end of word */
+    "~\U007F" = "deleteWordBackward:";                                /* M-Backspace  Delete from point to beginning of word */
+
+    "~<"      = "moveToBeginningOfDocument:";                         /* M-<          Move to beginning of document */
+    "~>"      = "moveToEndOfDocument:";                               /* M->          Move to end of document */
+
+    "~v"      = "pageUp:";                                            /* M-v          Page Up */
+    "~V"      = "pageUpAndModifySelection:";                          /* M-V
+
+    "~/"      = "complete:";                                          /* M-/          Complete (uses English dictionary rather than current doc symbols, thus entirely silly) */
+
+    "~c"      = ( "capitalizeWord:", "moveForward:" );                /* M-c          Capitalize word or words in region - the latter is NOT emacs standard */
+    "~l"      = ( "lowercaseWord:", "moveForward:" );                 /* M-l          Lowercase word or words in region - the latter is NOT emacs standard */
+    "~U"      = ( "uppercaseWord:", "moveForward:" );                 /* M-u          Uppercase word or words in region  - the latter is NOT emacs standard */
+                                                                      /*              ... USE ~U RATHER THAN ~u BECAUSE ~u IS NOT REBINDABLE! */
+
+    "~t"      = "transposeWords:";                                    /* M-t          Transpose words ... DOESN'T WORK BECAUSE "transposeWords:" IS BUGGY! */
+
+    "~\\@"    = ( "moveWordBackward:",
+                  "setMark:",
+                  "selectWord:" );                                    /* M-@          Highlight word, setting mark at its beginning (@ means Command key if unescaped) */
+    "~h"      = ( "moveToBeginningOfParagraph:",
+                  "setMark:",
+                  "selectParagraph:" );                               /* M-h          Highlight paragraph, setting mark at its beginning */
+
+    "~z"      = "redo:";                                              /* M-z          Redo - NOT emacs standard, but damn handy  */
+
+    "~a"      = ( "moveBackward:", "moveToBeginningOfParagraph:" );   /* M-a          Move to beginning of paragraph */
+    "~^a"     = ( "moveBackward:", "moveToBeginningOfParagraph:" );   /* C-M-a        Move to beginning of paragraph (see note for ~e) */
+    "~A"      = ( "moveBackwardAndModifySelection:",
+                  "moveToBeginningOfParagraphAndModifySelection:" );  /* M-A          Select from point to beginning of paragraph */
+    "~^A"     = ( "moveBackwardAndModifySelection:",
+                  "moveToBeginningOfParagraphAndModifySelection:" );  /* C-M-A        Select from point to beginning of paragraph (see note for ~e) */
+
+    "~e"      = ( "moveForward:", "moveToEndOfParagraph:" );          /* M-e          Move to end of paragraph - DOESN'T WORK BECAUSE ~e IS NOT REBINDABLE */
+    "~^e"     = ( "moveForward:", "moveToEndOfParagraph:" );          /* C-M-e        Move to end of paragraph */
+    "~E"      = ( "moveForwardAndModifySelection:",
+                  "moveToEndOfParagraphAndModifySelection:" );        /* M-E          Select from point to end of paragraph */
+    "~^E"     = ( "moveForwardAndModifySelection:",
+                  "moveToEndOfParagraphAndModifySelection:" );        /* C-M-E        Select from point to end of paragraph (see note for ~e) */
+
+    /* C-x shortcuts */
+
+    "^x" = {
+        "u"  = "undo:";                               /* C-x u    Undo */
+
+        "^u" = ( "uppercaseWord:", "moveForward:" );  /* C-x C-u  Uppercase word or words in region - won't work if you rebound ^u to be repeat count */
+        "^U" = ( "uppercaseWord:", "moveForward:" );  /* C-x C-U  Uppercase word or words in region - for consistency with ~U, and also for if you rebound ^u */
+        "^l" = ( "lowercaseWord:", "moveForward:" );  /* C-x C-l  Lowercase word or words in region */
+
+        "h"  = "selectAll:";                          /* C-x h    Select All */
+
+        "^x" = "swapWithMark:";                       /* C-x C-x  Swap point with mark */
+
+        "k"  = "performClose:";                       /* C-x k    Close */
+
+        "^f" = "openDocument:";                       /* C-x C-f  Open (find file) ... DOESN'T WORK BECAUSE "openDocument:" IS BUGGY */
+
+        "^s" = "save:";                               /* C-x C-s  Save ... works in some apps, not in others */
+        "^w" = "saveAs:";                             /* C-x C-w  Save as ... doesn't seem to work */
+    };
+
+    /* C-c shortcuts */
+
+    "^c" = {
+         "l" = "selectLine:";  /* C-c l         Select line - NOT emacs standard */
+    };
+}
