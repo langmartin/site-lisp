@@ -151,7 +151,12 @@
   (unless (message-to-google-voice-p)
     (mml-secure-message-sign-smime)))
 
-(add-hook 'message-send-hook 'mml-secure-message-sign-smime-maybe)
+(defun mml-maybe-unsecure ()
+  (when (message-to-google-voice-p)
+    (mml-unsecure-message)))
+
+(add-hook 'message-setup-hook 'mml-secure-message-sign-smime)
+(add-hook 'message-send-hook 'mml-maybe-unsecure)
 
 (with-feature bbdb
   (require 'bbdb-autoloads nil t)
