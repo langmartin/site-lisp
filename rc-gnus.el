@@ -22,6 +22,12 @@
 (defun message-to-google-voice-p ()
   (string-match-p "@txt\\.voice\\.google\\.com" (message-extract-header "to")))
 
+(defun message-to-excluded-person-p ()
+  (let ((to (message-extract-header "to")))
+    (or (string-match-p "jacorroon@optonline\\.net" to)
+        (string-match-p "jack\\.a\\.corroon@gmail\\.com" to)
+        (string-match-p "motoportusa@earthlink\\.net" to))))
+
 (defun rc-smtpmail-through-matching-accounts ()
   "Doesn't work in emacs 24."
 
@@ -148,7 +154,8 @@
  '(mml2015-sign-with-sender t))
 
 (defun mml-secure-message-sign-smime-maybe ()
-  (unless (message-to-google-voice-p)
+  (unless (or (message-to-google-voice-p)
+              (message-to-excluded-person-p))
     (mml-secure-message-sign-smime)))
 
 (add-hook 'message-send-hook 'mml-secure-message-sign-smime-maybe)
