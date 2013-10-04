@@ -90,6 +90,8 @@
 (scheme-add-indentations
  '((and-let* 1)
    (if-let* 1)
+   (do-> 1)
+   (do* 1)
    (let-optionals 2)
    (let-optionals* 2)
    (let-port-rest 2)
