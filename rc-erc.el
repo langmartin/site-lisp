@@ -87,7 +87,8 @@
                  "/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier"
                  "-title" title
                  "-message" message
-                 "-activate" "org.gnu.Emacs"))
+                 "-activate" "org.gnu.Emacs"
+                 "-sender" "org.gnu.Emacs"))
 
 (defun erc-growl-hook (match-type nick message)
   "Shows a growl notification, when user's nick was mentioned. If the buffer is currently not visible, makes it sticky."
