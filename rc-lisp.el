@@ -51,7 +51,18 @@
   (interactive)
   (put-clojure-indent 'and-let 1)
   (put-clojure-indent 'valid-let 1))
+
 (rc-clojure-indentation)
+
+(defun clojure-insert-lambda ()
+  (interactive)
+  (let ((before "(fn []")
+        (after  ")"))
+    (insert before)
+    (insert after)
+    (backward-char (length after))))
+
+(define-key clojure-mode-map (kbd "H-l") 'clojure-insert-lambda)
 
 (defun insert-clojure-clear-ns ()
   (interactive)
