@@ -6,6 +6,7 @@
 (require 'hooks)
 (load "site-start")
 (rc-lang)
+(require 'rc-backup)
 
 (defmacro ifdef (function &rest args)
   `(if (fboundp ',function)
