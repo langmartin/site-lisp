@@ -1,3 +1,7 @@
+(require 'cl)
+(require 'utility)
+(require 'srfi-1)
+
 (defun join (list splice)
   "Join a sequence of strings with the string splice."
   (apply 'concat

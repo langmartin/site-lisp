@@ -1,9 +1,12 @@
-(progn
-  ;; settings for bleeding-ier edge No Gnus v0.11
- (setq gnus-registry-install t)
- (setq tls-program '("openssl s_client -connect %h:%p -no_ssl2 -ign_eof"))
- (setq gnus-message-archive-group nil)
- )
+(require 'utility)
+(require 'srfi-2)
+
+;; (progn
+;;   ;; settings for bleeding-ier edge No Gnus v0.11
+;;  (setq gnus-registry-install t)
+;;  (setq tls-program '("openssl s_client -connect %h:%p -no_ssl2 -ign_eof"))
+;;  (setq gnus-message-archive-group nil)
+;;  )
 
 (require 'message)
 (require 'advice)
@@ -27,7 +30,9 @@
     (or (string-match-p "jacorroon@optonline\\.net" to)
         (string-match-p "jack\\.a\\.corroon@gmail\\.com" to)
         (string-match-p "motoportusa@earthlink\\.net" to)
-        (string-match-p "@reply\\.github\\.com" to))))
+        (string-match-p "@reply\\.github\\.com" to)
+        (string-match-p "perrycwhite" to)
+        (string-match-p "joanwhite" to))))
 
 (defun rc-smtpmail-through-matching-accounts ()
   "Doesn't work in emacs 24."
@@ -92,13 +97,13 @@
                  (nnir-search-engine imap)))
   (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
   (setq gnus-use-full-window nil)
-  (setq gnus-posting-styles
-        `(("."
-           (address ,user-mail-address))
-          ((header "to" ,work-mail-address)
-           (address ,work-mail-address))
-          ((header "cc" ,work-mail-address)
-           (address ,work-mail-address))))
+  ;; (setq gnus-posting-styles
+  ;;       `(("."
+  ;;          (address ,user-mail-address))
+  ;;         ((header "to" ,work-mail-address)
+  ;;          (address ,work-mail-address))
+  ;;         ((header "cc" ,work-mail-address)
+  ;;          (address ,work-mail-address))))
   (progn
     (setq gnus-treat-display-smileys nil)
     ;; (add-hook 'mail-mode-hook 'visual-line-not-auto-fill)
@@ -126,33 +131,34 @@
 
 (rc-gnus)
 
-(custom-set-variables
- '(gnus-agent nil)
- '(gnus-build-sparse-threads (quote some))
- '(gnus-dribble-directory "~/.emacs.d")
- '(gnus-fetch-old-headers (quote invisible))
- '(gnus-refer-thread-limit t)
- '(gnus-message-replysign t)
- '(gnus-message-replyencrypt t)
- '(mail-mailing-lists
-   (quote ("gambit-list@iro.umontreal.ca"
-           "all@coptix.com"
-           "dns@list.cr.yp.to"
-           "cfpug@cfpug.com"
-           ))))
+(defun rc-gnus-custom-set-variables ()
+  (custom-set-variables
+   '(gnus-agent nil)
+   '(gnus-build-sparse-threads (quote some))
+   '(gnus-dribble-directory "~/.emacs.d")
+   '(gnus-fetch-old-headers (quote invisible))
+   '(gnus-refer-thread-limit t)
+   '(gnus-message-replysign t)
+   '(gnus-message-replyencrypt t)
+   '(mail-mailing-lists
+     (quote ("gambit-list@iro.umontreal.ca"
+	     "office@quickcue.com"
+	     "dns@list.cr.yp.to"
+	     "cfpug@cfpug.com"
+	     ))))
 
-;; http://www.emacswiki.org/emacs/GnusSMIME
-;; export the private key bit and the intermediate together then pipe through
-;;   openssl pkcs12 -clcerts
+  ;; http://www.emacswiki.org/emacs/GnusSMIME
+  ;; export the private key bit and the intermediate together then pipe through
+  ;;   openssl pkcs12 -clcerts
 
-(custom-set-variables
- '(password-cache-expiry 86400)
- '(smime-CA-directory "~/.emacs.d/smime/")
- '(smime-certificate-directory "~/.emacs.d/smime/")
- '(mm-decrypt-option (quote always))
- '(mm-verify-option (quote always))
- '(mml-smime-use (quote openssl))
- '(mml2015-sign-with-sender t))
+  (custom-set-variables
+   '(password-cache-expiry 86400)
+   '(smime-CA-directory "~/.emacs.d/smime/")
+   '(smime-certificate-directory "~/.emacs.d/smime/")
+   '(mm-decrypt-option (quote always))
+   '(mm-verify-option (quote always))
+   '(mml-smime-use (quote openssl))
+   '(mml2015-sign-with-sender t)))
 
 (defun mml-secure-message-sign-smime-maybe ()
   (unless (or (message-to-google-voice-p)
@@ -175,7 +181,7 @@
 
 (add-hook 'message-setup-hook 'bbdb-insinuate-message)
 
-(require 'gnus-notify)
+;; (require 'gnus-notify)
 ;; Put your cursor on "All Mail" G p add (modline-notify t) to the list
 
 (defun gnus-group-restart-dont-ask ()
