@@ -1,3 +1,5 @@
+(require 'hooks)
+
 (defvar rc-javascript-mode)
 
 (defun js-insert-lambda ()
@@ -75,6 +77,6 @@
 
 (require 'embed-js-mode-js2)
 (rc-js2-mode)
-(require 'jss)
+;; (require 'jss)
 
 (provide 'rc-javascript)
