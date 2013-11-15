@@ -276,19 +276,19 @@ http://www.emacswiki.org/cgi-bin/wiki/ToggleWindowSplit"
     (erc-growl nick message)))
 
 ;;;; Utility Functions
-(defun cx-date () "Insert a date stamp in coptix format"
+(defun yyyymmdd () "Insert a date stamp in coptix format"
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(defun cx-date-pretty ()
+(defun yyyymmdd-pretty ()
   (interactive)
   (insert (format-time-string "%a, %b %d %Y")))
 
-(defun cx-time () "Insert a time stamp in coptix format"
+(defun hhmmss () "Insert a time stamp in coptix format"
   (interactive)
   (insert (format-time-string "%H:%M:%S")))
 
-(defun cx-datetime ()
+(defun datetime ()
   "Insert time and date as %Y-%m-%d %H:%M:%S"
   (interactive)
   (cx-date)
