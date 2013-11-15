@@ -17,11 +17,11 @@ Otherwise warn."
 ;; (with-feature maxframe)
 (with-feature org-compat)
 
-(with-feature project-mode
-  (project-load-all))
+;; (with-feature project-mode
+;;   (project-load-all))
 
-(with-feature session
-  (session-initialize))
+;; (with-feature session
+;;   (session-initialize))
 
 (with-feature magit
   (add-to-info-path "~/.emacs.d/elpa/magit-1.1.1/"))
@@ -41,8 +41,8 @@ Otherwise warn."
               (package-install p)))
         '(
           ;; Utilities
-	  bbdb
-	  ;; bbdb-vcard
+          bbdb
+          ;; bbdb-vcard
           highlight-symbol
           htmlize
           guess-offset

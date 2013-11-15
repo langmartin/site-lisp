@@ -3,8 +3,8 @@
 
 (require 'rc-erc)
 
-(with-feature jabber
- (require 'rc-jabber))
+;; (with-feature jabber
+;;  (require 'rc-jabber))
 
 ;;;; Switch to active jabber buffers then to active erc buffers on C-c
 ;;;; C-space.
