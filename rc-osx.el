@@ -2,11 +2,11 @@
 
 (fringe-mode '(1 . 1))
 
-(setenv "EMACS" "/Applications/Emacs.app/Contents/MacOS/Emacs")
-(setenv "EDITOR" "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
-(setenv "GIT_EDITOR" "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient")
+(setenv "EMACS" "/usr/local/bin/emacs")
+(setenv "EDITOR" "/usr/local/bin/emacsclient")
+(setenv "GIT_EDITOR" (getenv "EDITOR"))
+(setenv "PAGER" "tail -n100")
 (setenv "GIT_PAGER" "")
-(setenv "PAGER" "cat")
 ;; (setenv "SUDO_ASKPASS" "/Developer/usr/libexec/git-core/git-gui--askpass")
 
 (defun osx-defaults-write ()
@@ -23,7 +23,7 @@
  '(ns-alternate-modifier (quote hyper))
  '(ns-command-modifier (quote meta))
  '(tramp-initial-commands (quote ("unset HISTFILE" "unset correct" "unset autocorrect")))
- '(Info-additional-directory-list (quote ("/Applications/Emacs.app/Contents/Resources/info" "/usr/share/info")))
+ '(Info-additional-directory-list (quote ("/usr/share/info")))
  '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "/usr/local/share/man")))
  '(woman-use-own-frame nil))
 
