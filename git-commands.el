@@ -102,6 +102,20 @@
         (cd dir)
         (diff-mode)))))
 
+(defun backtick (command)
+  (with-temp-buffer
+    (shell-command command (current-buffer))
+    (chomp (buffer-string))))
+
+(defun git-set-rebase ()
+  (interactive)
+  (let ((branch (backtick "git rev-parse --abbrev-ref HEAD")))
+    (shell-command (concat "git config branch." branch ".rebase true"))))
+
+(defun git-set-default-push ()
+  (interactive)
+  (shell-command "git config remote.origin.push '+refs/heads/*:refs/remotes/langmartin/*'"))
+
 (defvar git-commands-map)
 
 (setq git-commands-map
