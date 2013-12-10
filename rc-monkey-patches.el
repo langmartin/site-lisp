@@ -25,7 +25,7 @@
 (defun magit-push (&optional prefix)
   (interactive "P")
   (if (not prefix)
-      (magit-run-git-async "push" "-v" "backup")
+      (magit-run-git-async "push" "-v" "origin")
     (magit-run-git-with-input
      (read-from-minibuffer
       "Run: git origin "))))
