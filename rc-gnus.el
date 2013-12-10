@@ -27,12 +27,8 @@
 
 (defun message-to-excluded-person-p ()
   (let ((to (message-extract-header "to")))
-    (or (string-match-p "jacorroon@optonline\\.net" to)
-        (string-match-p "jack\\.a\\.corroon@gmail\\.com" to)
-        (string-match-p "motoportusa@earthlink\\.net" to)
-        (string-match-p "@reply\\.github\\.com" to)
-        (string-match-p "perrycwhite" to)
-        (string-match-p "joanwhite" to))))
+    (or (string-match-p "@reply\\.github\\.com" to)
+        )))
 
 (defun rc-smtpmail-through-matching-accounts ()
   "Doesn't work in emacs 24."
