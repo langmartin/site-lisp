@@ -122,6 +122,10 @@
   (interactive)
   (shell-command "git config remote.origin.push '+refs/heads/*:refs/remotes/langmartin/*'"))
 
+(defun git-edit-config ()
+  (interactive)
+  (find-file (concat (git-get-current-root) "/config")))
+
 (defun git-set-hook-pre-commit ()
   (interactive)
   (let ((ppwd default-directory))
