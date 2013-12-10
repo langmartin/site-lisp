@@ -107,14 +107,32 @@
     (shell-command command (current-buffer))
     (chomp (buffer-string))))
 
+(defun git-get-current-branch ()
+  (backtick "git rev-parse --abbrev-ref HEAD"))
+
+(defun git-get-current-root ()
+  (backtick "git rev-parse --git-dir"))
+
 (defun git-set-rebase ()
   (interactive)
-  (let ((branch (backtick "git rev-parse --abbrev-ref HEAD")))
+  (let ((branch (git-get-current-branch)))
     (shell-command (concat "git config branch." branch ".rebase true"))))
 
 (defun git-set-default-push ()
   (interactive)
   (shell-command "git config remote.origin.push '+refs/heads/*:refs/remotes/langmartin/*'"))
+
+(defun git-set-hook-pre-commit ()
+  (interactive)
+  (let ((ppwd default-directory))
+    (unwind-protect
+	(progn
+	  (cd (git-get-current-root))
+	  (cd "hooks")
+	  (when (not (file-exists-p "pre-commit"))
+	    (when (file-exists-p "pre-commit.sample")
+	      (copy-file "pre-commit.sample" "pre-commit"))))
+      (cd ppwd))))
 
 (defvar git-commands-map)
 
