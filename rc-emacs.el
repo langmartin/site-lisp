@@ -169,17 +169,15 @@
 (defun switch-to-last-buffer ()
   (interactive)
   (switch-to-buffer nil))
-
-(global-set-keys '(("M-`" . switch-to-last-buffer)
-                   ;; ("C-<tab>" . other-window)
-                   ))
+(global-set-key (kbd "M-`") 'switch-to-last-buffer)
 
 (require 'rc-dired)
 (require 'rc-hyper-keymap)
 
 (progn
   (require 'goto-last-change)
-  (global-set-key "\C-x\C-\\" 'goto-last-change))
+  (global-set-key "\C-x\C-\\" 'goto-last-change)
+  (global-set-key (kbd "C-x C-/") 'goto-last-change))
 
 ;;;; http://emacs-fu.blogspot.com/2009/11/copying-lines-without-selecting-them.html
 (defadvice kill-ring-save (before slick-copy activate compile) "When called
