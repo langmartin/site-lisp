@@ -68,16 +68,24 @@
   (interactive)
   (insert "(doseq [[x _] (ns-map *ns*)] (ns-unmap *ns* x))"))
 
-(defun rc-clojure-nrepl ()
-  (require 'nrepl)
-  (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
-  (setq nrepl-popup-stacktraces-in-repl t)
-  (add-to-list 'same-window-buffer-names "*nrepl*")
-  (add-hook 'nrepl-mode-hook 'subword-mode)
-  (add-hook 'nrepl-mode-hook 'paredit-mode)
-  (define-key clojure-mode-map (kbd "C-c C-z") 'nrepl-jack-in)
+(defun rc-clojure-cider ()
+  (unless (package-installed-p 'cider)
+    (package-install 'cider))
+  (require 'cider)
+
+  (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+  (add-hook 'cider-repl-mode-hook 'subword-mode)
+  (add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+  (setq cider-repl-pop-to-buffer-on-connect nil
+        cider-popup-stacktraces nil
+        cider-repl-popup-stacktraces t
+        cider-repl-result-prefix ";; => "
+        cider-auto-select-error-buffer t
+        cider-repl-display-in-current-window t)
+
   (setenv "JVM_OPTS" "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n"))
 
-(rc-clojure-nrepl)
+(rc-clojure-cider)
 
 (provide 'rc-lisp)

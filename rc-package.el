@@ -53,9 +53,8 @@ Otherwise warn."
           websocket
           ;; Programming modes
           js2-mode
+          cider
           clojure-mode
-          clojure-project-mode
-          nrepl
           zencoding-mode
           )))
 
