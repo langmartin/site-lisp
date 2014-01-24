@@ -73,7 +73,17 @@
 (require 'script-collection)
 (require 'smooth-scrolling)
 (blink-cursor-mode -1)
-(require 'rc-gnus)
+
+(defun rc-mu4e ()
+  ;; (require 'rc-gnus)
+  (require 'mu4e)
+  (setq mail-user-agent 'mu4e-user-agent)
+  (global-set-key
+   (kbd "C-x m")
+   (alist-to-keymap-via-kbd
+    '(("m" . mu4e-compose-new)
+      ("r" . mu4e)))))
+(rc-mu4e)
 
 ;; (defun pykk-init ()
 ;;   (interactive)
