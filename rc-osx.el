@@ -7,6 +7,7 @@
 (setenv "GIT_EDITOR" (getenv "EDITOR"))
 (setenv "PAGER" "tail -n100")
 (setenv "GIT_PAGER" "")
+(setenv "MANPAGER" "cat")
 ;; (setenv "SUDO_ASKPASS" "/Developer/usr/libexec/git-core/git-gui--askpass")
 
 (defun osx-defaults-write ()
