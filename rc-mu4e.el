@@ -7,7 +7,7 @@
   '(("m" . mu4e-compose-new)
     ("r" . mu4e))))
 
-;; brew install mu4e --with-emacs
+;; brew install --with-emacs mu
 ;; brew install offlineimap
 ;; brew install html2text
 
@@ -23,3 +23,5 @@
  '(mu4e-refile-folder "/Archive")
  '(mu4e-sent-folder "/Archive")
  '(mu4e-trash-folder "/Deleted Items"))
+
+(provide 'rc-mu4e)
