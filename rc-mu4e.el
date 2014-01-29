@@ -10,7 +10,7 @@
  (kbd "C-x m")
  (alist-to-keymap-via-kbd
   '(("m" . mu4e-compose-new)
-    ("r" . mu4e-and-update))))
+    ("r" . mu4e))))
 
 ;; brew install --with-emacs mu
 ;; brew install offlineimap
