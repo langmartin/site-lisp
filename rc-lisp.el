@@ -78,7 +78,7 @@
   (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
   (setq cider-repl-pop-to-buffer-on-connect nil
-        cider-popup-stacktraces nil
+        cider-popup-stacktraces t
         cider-repl-popup-stacktraces t
         cider-repl-result-prefix ";; => "
         cider-auto-select-error-buffer t
