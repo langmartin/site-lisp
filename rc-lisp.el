@@ -77,6 +77,8 @@
   (add-hook 'cider-repl-mode-hook 'subword-mode)
   (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
+  (define-key clojure-mode-map (kbd "C-x `") 'cider-jump-to-compilation-error)
+
   (setq cider-repl-pop-to-buffer-on-connect nil
         cider-popup-stacktraces t
         cider-repl-popup-stacktraces t
