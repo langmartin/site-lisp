@@ -32,6 +32,7 @@
                              "-nobs"
                              "-utf8")
         (view-mode)
+        (beginning-of-buffer)
         (switch-to-buffer buf)))))
 
 (define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text)
