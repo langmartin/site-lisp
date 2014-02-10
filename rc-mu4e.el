@@ -37,8 +37,18 @@
 
 (define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text)
 
+(defun mu4e-mark-move-to-follow ()
+  (interactive)
+  (mu4e-mark-set 'move "/follow")
+  (mu4e-headers-next))
+
+(define-key mu4e-headers-mode-map "!" 'mu4e-mark-move-to-follow)
+(define-key mu4e-view-mode-map "!" 'mu4e-mark-move-to-follow)
+
 ;; (setq mu4e-html2text-command "html2text -width 72 -nobs -utf8")
 ;; (setq mu4e-html2text-command nil)
+;; (setq mu4e-get-mail-command "offlineimap")
+;; (setq mu4e-get-mail-command "true")
 
 (prog0
  (custom-set-variables
@@ -61,7 +71,7 @@
  '(mu4e-headers-fields (quote ((:human-date . 12) (:flags . 6) (:from . 22) (:subject))))
  '(mu4e-headers-leave-behavior (quote apply))
  '(mu4e-view-show-addresses t)
- '(mu4e-bookmarks (quote (("flag:unread AND NOT flag:trashed" "Unread messages" 117) ("flag:flagged OR maildir:/INBOX" "Flagged" 105) ("date:today..now" "Today's messages" 116) ("date:7d..now" "Last 7 days" 119) ("mime:image/*" "Messages with images" 112))))
+ '(mu4e-bookmarks (quote (("flag:unread AND NOT flag:trashed OR maildir:/INBOX" "Unread messages" 117) ("flag:flagged OR maildir:/follow" "Flagged" 105) ("date:today..now" "Today's messages" 116) ("date:7d..now" "Last 7 days" 119) ("from:lang AND date:7d..now" "Last week from me" 115) ("flag:draft OR maildir:/Drafts" "Drafts" 100))))
  '(mu4e-confirm-quit nil))
 
 ;; (custom-save-all)
