@@ -17,36 +17,40 @@
 ;; brew install offlineimap
 ;; brew install html2text
 
-(defun mu4e-view-with-html2text ()
+;;;; Toggle viewing with the other html viewer
+
+(defun mu4e-view-with-html2text-on ()
   (interactive)
-  (let ((buf (get-buffer-create mu4e-output-buffer-name))
-        (msg (mu4e-message-at-point)))
-    (with-current-buffer buf
-      (let ((inhibit-read-only t))
-        (erase-buffer)
-        (insert (mu4e-message-field msg :body-html))
-        (call-process-region (point-min) (point-max)
-                             "html2text"
-                             t buf t
-                             "-width" "72"
-                             "-nobs"
-                             "-utf8")
-        (view-mode)
-        (beginning-of-buffer)
-        (switch-to-buffer buf)))))
+  (let ((mu4e-html2text-command
+         (if mu4e-html2text-command
+             nil
+           "html2text -width 72 -nobs -utf8")))
+    (define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text-off)
+    (mu4e-view-refresh)))
 
-(define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text)
+(defun mu4e-view-with-html2text-off ()
+  (interactive)
+  (define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text-on)
+  (mu4e-view-refresh))
 
-(defun mu4e-mark-move-to-follow ()
+(define-key mu4e-view-mode-map "," 'mu4e-view-with-html2text-on)
+
+;;;; Flag by moving to a special folder; flags don't sync well to
+;;;; exchange
+
+(defun mu4e-headers-mark-move-to-follow ()
   (interactive)
   (mu4e-mark-set 'move "/follow")
   (mu4e-headers-next))
 
-(define-key mu4e-headers-mode-map "!" 'mu4e-mark-move-to-follow)
-(define-key mu4e-view-mode-map "!" 'mu4e-mark-move-to-follow)
+(defun mu4e-view-mark-move-to-follow ()
+  (interactive)
+  (mu4e~view-in-headers-context
+   (mu4e-headers-mark-move-to-follow)))
 
-;; (setq mu4e-html2text-command "html2text -width 72 -nobs -utf8")
-;; (setq mu4e-html2text-command nil)
+(define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-follow)
+(define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-follow)
+
 ;; (setq mu4e-get-mail-command "offlineimap")
 ;; (setq mu4e-get-mail-command "true")
 
@@ -70,6 +74,7 @@
  '(mu4e-get-mail-command "offlineimap")
  '(mu4e-headers-fields (quote ((:human-date . 12) (:flags . 6) (:from . 22) (:subject))))
  '(mu4e-headers-leave-behavior (quote apply))
+ '(mu4e-html2text-command "html2text -width 72 -nobs -utf8")
  '(mu4e-view-show-addresses t)
  '(mu4e-bookmarks (quote (("flag:unread AND NOT flag:trashed OR maildir:/INBOX" "Unread messages" 117) ("flag:flagged OR maildir:/follow" "Flagged" 105) ("date:today..now" "Today's messages" 116) ("date:7d..now" "Last 7 days" 119) ("from:lang AND date:7d..now" "Last week from me" 115) ("flag:draft OR maildir:/Drafts" "Drafts" 100))))
  '(mu4e-confirm-quit nil))
