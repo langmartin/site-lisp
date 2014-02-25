@@ -20,14 +20,15 @@
 ;;       (if old-editor
 ;;           (setenv "GIT_EDITOR" old-editor)))))
 
-(defalias 'magit-push-original 'magit-push)
-
-(defun magit-push (&optional prefix)
+(defun magit-push-dumber (&optional prefix)
   (interactive "P")
   (if (not prefix)
       (magit-run-git-async "push" "-v" "origin")
-    (magit-run-git-with-input
-     (read-from-minibuffer
-      "Run: git origin "))))
+    (apply 'magit-run-git-async
+           (split-string
+            (read-from-minibuffer "$ " "git push -v origin")))))
 
-(provide 'rc-monkey-patches)
+(define-key magit-status-mode-map (kbd "P")
+  `(keymap (80 . magit-push-dumber)))
+
+(provide 'rc-magit)
