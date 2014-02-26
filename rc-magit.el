@@ -26,7 +26,7 @@
       (magit-run-git-async "push" "-v" "origin")
     (apply 'magit-run-git-async
            (split-string
-            (read-from-minibuffer "$ " "git push -v origin")))))
+            (read-from-minibuffer "git " "push -v origin")))))
 
 (define-key magit-status-mode-map (kbd "P")
   `(keymap (80 . magit-push-dumber)))
