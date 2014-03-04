@@ -9,7 +9,8 @@
 (global-set-key
  (kbd "C-x m")
  (alist-to-keymap-via-kbd
-  '(("m" . mu4e-compose-new)
+  '(("c" . mu4e-compose-new)
+    ("m" . mu4e-compose-new)
     ("r" . mu4e)
     ("u" . mu4e-and-update))))
 
@@ -38,18 +39,50 @@
 ;;;; Flag by moving to a special folder; flags don't sync well to
 ;;;; exchange
 
-(defun mu4e-headers-mark-move-to-follow ()
-  (interactive)
-  (mu4e-mark-set 'move "/follow")
-  (mu4e-headers-next))
+(defun rc-mu4e-starred ()
+  (defvar mu4e-starred-folder "/follow")
+  (defun mu4e-headers-mark-move-to-starred ()
+    (interactive)
+    (mu4e-mark-set 'move mu4e-starred-folder)
+    (mu4e-headers-next))
+  (defun mu4e-view-mark-move-to-starred ()
+    (interactive)
+    (mu4e~view-in-headers-context
+     (mu4e-headers-mark-move-to-starred)))
+  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
+  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred))
 
-(defun mu4e-view-mark-move-to-follow ()
-  (interactive)
-  (mu4e~view-in-headers-context
-   (mu4e-headers-mark-move-to-follow)))
+(defun rc-mu4e-junk-mail ()
+  (defvar mu4e-junk-folder "/Junk Email")
+  (defun mu4e-headers-mark-move-to-junk ()
+    (interactive)
+    (mu4e-mark-set 'move mu4e-junk-folder)
+    (mu4e-headers-next))
+  (defun mu4e-view-mark-move-to-junk ()
+    (interactive)
+    (mu4e~view-in-headers-context
+     (mu4e-headers-mark-move-to-junk)))
+  (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
+  (define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-junk))
 
-(define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-follow)
-(define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-follow)
+(defun rc-mu4e-gmail-shortcuts ()
+  (define-key mu4e-main-mode-map "g" 'mu4e-headers-search-bookmark)
+  (define-key mu4e-main-mode-map "/" 'mu4e-headers-search)
+  (define-key mu4e-headers-mode-map "G" 'mu4e-headers-rerun-search)
+  (define-key mu4e-headers-mode-map "g" 'mu4e-headers-search-bookmark)
+  (define-key mu4e-view-mode-map "G" 'mu4e-view-go-to-url)
+  (define-key mu4e-view-mode-map "g" 'mu4e-headers-search-bookmark)
+  (setq
+   mu4e-bookmarks
+   `((,(concat "flag:unread OR maildir:/INBOX AND NOT flag:trashed AND NOT maildir" mu4e-trash-folder) "Unread" 105)
+     (,(concat "flag:flagged OR maildir:" mu4e-starred-folder) "Starred" 115)
+     (,(concat "from:" user-mail-address " AND date:30d..now") "Last 30 days sent" 116)
+     (,(concat "flag:draft OR maildir:" mu4e-drafts-folder) "Drafts" 100)
+     ("date:7d..now" "Last 7 days" 97))))
+
+(rc-mu4e-starred)
+(rc-mu4e-junk-mail)
+(rc-mu4e-gmail-shortcuts)
 
 ;; (setq mu4e-get-mail-command "offlineimap")
 ;; (setq mu4e-get-mail-command "true")
@@ -76,7 +109,6 @@
  '(mu4e-headers-leave-behavior (quote apply))
  '(mu4e-html2text-command "html2text -width 72 -nobs -utf8")
  '(mu4e-view-show-addresses t)
- '(mu4e-bookmarks (quote (("flag:unread AND NOT flag:trashed OR maildir:/INBOX" "Unread messages" 117) ("flag:flagged OR maildir:/follow" "Flagged" 105) ("date:today..now" "Today's messages" 116) ("date:7d..now" "Last 7 days" 119) ("from:lang AND date:7d..now" "Last week from me" 115) ("flag:draft OR maildir:/Drafts" "Drafts" 100))))
  '(mu4e-confirm-quit nil))
 
 ;; (custom-save-all)
