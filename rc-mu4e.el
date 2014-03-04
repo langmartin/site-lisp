@@ -48,9 +48,7 @@
   (defun mu4e-view-mark-move-to-starred ()
     (interactive)
     (mu4e~view-in-headers-context
-     (mu4e-headers-mark-move-to-starred)))
-  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
-  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred))
+     (mu4e-headers-mark-move-to-starred))))
 
 (defun rc-mu4e-junk-mail ()
   (defvar mu4e-junk-folder "/Junk Email")
@@ -61,9 +59,7 @@
   (defun mu4e-view-mark-move-to-junk ()
     (interactive)
     (mu4e~view-in-headers-context
-     (mu4e-headers-mark-move-to-junk)))
-  (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
-  (define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-junk))
+     (mu4e-headers-mark-move-to-junk))))
 
 (defun rc-mu4e-gmail-shortcuts ()
   (define-key mu4e-main-mode-map "g" 'mu4e-headers-search-bookmark)
@@ -72,6 +68,16 @@
   (define-key mu4e-headers-mode-map "g" 'mu4e-headers-search-bookmark)
   (define-key mu4e-view-mode-map "G" 'mu4e-view-go-to-url)
   (define-key mu4e-view-mode-map "g" 'mu4e-headers-search-bookmark)
+
+  (define-key mu4e-headers-mode-map "y" 'mu4e-headers-mark-for-refile)
+  (define-key mu4e-view-mode-map "y" 'mu4e-view-mark-for-refile)
+  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
+  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred)
+  (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
+  (define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-junk)
+  (define-key mu4e-headers-mode-map "#" 'mu4e-headers-mark-for-trash)
+  (define-key mu4e-view-mode-map "#" 'mu4e-view-mark-for-trash)
+
   (setq
    mu4e-bookmarks
    `((,(concat "flag:unread OR maildir:/INBOX AND NOT flag:trashed AND NOT maildir" mu4e-trash-folder) "Unread" 105)
