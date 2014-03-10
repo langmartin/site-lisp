@@ -47,6 +47,7 @@
   (rc-js2-mode-setup)
   (rc-js2-mode-tabs)
   (add-to-auto-mode-alist '(("\\.js\\'" . js2-mode)))
+  (add-to-auto-mode-alist '(("\\.json\\'" . js2-mode)))
   (add-hook 'js2-mode-hook 'embed-js-mode-into-js2)
   (defalias 'rc-javascript-mode 'js2-mode))
 
