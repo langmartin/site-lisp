@@ -327,7 +327,7 @@ Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
 
 (require 'rc-magit)
 
-(progn
+(prog0
   (require 'powerline)
   (rc-org-mode-line-less-decoration)
   (rc-erc-mode-line-less-decoration))
