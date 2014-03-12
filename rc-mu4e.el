@@ -82,8 +82,8 @@
    mu4e-bookmarks
    `((,(concat "flag:unread AND NOT flag:trashed"
                " OR maildir:/INBOX"
-               " AND NOT maildir" mu4e-trash-folder
-               " AND NOT maildir" mu4e-junk-folder) "Unread" 105)
+               " AND NOT maildir:" mu4e-trash-folder
+               " AND NOT maildir:" mu4e-junk-folder) "Unread" 105)
      (,(concat "flag:flagged OR maildir:" mu4e-starred-folder) "Starred" 115)
      (,(concat "from:" user-mail-address " AND date:30d..now") "Last 30 days sent" 116)
      (,(concat "flag:draft OR maildir:" mu4e-drafts-folder) "Drafts" 100)
