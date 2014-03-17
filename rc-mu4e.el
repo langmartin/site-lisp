@@ -107,6 +107,8 @@
   '(mu4e-refile-folder "/[Gmail].All Mail")
   '(mu4e-sent-folder "/[Gmail].All Mail")
   '(mu4e-trash-folder "/[Gmail].Trash")
+  '(mu4e-junk-folder "/[Gmail].Trash")
+  '(mu4e-headers-skip-duplicates t)
   '(mu4e-drafts-folder "/[Gmail].Drafts")))
 
 (custom-set-variables
