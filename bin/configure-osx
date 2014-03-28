@@ -7,4 +7,4 @@ defaults write com.apple.Safari NSUserKeyEquivalents -dict-add "Quit Safari" "@^
 defaults write com.apple.Safari NSUserKeyEquivalents -dict-add "Undo Close Tab" "@$t"
 # delete goes back a page
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool YES
-defaults write com.apple.Safari IncludeDebugMenu -boolean
+defaults write com.apple.Safari IncludeDebugMenu -bool YES
