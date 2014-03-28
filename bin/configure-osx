@@ -20,6 +20,9 @@ defaults write com.apple.Dock orientation -string right
 
 defaults write com.apple.iTunes invertStoreLinks -bool true
 
+defaults write com.apple.finder NSUserKeyEquivalents -dict-add "New Tab" "@^t"
+defaults write com.apple.finder NSUserKeyEquivalents -dict-add "Add to Sidebar" "@t"
+
 ## ----------------------------------------------------------------------
 ## From https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
@@ -60,7 +63,7 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
 
 # Finder: show path bar
-defaults write com.apple.finder ShowPathbar -bool true
+# defaults write com.apple.finder ShowPathbar -bool true
 
 # Finder: allow text selection in Quick Look
 defaults write com.apple.finder QLEnableTextSelection -bool true
