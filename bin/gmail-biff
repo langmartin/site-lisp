@@ -1,0 +1,104 @@
+#!/usr/local/bin/racket -tm
+#lang racket
+
+(require
+ openssl/mzssl
+ net/imap
+ net/head
+ net/mime)
+
+(provide main)
+
+(define (biff-connect imap-server imap-port username password mailbox)
+  (let ([c (ssl-make-client-context)])
+    (let-values ([(in out) (ssl-connect imap-server imap-port c)])
+      (imap-connect* in out username password mailbox))))
+
+(define (default-string string default)
+  (or (and string (not (zero? (string-length string))) string)
+      default))
+
+(define (q-notify string)
+  (string-append "\\" string))
+
+(define (biff-notify from subject url)
+  (let* ((args
+          (list "/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier"
+                "-title" (q-notify (default-string from "sender"))
+                ;; "-subtitle" from
+                "-message" (q-notify (default-string subject "subject"))
+                "-sender" "com.apple.Mail"))
+         (args
+          (if url
+              (append args (list "-open" url))
+              (append args (list "-activate" "org.gnu.Emacs")))))
+    (apply system* args)))
+
+(define (all-the-headers raw)
+  (extract-all-fields (caar raw)))
+
+(define (the-headers raw)
+  (filter-map (lambda (x)
+                (let ((s (string->symbol (string-downcase (bytes->string/utf-8 (car x))))))
+                  (and (memq s '(from to subject))
+                       (cons s (bytes->string/utf-8 (cdr x))))))
+              (all-the-headers raw)))
+
+(define (the-body raw)
+  (call-with-output-string
+    (let* ((message (mime-analyze (caar raw)))
+           (type    (entity-type (message-entity message)))
+           (parts   (entity-parts (message-entity message))))
+      (if (and (eq? type 'multipart) parts)
+          (car (filter-map (lambda (x)
+                             (and (eq? (entity-type (message-entity x)) 'text)
+                                  (eq? (entity-subtype (message-entity x)) 'plain)
+                                  (entity-body (message-entity x))))
+                           parts))
+          (entity-body (message-entity message))))))
+
+(define-syntax shhhhh
+  (syntax-rules ()
+    ((_ body ...)
+     (with-handlers ((exn:fail:network? (lambda (e) #f)))
+       body ...))))
+
+(define (biff-fetch url imap n m)
+  (for-each (lambda (x)
+              ;; (displayln x)
+              (biff-notify (dict-ref x 'from)
+                           (dict-ref x 'subject)
+                           url))
+            (map (lambda (x)
+                   (the-headers (imap-get-messages imap (list x) '(header))))
+                 (map add1 (range n m)))))
+
+(define (poll-loop imap-server imap-port username password mailbox url)
+  (let lp ((seen 0))
+    (define-values (imap messages recent)
+      (biff-connect imap-server imap-port username password mailbox))
+    (let ((count (- messages seen)))
+      (when (> count 0)
+        (shhhhh (biff-fetch url imap seen messages))))
+    (sleep 120)
+    (shhhhh (imap-disconnect imap))
+    (lp messages)))
+
+(define (main)
+  (let ((i "imap.gmail.com")
+        (p 993))
+    (for-each (lambda (t)
+                (thread-wait t))
+              (map (lambda (args)
+                     (thread
+                      (lambda ()
+                        (apply poll-loop args))))
+                   `(("imap.gmail.com" 993
+                      (getenv "MAILUSER")
+                      (getenv "MAILPASS")
+                      "INBOX"
+                      "https://mail.google.com/"))))))
+
+;; Local Variables:
+;; mode: scheme
+;; End:

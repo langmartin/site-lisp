@@ -1,0 +1,3 @@
+#!/bin/sh
+security find-generic-password -a "$1" -s "$2" -g \
+	2>&1 | perl -ane 's/^.*?password: \"(.*)\"\s*$/\1/ and print and print "\n";'
