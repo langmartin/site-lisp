@@ -10,14 +10,16 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 defaults write com.apple.Safari IncludeDebugMenu -bool YES
 defaults write com.apple.Safari WebKitShowsURLsInToolTips -bool YES
 
+# Turn off automatic text substitution
 defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write -g NSAutomaticDashSubstitutionEnabled -bool false
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write -g NSCloseAlwaysConfirmsChanges -bool false
 
 defaults write com.apple.Dock pinning -string end
-defaults write com.apple.Dock orientation -string right
+defaults write com.apple.Dock orientation -string left
 
+# The store links go to albums in your library instead
 defaults write com.apple.iTunes invertStoreLinks -bool true
 
 defaults write com.apple.finder NSUserKeyEquivalents -dict-add "New Tab" "@^t"
@@ -105,6 +107,9 @@ defaults write com.apple.dock show-process-indicators -bool true
 
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.1
+
+# Make the dock more transparent
+defaults write com.apple.dock hide-mirror -bool true
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
