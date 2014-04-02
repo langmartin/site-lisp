@@ -96,6 +96,8 @@
 
 ;; (setq mu4e-get-mail-command "offlineimap")
 ;; (setq mu4e-get-mail-command "true")
+;; (setq mu4e-html2text-command "html2text -width 72 -nobs -utf8")
+;; (setq mu4e-html2text-command nil)
 
 (prog0
  (custom-set-variables
