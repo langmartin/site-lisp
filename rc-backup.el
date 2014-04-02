@@ -13,8 +13,14 @@ the working directory"
          backup-directory-alist `(("." . ,backup))
          tramp-backup-directory-alist backup-directory-alist
          auto-save-list-file-prefix (concat backup ".auto-saves-")
-         auto-save-file-name-transforms `((".*" ,backup t)))))
+         auto-save-file-name-transforms `(("(.*)" ,(concat backup "\\1") t))
+         vc-make-backup-files t)))
 
+(defun backup-buffer-force ()
+  (let ((buffer-backed-up nil))
+    (backup-buffer)))
+
+(add-hook 'before-save-hook 'backup-buffer-force)
 (rc-backups-and-autosave-directory "~/.emacs.d/backup")
 
 (provide 'rc-backup)
