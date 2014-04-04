@@ -17,3 +17,5 @@ mbox
 unstable
 contrib/
 TAGS
+*.log
+*.pdf

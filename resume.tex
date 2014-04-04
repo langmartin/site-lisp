@@ -1,0 +1,111 @@
+\documentclass[margin]{res}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[colorlinks=true,pdfstartview=FitV,linkcolor=Blue,citecolor=Blue,urlcolor=Blue,filecolor=Blue]{hyperref}
+\textwidth=5in
+
+\begin{document}
+
+%% \name{Lang Martin}
+%% \address{lang.martin@gmail.com \quad\quad 423 521-0574}
+
+\hbox to \hsize{%
+\vbox{\raggedleft
+{\bf Lang Martin}\\
+lang.martin@gmail.com
+423 521-0574\\
+4412 St. Elmo Ave., Chattanooga TN 37409\\
+\href{https://github.com/langmartin}{GitHub},
+\href{http://www.linkedin.com/pub/lang-martin/0/bb1/611}{LinkedIn}%
+}}
+
+\begin{resume}
+\section{About}
+
+I am an experienced developer with an interest in programming
+languages and system architecture. I enjoy difficult problems, elegant
+solutions, and working on teams that are serious about their craft. I
+learned programming as a system administrator and, later, learned
+principles of computer science.
+
+\section{Experience}
+
+{\bf \href{https://opentable.com/}{OpenTable} Service Programming}
+%
+Senior engineer on the Services team of Restaurant Engineering.
+Integrating Quickcue services with OpenTable systems, participating in
+future system design.\\
+%
+Dec 2013--
+
+{\bf \href{https://quickcue.com/}{Quickcue} System Architecture}
+%
+Responsible for the design of the API, implementation of the API
+server, and deployment strategy. A member of the initial product team,
+also involved in planning of user interfaces. Quickcue was acquired by
+OpenTable in 2013.\\
+%
+Dec 2011--Dec 2013
+
+{\bf \href{https://www.cx.com/}{CX} Desktop Programming}
+%
+Development of the desktop syncing client. The client featured an
+embedded Python interpreter that managed the API and file system, with
+native wrappers for Windows and OS X.\\
+%
+Oct 2011--Dec 2011
+
+{\bf \href{http://tva.gov/}{TVA} Internal Web Development}
+%
+Document storage interface, responsible for the specification,
+estimation, design, implementation, deployment and support of three
+medium-sized web interfaces to commercial database applications.\\
+%
+Apr 2009--Oct 2011
+
+{\bf \href{http://thisismedium.com/}{Coptix} Programming and Architecture}
+%
+Initially system administration, then responsible for the deployment
+strategy. In 2003, web development, working on ASP projects and
+leading a shift to PHP. Helped design the new core tool set.
+Instrumental in building a culture of experimentation. Coptix was
+renamed `Medium' in 2009, and dissolved in 2011.\\
+%
+Sep 1999--Apr 2009
+
+\section{Education}
+
+Covenant College, graduated spring of 2000. A B.A.\ in
+history with concentrations in education and mathematics.
+
+\section{Technologies}
+
+Clojure, Java, Linux,
+PostgreSQL, MySQL, MS SQL Server,
+JavaScript, Node.js, HTML5,
+Scheme, Python, Perl, PHP, ASP,
+Apache, HTTP, Git
+
+\section{Projects}
+{\bf Quickcue API} The Quickcue API stores a versioned data set for
+synchronizing clients, enforcing the client's knowledge of the version
+on updates, and broadcasting diffs to connected clients. It's written
+in Clojure and uses PostgreSQL.
+
+{\bf TVA DDS} The nuclear document distribution system is a
+replacement for a custom mainframe application. The project was behind
+schedule; designed the interface and application and launched on
+schedule, allowing the mainframe to be retired.
+
+{\bf YKK/Message DB} A web development database platform designed for
+version reconciliation and replication (in 2005). YKK was the initial
+build (in Scheme), Message DB was a rewrite (in Python) which entered
+production.
+
+{\bf Coptix Deployment System} A system for automatic deployment of
+internal projects, including tools for reconciling SQL schema changes,
+software versions, and multiple active deployments. Reproducible
+server states allowed some measure of hardware independence prior to
+the ubiquity of virtualization.
+
+\end{resume}
+\end{document}
