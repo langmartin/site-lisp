@@ -69,8 +69,15 @@
   (define-key mu4e-view-mode-map "G" 'mu4e-view-go-to-url)
   (define-key mu4e-view-mode-map "g" 'mu4e-headers-search-bookmark)
 
+  (define-key mu4e-main-mode-map "l" 'mu4e~headers-jump-to-maildir)
+  (define-key mu4e-headers-mode-map "l" 'mu4e~headers-jump-to-maildir)
+  (define-key mu4e-view-mode-map "l" 'mu4e~headers-jump-to-maildir)
+
   (define-key mu4e-headers-mode-map "y" 'mu4e-headers-mark-for-refile)
   (define-key mu4e-view-mode-map "y" 'mu4e-view-mark-for-refile)
+  (define-key mu4e-headers-mode-map "r" 'mu4e-compose-reply)
+  (define-key mu4e-view-mode-map "r" 'mu4e-compose-reply)
+
   (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
   (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred)
   (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
