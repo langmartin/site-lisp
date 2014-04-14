@@ -20,8 +20,7 @@
        :port 6667
        :nick "langmartin"
        :full-name "Lang Martin"
-       :password bitlbee-password)
-  (erc-fix-colors))
+       :password bitlbee-password))
 
 (defun erc-hide-notices () "hide all notices in a very busy channel"
   (interactive)
@@ -39,8 +38,7 @@
            ;; :port 8001
            :port 6697
            ;; :password freenode-password
-           )
-  (erc-fix-colors))
+           ))
 
 ;; (define-buffer-visitor visit-medium "#medium" 'irc)
 ;; (global-set-key (kbd "H-m") 'visit-medium)
@@ -49,7 +47,8 @@
   (interactive)
   (save-default-directory
       "~"
-    (irc-freenode)))
+    (irc-freenode)
+    (erc-fix-colors)))
 
 (custom-set-variables
  '(erc-autoaway-idle-method (quote user))
