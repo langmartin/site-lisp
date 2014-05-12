@@ -85,13 +85,17 @@
   (define-key mu4e-headers-mode-map "#" 'mu4e-headers-mark-for-trash)
   (define-key mu4e-view-mode-map "#" 'mu4e-view-mark-for-trash)
 
+  (define-key mu4e-headers-mode-map "I" 'mu4e-headers-mark-for-read)
+  (define-key mu4e-headers-mode-map "U" 'mu4e-headers-mark-for-unread)
+
   (setq
    mu4e-bookmarks
-   `((,(concat "(maildir:/INBOX OR flag:unread)"
-               " AND NOT ("
-               "maildir:" mu4e-trash-folder
-               " OR "
-               "maildir:" mu4e-junk-folder ")") "Unread" 105)
+   `((;; (concat "(maildir:/INBOX OR flag:unread)"
+      ;;          " AND NOT ("
+      ;;          "maildir:" mu4e-trash-folder
+      ;;          " OR "
+      ;;          "maildir:" mu4e-junk-folder ")")
+      "maildir:/INBOX" "Inbox" 105)
      (,(concat "flag:flagged OR maildir:" mu4e-starred-folder) "Starred" 115)
      (,(concat "from:" user-mail-address " AND date:30d..now") "Last 30 days sent" 116)
      (,(concat "flag:draft OR maildir:" mu4e-drafts-folder) "Drafts" 100)
