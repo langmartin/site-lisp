@@ -76,7 +76,12 @@
     (insert after)
     (backward-char (length after))))
 
+(defun clojure-insert-trace ()
+  (interactive)
+  (insert "(use 'clojure.tools.trace)"))
+
 (define-key clojure-mode-map (kbd "H-l") 'clojure-insert-lambda)
+(define-key clojure-mode-map (kbd "H-t") 'clojure-insert-trace)
 
 (defun insert-clojure-clear-ns ()
   (interactive)
