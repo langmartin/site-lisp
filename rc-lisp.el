@@ -54,8 +54,10 @@
       (let ((old (clojure-test-for-style
                   namespace
                   (lambda (p)
-                    (cons (car p)
-                          (cons "test" (cdr p))))
+                    (if (not (cdr p))
+                        (cons "test" p)
+                      (cons (car p)
+                            (cons "test" (cdr p)))))
                   "%stest/%s.clj")))
         (if (file-exists-p old)
             old
