@@ -42,6 +42,15 @@
 (defun rc-bind-cleanup-untabify-save (keymap)
   (define-key keymap (kbd "C-x C-s") 'cleanup-untabify-save))
 
+(defun cleanup-tabify-save ()
+  (interactive)
+  (delete-trailing-whitespace)
+  (tabify (point-min) (point-max))
+  (save-buffer))
+
+(defun rc-bind-cleanup-tabify-save (keymap)
+  (define-key keymap (kbd "C-x C-s") 'cleanup-tabify-save))
+
 (defmacro lambda-insert-with-point (before after)
   `(lambda ()
      (interactive)

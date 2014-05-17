@@ -119,6 +119,9 @@
 (require 'rc-javascript)
 (require 'rc-web-development)
 
+(add-to-list 'java-mode-hook 'set-tab-width-4)
+(rc-bind-cleanup-tabify-save java-mode-map)
+
 (progn
   ;;; VC setup
   (require 'vc-darcs)
