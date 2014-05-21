@@ -4,3 +4,6 @@
 [submodule "skeleton-complete"]
 	path = skeleton-complete
 	url = https://github.com/baohaojun/skeleton-complete.git
+[submodule "org-jira"]
+	path = org-jira
+	url = git://github.com/baohaojun/org-jira.git
