@@ -1,0 +1,66 @@
+# https://github.com/jigish/slate
+
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+
+alias left   move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias right  move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias left34 move screenOriginX;screenOriginY (screenSizeX/4)*3;screenSizeY
+alias right34 move screenOriginX+screenSizeX/4;screenOriginY (screenSizeX/4)*3;screenSizeY
+alias top    move screenOriginX;screenOriginY screenSizeX;screenSizeY/2
+alias bottom move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY
+alias max    move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias center move screenOriginX+screenSizeX/6;screenOriginY (screenSizeX/3)*2;screenSizeY
+
+alias emacs 'Emacs':REPEAT ${max}
+alias safari 'Safari':REPEAT ${max}
+
+## ----------------------------------------
+
+layout ot2 ${emacs} 0
+layout ot2 ${safari} 0
+layout ot2 'Terminal' ${top} 0
+layout ot2 'HipChat' ${right34} 1
+default ot2 resolutions:2560x1440;1280x800
+
+## ----------------------------------------
+
+layout two ${emacs} 0
+layout two ${safari} 0
+layout two 'Terminal' ${top} 0
+layout two 'HipChat' ${max} 1
+layout two 'Messages' ${max} 1
+default two count:2
+
+## ----------------------------------------
+
+layout one 'Emacs' ${max} 0
+layout one 'Safari' ${max} 0
+layout one 'Terminal' ${top} 0
+layout one 'HipChat' ${max} 0
+default one count:1
+
+## ----------------------------------------
+
+layout read 'Emacs' ${left} 0
+layout read 'Safari':REPEAT ${right} 0
+layout hack 'Emacs' ${max} 0
+layout hack 'Safari' ${max} 0
+
+bind r:ctrl,alt,cmd layout read
+bind s:ctrl,alt,cmd layout read
+bind h:ctrl,alt,cmd layout hack
+bind u:ctrl,alt,cmd layout hack
+
+bind left:ctrl,alt,cmd ${left}
+bind right:ctrl,alt,cmd ${right}
+bind up:ctrl,alt,cmd ${top}
+bind down:ctrl,alt,cmd ${bottom}
+bind c:ctrl,alt,cmd ${center}
+bind f:ctrl,alt,cmd ${max}
+bind tab:ctrl,alt,cmd throw next
+# bind esc:ctrl,alt,cmd hint
+bind delete:ctrl,alt,cmd shell "/bin/zsh -c '(killall Slate; open /Applications/Slate.app)&!'"
