@@ -15,15 +15,17 @@ alias bottom move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSi
 alias max    move screenOriginX;screenOriginY screenSizeX;screenSizeY
 alias center move screenOriginX+screenSizeX/4;screenOriginY screenSizeX/2;screenSizeY
 alias center23 move screenOriginX+screenSizeX/6;screenOriginY (screenSizeX/3)*2;screenSizeY
+alias visibile move screenSizeX+screenOriginY; screenSizeX;screenSizeY
 
 alias emacs 'Emacs':REPEAT ${max}
 alias safari 'Safari':REPEAT ${max}
+alias terminal 'Terminal':REPEAT ${top}
 
 ## ----------------------------------------
 
 layout ot2 ${emacs} 0
 layout ot2 ${safari} 0
-layout ot2 'Terminal' ${top} 0
+layout ot2 ${terminal} 0
 layout ot2 'HipChat' ${right34} 1
 default ot2 resolutions:2560x1440;1280x800
 
@@ -31,25 +33,25 @@ default ot2 resolutions:2560x1440;1280x800
 
 layout two ${emacs} 0
 layout two ${safari} 0
-layout two 'Terminal' ${top} 0
+layout two ${terminal} 0
 layout two 'HipChat' ${max} 1
 layout two 'Messages' ${max} 1
 default two count:2
 
 ## ----------------------------------------
 
-layout one 'Emacs' ${max} 0
-layout one 'Safari' ${max} 0
-layout one 'Terminal' ${top} 0
+layout one ${emacs} 0
+layout one ${safari} 0
+layout one ${terminal} 0
 layout one 'HipChat' ${max} 0
 default one count:1
 
 ## ----------------------------------------
 
-layout read 'Emacs' ${left} 0
+layout read 'Emacs':REPEAT ${left} 0
 layout read 'Safari':REPEAT ${right} 0
-layout hack 'Emacs' ${max} 0
-layout hack 'Safari' ${max} 0
+layout hack 'Emacs':REPEAT ${max} 0
+layout hack 'Safari':REPEAT ${max} 0
 
 bind r:ctrl,alt,cmd layout read
 bind s:ctrl,alt,cmd layout read
