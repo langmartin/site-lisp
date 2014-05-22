@@ -13,7 +13,8 @@ alias right34 move screenOriginX+screenSizeX/4;screenOriginY (screenSizeX/4)*3;s
 alias top    move screenOriginX;screenOriginY screenSizeX;screenSizeY/2
 alias bottom move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY
 alias max    move screenOriginX;screenOriginY screenSizeX;screenSizeY
-alias center move screenOriginX+screenSizeX/6;screenOriginY (screenSizeX/3)*2;screenSizeY
+alias center move screenOriginX+screenSizeX/4;screenOriginY screenSizeX/2;screenSizeY
+alias center23 move screenOriginX+screenSizeX/6;screenOriginY (screenSizeX/3)*2;screenSizeY
 
 alias emacs 'Emacs':REPEAT ${max}
 alias safari 'Safari':REPEAT ${max}
