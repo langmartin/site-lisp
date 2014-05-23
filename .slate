@@ -21,22 +21,27 @@ alias emacs 'Emacs':REPEAT ${max}
 alias safari 'Safari':REPEAT ${max}
 alias terminal 'Terminal':REPEAT ${top}
 
-## ----------------------------------------
-
-layout ot2 ${emacs} 0
-layout ot2 ${safari} 0
-layout ot2 ${terminal} 0
-layout ot2 'HipChat' ${right34} 1
-default ot2 resolutions:2560x1440;1280x800
+alias mbpro 1280x800
+alias 27in 2560x1440
+alias air11 1366x768
+alias samsung 1920x1080
 
 ## ----------------------------------------
 
-layout two ${emacs} 0
-layout two ${safari} 0
-layout two ${terminal} 0
-layout two 'HipChat' ${max} 1
-layout two 'Messages' ${max} 1
-default two count:2
+layout ot2 ${emacs} ${27in}
+layout ot2 ${safari} ${27in}
+layout ot2 ${terminal} ${27in}
+layout ot2 'HipChat' ${right34} ${mbpro}
+default ot2 resolutions:${27in};${mbpro}
+
+## ----------------------------------------
+
+layout hm2 ${emacs} ${samsung}
+layout hm2 ${safari} ${samsung}
+layout hm2 ${terminal} ${samsung}
+layout hm2 'HipChat' ${max} ${air11}
+layout hm2 'Messages' ${max} ${air11}
+default hm2 resolutions:${air11};${samsung}
 
 ## ----------------------------------------
 
@@ -44,14 +49,15 @@ layout one ${emacs} 0
 layout one ${safari} 0
 layout one ${terminal} 0
 layout one 'HipChat' ${max} 0
+layout one 'Messages' ${max} 0
 default one count:1
 
 ## ----------------------------------------
 
-layout read 'Emacs':REPEAT ${left} 0
-layout read 'Safari':REPEAT ${right} 0
-layout hack 'Emacs':REPEAT ${max} 0
-layout hack 'Safari':REPEAT ${max} 0
+layout read 'Emacs':REPEAT ${left}
+layout read 'Safari':REPEAT ${right}
+layout hack 'Emacs':REPEAT ${max}
+layout hack 'Safari':REPEAT ${max}
 
 bind r:ctrl,alt,cmd layout read
 bind s:ctrl,alt,cmd layout read
@@ -65,5 +71,3 @@ bind down:ctrl,alt,cmd ${bottom}
 bind c:ctrl,alt,cmd ${center}
 bind f:ctrl,alt,cmd ${max}
 bind tab:ctrl,alt,cmd throw next
-# bind esc:ctrl,alt,cmd hint
-bind delete:ctrl,alt,cmd shell "/bin/zsh -c '(killall Slate; open /Applications/Slate.app)&!'"
