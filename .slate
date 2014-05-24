@@ -23,8 +23,10 @@ alias terminal 'Terminal':REPEAT ${top}
 
 alias mbpro 1280x800
 alias 27in 2560x1440
-alias air11 1366x768
-alias samsung 1920x1080
+# alias air11 1366x768
+# alias samsung 1920x1080
+alias air11 0
+alias samsung 1
 
 ## ----------------------------------------
 
@@ -41,7 +43,8 @@ layout hm2 ${safari} ${samsung}
 layout hm2 ${terminal} ${samsung}
 layout hm2 'HipChat' ${max} ${air11}
 layout hm2 'Messages' ${max} ${air11}
-default hm2 resolutions:${air11};${samsung}
+# default hm2 resolutions:${air11};${samsung}
+default hm2 count:2
 
 ## ----------------------------------------
 
