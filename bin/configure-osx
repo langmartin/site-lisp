@@ -2,9 +2,8 @@
 defaults write com.apple.Mail NSUserKeyEquivalents -dict-add "Quit Mail" "@^q"
 defaults write com.apple.Terminal NSUserKeyEquivalents -dict-add "Quit Terminal" "@^q"
 defaults write com.apple.Terminal NSUserKeyEquivalents -dict-add "Print..." '@$p'
-
 defaults write com.apple.Safari NSUserKeyEquivalents -dict-add "Quit Safari" "@^q"
-defaults write com.apple.Safari NSUserKeyEquivalents -dict-add "Undo Close Tab" '@$t'
+
 # delete goes back a page
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool YES
 defaults write com.apple.Safari IncludeDebugMenu -bool YES
@@ -18,9 +17,6 @@ defaults write -g NSCloseAlwaysConfirmsChanges -bool false
 
 # The store links go to albums in your library instead
 defaults write com.apple.iTunes invertStoreLinks -bool true
-
-defaults write com.apple.finder NSUserKeyEquivalents -dict-add "New Tab" "@^t"
-defaults write com.apple.finder NSUserKeyEquivalents -dict-add "Add to Sidebar" "@t"
 
 ## ----------------------------------------------------------------------
 ## From https://github.com/mathiasbynens/dotfiles/blob/master/.osx
