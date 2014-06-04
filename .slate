@@ -21,6 +21,7 @@ alias emacs 'Emacs':REPEAT ${max}
 alias safari 'Safari':REPEAT ${max}
 alias chrome 'Google Chrome':REPEAT ${center23}
 alias terminal 'Terminal':REPEAT ${top}
+alias iterm 'iTerm':REPEAT ${top}
 
 alias mbpro 1280x800
 alias 27in 2560x1440
@@ -35,6 +36,7 @@ layout ot2 ${emacs} ${27in}
 layout ot2 ${safari} ${27in}
 layout ot2 ${chrome} ${27in}
 layout ot2 ${terminal} ${27in}
+layout ot2 ${iterm} ${27in}
 layout ot2 'HipChat' ${right34} ${mbpro}
 default ot2 resolutions:${27in};${mbpro}
 
@@ -44,6 +46,7 @@ layout hm2 ${emacs} ${samsung}
 layout hm2 ${safari} ${samsung}
 layout hm2 ${chrome} ${samsung}
 layout hm2 ${terminal} ${samsung}
+layout hm2 ${iterm} ${samsung}
 layout hm2 'HipChat' ${max} ${air11}
 layout hm2 'Messages' ${max} ${air11}
 # default hm2 resolutions:${air11};${samsung}
@@ -55,6 +58,7 @@ layout one ${emacs} 0
 layout one ${safari} 0
 layout one ${chrome} 0
 layout one ${terminal} 0
+layout one ${iterm} 0
 layout one 'HipChat' ${max} 0
 layout one 'Messages' ${max} 0
 default one count:1
