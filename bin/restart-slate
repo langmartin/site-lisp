@@ -1,0 +1,8 @@
+#!/bin/sh
+if system_profiler SPDisplaysDataType|grep -q "Connection Type:"; then
+	/usr/local/bin/emacsclient -e '(rc-font-lg)'
+else
+	/usr/local/bin/emacsclient -e '(rc-font-sm)'
+fi
+killall Slate
+open /Applications/Slate.app

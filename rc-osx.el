@@ -10,15 +10,13 @@
 (setenv "MANPAGER" "cat")
 ;; (setenv "SUDO_ASKPASS" "/Developer/usr/libexec/git-core/git-gui--askpass")
 
-(defun osx-defaults-write ()
+(defun rc-font-lg ()
   (interactive)
-  (shell-command "defaults write com.apple.Dock pinning end")
-  (shell-command "killall Dock")
-  (shell-command "defaults write com.apple.iTunes hide-ping-dropdown 1")
-  (shell-command "defaults write com.apple.iTunes show-store-link-arrows 1")
-  (shell-command "sudo pmset hibernatemode 0")
-  ;; (shell-command "defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false")
-  )
+  (set-frame-font "Monaco-14"))
+
+(defun rc-font-sm ()
+  (interactive)
+  (set-frame-font "Monaco-12"))
 
 (custom-set-variables
  '(ns-alternate-modifier (quote hyper))
