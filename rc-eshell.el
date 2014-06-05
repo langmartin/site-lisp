@@ -39,8 +39,24 @@
          (insert "")
          (comint-send-input))))
 
+(defun comint-send-tab ()
+  (interactive)
+  (comint-send-string nil " "))
+
 (define-key shell-mode-map (kbd "C-c C-c") 'send-c-c-interrupt-subjob)
+;; (define-key shell-mode-map (kbd "<tab>") 'comint-send-tab)
 
 (global-set-key (kbd "H-s") 'shell-focus-or-create)
+
+
+;;;; multi-term
+(defun rc-multi-term ()
+  (require 'multi-term)
+  (setq term-term-name "xterm-color")
+  (define-key term-raw-map (kbd "C-y") 'term-paste)
+  (add-to-list 'term-bind-key-alist '("C-a" . term-bol))
+  (add-to-list 'term-bind-key-alist '("C-e" . term-eol))
+  ;; (global-set-key (kbd "H-s") 'multi-term-next)
+  )
 
 (provide 'rc-eshell)
