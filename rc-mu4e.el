@@ -1,3 +1,6 @@
+(require 'hooks)
+(require 'utility)
+
 (require 'mu4e)
 (setq mail-user-agent 'mu4e-user-agent)
 
