@@ -226,8 +226,8 @@ Valid keywords and arguments are:
 
 (defun cleanup-untabify-save ()
   (interactive)
-  (cleanup-buffer)
-  (untabify-buffer)
+  (delete-trailing-whitespace)
+  (untabify (point-min) (point-max))
   (save-buffer))
 
 (provide 'utility)
