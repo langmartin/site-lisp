@@ -1,2 +1,0 @@
-#!/bin/sh
-sudo pmset -a hibernatemode 25 force
