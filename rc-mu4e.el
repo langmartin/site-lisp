@@ -18,7 +18,7 @@
     ("u" . mu4e-and-update))))
 
 ;; brew install --with-emacs mu
-;; brew install offlineimap
+;; brew install isync
 ;; brew install html2text
 
 ;;;; Toggle viewing with the other html viewer
@@ -81,8 +81,8 @@
   (define-key mu4e-headers-mode-map "r" 'mu4e-compose-reply)
   (define-key mu4e-view-mode-map "r" 'mu4e-compose-reply)
 
-  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
-  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred)
+  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-for-flag)
+  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-for-flag)
   (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
   (define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-junk)
   (define-key mu4e-headers-mode-map "#" 'mu4e-headers-mark-for-trash)
@@ -99,12 +99,12 @@
       ;;          " OR "
       ;;          "maildir:" mu4e-junk-folder ")")
       "maildir:/INBOX" "Inbox" 105)
-     (,(concat "flag:flagged OR maildir:" mu4e-starred-folder) "Starred" 115)
+     ("flag:flagged" "Flagged" 115)
      (,(concat "from:" user-mail-address " AND date:30d..now") "Last 30 days sent" 116)
      (,(concat "flag:draft OR maildir:" mu4e-drafts-folder) "Drafts" 100)
      ("date:7d..now" "Last 7 days" 97))))
 
-(rc-mu4e-starred)
+;; (rc-mu4e-starred)
 (rc-mu4e-junk-mail)
 (rc-mu4e-gmail-shortcuts)
 
@@ -132,7 +132,7 @@
  '(mu4e-attachment-dir "~/Downloads")
  '(mu4e-date-format-long "%Y-%m-%d")
  '(mu4e-headers-date-format "%y-%m-%d")
- '(mu4e-get-mail-command "offlineimap")
+ '(mu4e-get-mail-command "isync INBOX Archive Drafts 'Deleted Items'")
  '(mu4e-headers-fields (quote ((:human-date . 12) (:flags . 6) (:from . 22) (:subject))))
  '(mu4e-headers-leave-behavior (quote apply))
  '(mu4e-html2text-command "html2text -width 72 -nobs -utf8")
