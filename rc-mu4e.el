@@ -42,27 +42,35 @@
 ;;;; Flag by moving to a special folder; flags don't sync well to
 ;;;; exchange
 
-(defun rc-mu4e-starred ()
-  (defvar mu4e-starred-folder "/starred")
-  (defun mu4e-headers-mark-move-to-starred ()
-    (interactive)
-    (mu4e-mark-set 'move mu4e-starred-folder)
-    (mu4e-headers-next))
-  (defun mu4e-view-mark-move-to-starred ()
-    (interactive)
-    (mu4e~view-in-headers-context
-     (mu4e-headers-mark-move-to-starred))))
+(defcustom mu4e-starred-folder "/Starred"
+  "Your folder for flagged messages to work around offlineimap's flagged message support"
+  :type '(string :tag "Folder name")
+  :group 'mu4e-folders)
 
-(defun rc-mu4e-junk-mail ()
-  (defvar mu4e-junk-folder "/Junk Email")
-  (defun mu4e-headers-mark-move-to-junk ()
-    (interactive)
-    (mu4e-mark-set 'move mu4e-junk-folder)
-    (mu4e-headers-next))
-  (defun mu4e-view-mark-move-to-junk ()
-    (interactive)
-    (mu4e~view-in-headers-context
-     (mu4e-headers-mark-move-to-junk))))
+(defun mu4e-headers-mark-move-to-starred ()
+  (interactive)
+  (mu4e-mark-set 'move mu4e-starred-folder)
+  (mu4e-headers-next))
+
+(defun mu4e-view-mark-move-to-starred ()
+  (interactive)
+  (mu4e~view-in-headers-context
+   (mu4e-headers-mark-move-to-starred)))
+
+(defcustom mu4e-junk-folder "/Junk Email"
+  "Your folder for junk mail"
+  :type '(string :tag "Folder name")
+  :group 'mu4e-folders)
+
+(defun mu4e-headers-mark-move-to-junk ()
+  (interactive)
+  (mu4e-mark-set 'move mu4e-junk-folder)
+  (mu4e-headers-next))
+
+(defun mu4e-view-mark-move-to-junk ()
+  (interactive)
+  (mu4e~view-in-headers-context
+   (mu4e-headers-mark-move-to-junk)))
 
 (defun rc-mu4e-gmail-shortcuts ()
   (define-key mu4e-main-mode-map "g" 'mu4e-headers-search-bookmark)
@@ -81,8 +89,8 @@
   (define-key mu4e-headers-mode-map "r" 'mu4e-compose-reply)
   (define-key mu4e-view-mode-map "r" 'mu4e-compose-reply)
 
-  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-for-flag)
-  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-for-flag)
+  (define-key mu4e-headers-mode-map "s" 'mu4e-headers-mark-move-to-starred)
+  (define-key mu4e-view-mode-map "s" 'mu4e-view-mark-move-to-starred)
   (define-key mu4e-headers-mode-map "!" 'mu4e-headers-mark-move-to-junk)
   (define-key mu4e-view-mode-map "!" 'mu4e-view-mark-move-to-junk)
   (define-key mu4e-headers-mode-map "#" 'mu4e-headers-mark-for-trash)
@@ -99,13 +107,11 @@
       ;;          " OR "
       ;;          "maildir:" mu4e-junk-folder ")")
       "maildir:/INBOX" "Inbox" 105)
-     ("flag:flagged" "Flagged" 115)
+     (,(concat "flag:flagged OR maildir:" mu4e-starred-folder) "Flagged" 115)
      (,(concat "from:" user-mail-address " AND date:30d..now") "Last 30 days sent" 116)
      (,(concat "flag:draft OR maildir:" mu4e-drafts-folder) "Drafts" 100)
      ("date:7d..now" "Last 7 days" 97))))
 
-;; (rc-mu4e-starred)
-(rc-mu4e-junk-mail)
 (rc-mu4e-gmail-shortcuts)
 
 ;; (setq mu4e-get-mail-command "offlineimap")
@@ -118,15 +124,19 @@
   '(mu4e-refile-folder "/Archive")
   '(mu4e-sent-folder "/Archive")
   '(mu4e-trash-folder "/Deleted Items")
-  '(mu4e-drafts-folder "/Drafts"))
+  '(mu4e-drafts-folder "/Drafts")
+  '(mu4e-starred-folder "/Starred")
+  '(mu4e-junk-folder "/Junk Mail")
+  '(mu4e-get-mail-command "offlineimap"))
 
  (custom-set-variables
   '(mu4e-refile-folder "/[Gmail].All Mail")
   '(mu4e-sent-folder "/[Gmail].All Mail")
   '(mu4e-trash-folder "/[Gmail].Trash")
-  '(mu4e-junk-folder "/[Gmail].Trash")
   '(mu4e-headers-skip-duplicates t)
-  '(mu4e-drafts-folder "/[Gmail].Drafts")))
+  '(mu4e-drafts-folder "/[Gmail].Drafts")
+  '(mu4e-starred-folder "/[Gmail].Starred")
+  '(mu4e-junk-folder "/[Gmail].Trash")))
 
 (custom-set-variables
  '(mu4e-attachment-dir "~/Downloads")
